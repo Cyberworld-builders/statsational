@@ -54,7 +54,7 @@
 
                               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                                  <a class="dropdown-item" href="auction/1" >
+                                  <a class="dropdown-item" href="/auction/1" >
                                       {{ __('Test Auction') }}
                                   </a>
 

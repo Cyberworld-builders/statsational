@@ -13471,10 +13471,16 @@ a.text-dark:focus {
   margin: 25px;
 }
 
+.auction .info-block .bid-button {
+  max-width: 60px;
+  max-height: 60px;
+}
+
 .auction .info-block button.small,
 .auction .info-block input[type=number] {
-  width: 45px;
-  height: 45px;
+  width: 55px;
+  height: 55px;
+  margin: 3px;
 }
 
 .auction ul {
@@ -13496,6 +13502,10 @@ a.text-dark:focus {
 
 .auction .top-line span {
   line-height: 3;
+}
+
+.auction .administration .auction-controls button {
+  margin: 5px;
 }
 
 .navbar-laravel {

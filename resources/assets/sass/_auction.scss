@@ -19,9 +19,11 @@
     margin-right: auto;
     // text-align: left;
     margin: 25px;
+    .bid-button { max-width: 60px; max-height: 60px;}
     button.small, input[type=number] {
-      width: 45px;
-      height: 45px;
+      width: 55px;
+      height: 55px;
+      margin: 3px;
     }
   }
   ul {
@@ -36,6 +38,14 @@
     }
     span {
       line-height: 3;
+    }
+  }
+
+  .administration {
+    .auction-controls {
+      button {
+        margin: 5px;
+      }
     }
   }
 
