@@ -62,6 +62,9 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .welcome-logo { width: 250px; height: auto; }
+
         </style>
     </head>
     <body>
@@ -79,7 +82,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    <img src="{{ asset('/images/statsational-logo.jpg') }}" />
+                    <img class="welcome-logo" src="{{ asset('/images/statsational-logo.jpg') }}" />
                 </div>
             </div>
         </div>
