@@ -18,3 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// user nav items
+
+Route::get('settings', 'UserController@showSettings');
+
+Route::get('auction/{id}', 'AuctionController@show');

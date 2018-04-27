@@ -8,11 +8,29 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Font Awesome
+@import "~font-awesome/scss/font-awesome.scss";
+
 @import 'navbar';
 @import 'dashboard';
+@import 'auction';
+
 
 
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.card {
+  -webkit-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.card-header {
+  // color: #fff;
+  // background-color: $light;
 }

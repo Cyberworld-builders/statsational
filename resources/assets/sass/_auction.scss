@@ -1,0 +1,42 @@
+.auction {
+  margin-left: auto;
+  margin-right: auto;
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+      /* display: none; <- Crashes Chrome on hover */
+      -webkit-appearance: none;
+      margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  }
+  .row {
+    // margin-bottom: 25px;
+
+  }
+  .card {
+    margin-bottom: 20px;
+  }
+  .info-block {
+    margin-left: auto;
+    margin-right: auto;
+    // text-align: left;
+    margin: 25px;
+    button.small, input[type=number] {
+      width: 45px;
+      height: 45px;
+    }
+  }
+  ul {
+    list-style-type: none;
+    li { text-align: left;}
+  }
+  .top-line {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    margin-bottom: 15px;
+    h2 {
+      line-height: normal;
+    }
+    span {
+      line-height: 3;
+    }
+  }
+
+}
