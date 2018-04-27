@@ -63,7 +63,10 @@
                 margin-bottom: 30px;
             }
 
-            .welcome-logo { width: 250px; height: auto; }
+            @media only screen and (max-width: 767px ){
+              .welcome-logo { width: 250px; height: auto; }
+            }
+
 
         </style>
     </head>
