@@ -48,15 +48,22 @@
 
                           <li class="nav-item dropdown">
 
-                              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="/auctions" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                   Auctions <span class="caret"></span>
                               </a>
 
+
                               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                                  <a class="dropdown-item" href="/auction/1" >
-                                      {{ __('Test Auction') }}
-                                  </a>
+                                <a class="dropdown-item" href="/auctions/new" >
+                                    {{ __('New Auction') }}
+
+                                </a>
+                                <hr />
+                                <a class="dropdown-item" href="/auctions/1" >
+                                    {{ __('Test Auction') }}
+                                </a>
+
 
                               </div>
 

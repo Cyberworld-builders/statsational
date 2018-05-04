@@ -23,4 +23,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('settings', 'UserController@showSettings');
 
-Route::get('auction/{id}', 'AuctionController@show');
+Route::get('auctions', 'AuctionController@list');
+Route::get('auctions/{id}', 'AuctionController@show');
+Route::get('auctions/new', 'AuctionController@create');

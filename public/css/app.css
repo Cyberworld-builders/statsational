@@ -13508,6 +13508,10 @@ a.text-dark:focus {
   margin: 5px;
 }
 
+.auction .messaging textarea {
+  min-height: 200px;
+}
+
 .navbar-laravel {
   background-color: #fff;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
