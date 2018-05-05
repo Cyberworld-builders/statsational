@@ -23,6 +23,22 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('settings', 'UserController@showSettings');
 
-Route::get('auctions', 'AuctionController@list');
-Route::get('auctions/{id}', 'AuctionController@show');
-Route::get('auctions/new', 'AuctionController@create');
+// Route::get('auctions', 'AuctionController@list');
+Route::get('auction/{id}', 'AuctionController@show');
+Route::get('auctions/new', 'AuctionController@new');
+
+Route::post('auctions/store','AuctionController@store');
+
+// Route::get('auctions',function(){
+//   $auctions = Statsational\Auction::all();
+//
+//   return View::make('pages.auctions')->with('auctions',$auctions);
+// });
+
+
+// Route::get('/profile/{username}',function($username){
+//   $user = Statsational\User::where('name',$username)->first();
+//   // $user = Auth::User();
+//   // var_dump($user);
+//   return View::make('pages.profile')->with('user',$user);
+// });

@@ -60,9 +60,12 @@
 
                                 </a>
                                 <hr />
-                                <a class="dropdown-item" href="/auctions/1" >
-                                    {{ __('Test Auction') }}
-                                </a>
+                                @foreach (Auth::user()->auctions as $auction)
+                                  <a class="dropdown-item" href="/auction/{{ $auction->id }}" >
+                                      {{ __( $auction->name ) }}
+                                  </a>
+                                @endforeach
+
 
 
                               </div>

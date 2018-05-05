@@ -2,6 +2,7 @@
 
 namespace Statsational\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Statsational\Auction;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,7 @@ class AuctionController extends Controller
      */
     public function index()
     {
+
         return view('pages.auction');
     }
 
@@ -22,10 +24,19 @@ class AuctionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+     public function new()
+     {
+         return view('pages.newAuction');
+     }
+
+     public function create()
+     {
+
+
+
+     }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +46,15 @@ class AuctionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $auction = new Auction;
+      $auction->name = request('name');
+      $auction->start_time = date('Y-m-d h:i:s',strtotime(request('start_time')));
+      $auction->private = request('private');
+
+      $user = Auth::User();
+      $user->auctions()->save($auction);
+
+      return $auction;
     }
 
     /**
@@ -44,9 +63,16 @@ class AuctionController extends Controller
      * @param  \Statsational\Auction  $auction
      * @return \Illuminate\Http\Response
      */
-    public function show(Auction $auction)
+    public function show( $auction_id )
     {
-        return view('pages.auction');
+        $auction = Auction::find($auction_id);
+        // var_dump($auction);
+        if($auction->exists()){
+          return view('pages.auction',['auction' => $auction]);
+        } else {
+          // return view('pages.newAuction');
+        }
+
     }
 
     /**

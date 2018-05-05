@@ -1,7 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
-<div id="app">
   <Auction>
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -9,7 +7,7 @@
             <div class="col-md-12">
               <div class="row">
                 <div class="col-sm-12 col-md-6">
-                  <h2 class="pull-left">Auction</h2>
+                  <h2 class="pull-left">{{ $auction->name }}</h2>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
                   <span class="text-right">Status: online</span>
@@ -61,7 +59,7 @@
                               <button class="btn btn-secondary small form-control"><i class="fa fa-minus"></i></button>
                             </div>
                             <div class="col-md-3 bid-button">
-                              <input class="form-control" type="number" v-model="bid_amount">
+                              <input class="form-control" type="number" >
                             </div>
                             <div class="col-md-3 bid-button">
                               <button class="btn btn-secondary small form-control"><i class="fa fa-plus"></i></button>
@@ -120,16 +118,4 @@
         </div>
     </div>
   </Auction>
-
-</div>
-<script>
-// var Vue = require('vue');
-// var app = new Vue({
-//   el: '#app',
-//   data: {
-//       bid_amount: 0
-//   }
-// });
-</script>
-
 @endsection

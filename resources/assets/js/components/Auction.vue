@@ -6,6 +6,7 @@
 
 <script>
     import Countdown from 'vuejs-countdown'
+
     export default {
       data(){
         return {

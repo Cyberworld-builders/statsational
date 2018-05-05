@@ -28,7 +28,7 @@ class User extends Authenticatable
     ];
 
     public function auctions(){
-      return $this->hasMany('App\Auction');
+      return $this->hasMany('Statsational\Auction');
     }
 
 }

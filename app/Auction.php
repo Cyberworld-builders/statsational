@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Auction extends Model
 {
-    public function user(){
-      return $this->belongsTo('App\User');
-    }
+
+  public function user(){
+    return $this->belongsTo('Statsational\User');
+  }
+
+  public function users(){
+    return $this->belongsToMany('Statsational\User');
+  }
+
 }
