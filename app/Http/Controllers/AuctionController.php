@@ -54,7 +54,7 @@ class AuctionController extends Controller
       $user = Auth::User();
       $user->auctions()->save($auction);
 
-      return $auction;
+      return $auction->id;
     }
 
     /**
@@ -66,13 +66,7 @@ class AuctionController extends Controller
     public function show( $auction_id )
     {
         $auction = Auction::find($auction_id);
-        // var_dump($auction);
-        if($auction->exists()){
-          return view('pages.auction',['auction' => $auction]);
-        } else {
-          // return view('pages.newAuction');
-        }
-
+        return view('pages.auction',['auction' => $auction]);
     }
 
     /**

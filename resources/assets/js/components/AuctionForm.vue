@@ -56,7 +56,8 @@
               start_time: this.start_time,
               private: this.private
             }).then(function(response){
-              console.log(response);
+              console.log(response.data);
+              window.location.href = '/auction/' + response.data;
             }).catch(e => {
               console.log(e);
             });
