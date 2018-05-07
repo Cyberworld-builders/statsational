@@ -7,6 +7,9 @@ Vue.component('Auction', require('./components/Auction.vue'));
 Vue.component('Tabs', require('./components/Tabs.vue'));
 Vue.component('auction-control', require('./components/AuctionControl.vue'));
 Vue.component('auction-form', require('./components/AuctionForm.vue'));
+Vue.component('join-form', require('./components/AuctionJoinForm.vue'));
+// Vue.component('join-form', {props: ['auction'],template: '<h1>{{ auction }}</h1>'});
+
 
 // var VueResource = require('vue-resource');
 // Vue.use(VueResource);

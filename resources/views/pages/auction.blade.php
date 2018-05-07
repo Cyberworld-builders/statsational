@@ -15,24 +15,29 @@
               </div>
             </div>
           </div>
-          <div class="row administration">
-            <div class="col-sm-12 col-md-12">
-              <div class="card">
-                  <div class="card-header">Auction Administration</div>
-                  <div class="card-body">
-                      <div class="col-md-12 auction-controls">
-                        <Tabs>
-                          <auction-control>Start Next Item</auction-control>
-                          <auction-control>Restart Clock</auction-control>
-                          <auction-control>Undo Last Bid</auction-control>
-                          <auction-control>End Auction</auction-control>
-                          <auction-control>Reload App</auction-control>
-                        </Tabs>
-                      </div>
-                  </div>
+
+
+          @if ($auction->is_owner())
+            <div class="row administration">
+              <div class="col-sm-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">Auction Administration</div>
+                    <div class="card-body">
+                        <div class="col-md-12 auction-controls">
+                          <Tabs>
+                            <auction-control>Start Next Item</auction-control>
+                            <auction-control>Restart Clock</auction-control>
+                            <auction-control>Undo Last Bid</auction-control>
+                            <auction-control>End Auction</auction-control>
+                            <auction-control>Reload App</auction-control>
+                          </Tabs>
+                        </div>
+                    </div>
+                </div>
               </div>
             </div>
-          </div>
+          @endif
+
           <div class="row bidding">
             <div class="col-sm-12 col-md-6 ">
               <div class="row info-block">

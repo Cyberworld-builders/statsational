@@ -28,6 +28,8 @@ Route::get('auction/{id}', 'AuctionController@show');
 Route::get('auctions/new', 'AuctionController@new');
 
 Route::post('auctions/store','AuctionController@store');
+Route::post('auctions/join','AuctionController@join');
+
 
 // Route::get('auctions',function(){
 //   $auctions = Statsational\Auction::all();
