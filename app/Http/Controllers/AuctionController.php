@@ -1,9 +1,9 @@
 <?php
 
-namespace Statsational\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use Statsational\Auction;
+use App\Auction;
 use Illuminate\Http\Request;
 
 class AuctionController extends Controller
@@ -60,7 +60,7 @@ class AuctionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Statsational\Auction  $auction
+     * @param  \App\Auction  $auction
      * @return \Illuminate\Http\Response
      */
     public function show( $auction_id )
@@ -72,7 +72,7 @@ class AuctionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Statsational\Auction  $auction
+     * @param  \App\Auction  $auction
      * @return \Illuminate\Http\Response
      */
     public function edit(Auction $auction)
@@ -84,7 +84,7 @@ class AuctionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Statsational\Auction  $auction
+     * @param  \App\Auction  $auction
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Auction $auction)
@@ -95,7 +95,7 @@ class AuctionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Statsational\Auction  $auction
+     * @param  \App\Auction  $auction
      * @return \Illuminate\Http\Response
      */
     public function destroy(Auction $auction)

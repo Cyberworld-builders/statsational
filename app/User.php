@@ -1,6 +1,6 @@
 <?php
 
-namespace Statsational;
+namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -28,7 +28,7 @@ class User extends Authenticatable
     ];
 
     public function auctions(){
-      return $this->hasMany('Statsational\Auction');
+      return $this->hasMany('App\Auction');
     }
 
 }
