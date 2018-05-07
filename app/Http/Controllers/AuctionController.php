@@ -44,18 +44,26 @@ class AuctionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-      $auction = new Auction;
-      $auction->name = request('name');
-      $auction->start_time = date('Y-m-d h:i:s',strtotime(request('start_time')));
-      $auction->private = request('private');
+     public function store(Request $request)
+     {
+       $auction = new Auction;
+       $auction->name = request('name');
+       $auction->start_time = date('Y-m-d h:i:s',strtotime(request('start_time')));
+       $auction->private = request('private');
+       $user = Auth::User();
+       $user->auctions()->save($auction);
+       return $auction->id;
+     }
 
-      $user = Auth::User();
-      $user->auctions()->save($auction);
+     public function join(Request $request)
+     {
+       $user = Auth::User();
+       $auction = Auction::find($request->auction_id);
+       $auction->users()->save($user);
+       return $auction->id;
+     }
 
-      return $auction->id;
-    }
+
 
     /**
      * Display the specified resource.
@@ -66,7 +74,12 @@ class AuctionController extends Controller
     public function show( $auction_id )
     {
         $auction = Auction::find($auction_id);
-        return view('pages.auction',['auction' => $auction]);
+        if($auction->is_participant()){
+          return view('pages.auction',['auction' => $auction]);
+        } else {
+          return view('pages.joinAuction',['auction' => $auction]);
+        }
+
     }
 
     /**
