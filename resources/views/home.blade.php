@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Auctions</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,7 +14,15 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <ul>
+                      @foreach($auctions as $auction)
+                        <li>
+                          <a class="dropdown-item" href="/auction/{{ $auction->id }}" >
+                              {{ __( $auction->name ) }}
+                          </a>
+                        </li>
+                      @endforeach
+                    </ul>
                 </div>
             </div>
         </div>
