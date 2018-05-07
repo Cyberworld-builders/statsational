@@ -1,8 +1,9 @@
 <?php
 
-namespace Statsational\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+// use
 
 class HomeController extends Controller
 {
@@ -23,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $auctions = \App\Auction::all();
+        return view('home')->with('auctions',$auctions);
     }
 }
