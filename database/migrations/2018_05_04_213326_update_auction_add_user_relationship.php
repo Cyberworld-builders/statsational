@@ -34,10 +34,10 @@ class UpdateAuctionAddUserRelationship extends Migration
     public function down()
     {
       Schema::table('auctions', function (Blueprint $table) {
-        $table->dropTable('user_id');
-        $table->dropTable('name');
-        $table->dropTable('start_time');
-        $table->dropTable('private');
+        $table->dropColumn('user_id');
+        $table->dropColumn('name');
+        $table->dropColumn('start_time');
+        $table->dropColumn('private');
       });
     }
 }

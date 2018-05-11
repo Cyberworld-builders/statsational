@@ -2,6 +2,7 @@
   <div class="container auction">
     <slot></slot>
   </div>
+
 </template>
 
 <script>

@@ -5,9 +5,11 @@ require('./bootstrap');
 var Vue = require('vue');
 Vue.component('Auction', require('./components/Auction.vue'));
 Vue.component('Tabs', require('./components/Tabs.vue'));
-Vue.component('auction-control', require('./components/AuctionControl.vue'));
-Vue.component('auction-form', require('./components/AuctionForm.vue'));
-Vue.component('join-form', require('./components/AuctionJoinForm.vue'));
+Vue.component('auction-control', require('./components/auction/AuctionControl.vue'));
+Vue.component('auction-form', require('./components/auction/AuctionForm.vue'));
+Vue.component('join-form', require('./components/auction/AuctionJoinForm.vue'));
+Vue.component('auction-bidding', require('./components/auction/AuctionBidding.vue'));
+Vue.component('auction-items', require('./components/auction/AuctionItems.vue'));
 // Vue.component('join-form', {props: ['auction'],template: '<h1>{{ auction }}</h1>'});
 
 Vue.component('chat-messages', require('./components/messages/ChatMessages.vue'));
@@ -15,11 +17,10 @@ Vue.component('chat-form', require('./components/messages/ChatForm.vue'));
 
 
 
-// var VueResource = require('vue-resource');
-// Vue.use(VueResource);
-//
-// Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('content');
-// Vue.http.options.emulateJSON = true;
+import BootstrapVue from 'bootstrap-vue'
+Vue.use(BootstrapVue);
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import Datetime from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'

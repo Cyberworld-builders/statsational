@@ -27,20 +27,19 @@ class Auction extends Model
   public function is_participant(){
     $participants = $this->users->pluck('id');
     $user_id = Auth::user()->id;
-
     if($this->is_owner()){
       return true;
     }
-
     foreach($participants as $participant){
       if($participant == $user_id){
         return true;
       }
     }
-
-
-
     return false;
+  }
+
+  public function items(){
+    return $this->hasMany('App\Item');
   }
 
 
