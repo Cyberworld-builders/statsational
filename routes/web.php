@@ -11,13 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 // user nav items
 
@@ -29,6 +29,11 @@ Route::get('auctions/new', 'AuctionController@new');
 
 Route::post('auctions/store','AuctionController@store');
 Route::post('auctions/join','AuctionController@join');
+
+
+Route::get('chat', 'ChatsController@index');
+Route::get('messages', 'ChatsController@fetchMessages');
+Route::post('messages', 'ChatsController@sendMessage');
 
 
 // Route::get('auctions',function(){
