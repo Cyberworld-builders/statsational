@@ -22,7 +22,9 @@
     "dependencies": {
         "bootstrap-vue": "^2.0.0-rc.9",
         "font-awesome": "^4.7.0",
+        "laravel-echo": "^1.3.5",
         "luxon": "^1.2.0",
+        "pusher-js": "^4.2.2",
         "vue-datetime": "^1.0.0-beta.3",
         "vuejs-countdown": "^0.2.1",
         "weekstart": "^1.0.0"

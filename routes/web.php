@@ -33,6 +33,11 @@ Route::post('auctions/addItem','AuctionController@addItem');
 
 
 
+Route::get('chat', 'ChatsController@index');
+Route::get('messages', 'ChatsController@fetchMessages');
+Route::post('messages', 'ChatsController@sendMessage');
+
+
 // Route::get('auctions',function(){
 //   $auctions = Statsational\Auction::all();
 //
