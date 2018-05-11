@@ -29,6 +29,8 @@ Route::get('auctions/new', 'AuctionController@new');
 
 Route::post('auctions/store','AuctionController@store');
 Route::post('auctions/join','AuctionController@join');
+Route::post('auctions/addItem','AuctionController@addItem');
+
 
 
 // Route::get('auctions',function(){
