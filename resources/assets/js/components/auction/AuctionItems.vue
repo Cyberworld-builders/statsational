@@ -3,21 +3,21 @@
   <div class="row items">
     <div class="col-sm-12 col-md-12 ">
       <div class="card">
-          <div class="card-header">Items</div>
+          <div class="card-header">Item Queue</div>
           <div class="card-body">
               <div class="col-md-12">
+                <ul>
+                  <li v-for="(item,index) in items">
+                    <span>{{ items[index].name }}</span>
+                  </li>
+                </ul>
               </div>
-              <ul>
-                <li v-for="item in this.items">
-                  {{ item.name }} atest
-                </li>
-              </ul>
-              <b-btn v-b-modal.itemForm class="btn btn-primary form-control"><i class="fa fa-plus"></i> Add Item</b-btn>
+              <b-button v-if="owner == user" @click="showModal" class="btn btn-primary form-control"><i class="fa fa-plus"></i> Add Item</b-button>
           </div>
       </div>
     </div>
     <div class="col-xs-3 col-md-2">
-      <b-modal id="itemForm" ref="itemFormRef" hide-footer title="Add Item">
+      <b-modal ref="myModalRef" hide-footer title="Add Item">
         <form id="addItem" @submit.prevent="addItem" role="form">
           <div class="form-group">
             <label for="name">
@@ -37,44 +37,43 @@
     import axios from 'axios'
     export default {
         name: 'auction-items',
-        props: ['auction_id','auction','items'],
+        props: ['auction_id','owner','items','user'],
 
-        data: function(){
+        data(){
           return {
-            name: ""
+            name: "",
+            modalShow: false
           }
         },
 
         methods:{
+
           showModal: function(){
-            this.$refs.itemFormRef.show();
+            this.$refs.myModalRef.show();
           },
           hideModal: function(){
-            this.$refs.itemFormRef.hide();
+            this.$refs.myModalRef.hide();
           },
 
           addItem: function(){
-            // axios.post('/auctions/addItem',{
-            //   name: this.name,
-            //   auction_id: this.auction_id
-            // }).then(function(response){
-            //   // var items = response.data;
-            //   // console.log( response.data );
-            //
-            //   // this.auction.items = response.data;
-            //   // this.hideModal();
-            // }).catch(e => {
-            //   console.log(e);
-            // });
-            // this.items.push("balls");
-            console.log( this.items );
+            var items = this.items;
+            axios.post('/auctions/addItem',{
+              name: this.name,
+              auction_id: this.auction_id
+            }).then(function(response){
+              items = response.data;
+              location.reload();
+
+            }).catch(e => {
+              console.log(e);
+            });
+            this.items = items;
+            this.hideModal();
           }
         },
 
-
-
         mounted: function(){
-          console.log(this.items);
+
         }
 
 

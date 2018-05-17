@@ -67813,43 +67813,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'auction-items',
-  props: ['auction_id', 'auction', 'items'],
+  props: ['auction_id', 'owner', 'items', 'user'],
 
   data: function data() {
     return {
-      name: ""
+      name: "",
+      modalShow: false
     };
   },
 
+
   methods: {
+
     showModal: function showModal() {
-      this.$refs.itemFormRef.show();
+      this.$refs.myModalRef.show();
     },
     hideModal: function hideModal() {
-      this.$refs.itemFormRef.hide();
+      this.$refs.myModalRef.hide();
     },
 
     addItem: function addItem() {
-      // axios.post('/auctions/addItem',{
-      //   name: this.name,
-      //   auction_id: this.auction_id
-      // }).then(function(response){
-      //   // var items = response.data;
-      //   // console.log( response.data );
-      //
-      //   // this.auction.items = response.data;
-      //   // this.hideModal();
-      // }).catch(e => {
-      //   console.log(e);
-      // });
-      // this.items.push("balls");
-      console.log(this.items);
+      var items = this.items;
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/auctions/addItem', {
+        name: this.name,
+        auction_id: this.auction_id
+      }).then(function (response) {
+        items = response.data;
+        location.reload();
+      }).catch(function (e) {
+        console.log(e);
+      });
+      this.items = items;
+      this.hideModal();
     }
   },
 
-  mounted: function mounted() {
-    console.log(this.items);
-  }
+  mounted: function mounted() {}
 
 });
 
@@ -67864,41 +67863,33 @@ var render = function() {
   return _c("div", { staticClass: "row items" }, [
     _c("div", { staticClass: "col-sm-12 col-md-12 " }, [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [_vm._v("Items")]),
+        _c("div", { staticClass: "card-header" }, [_vm._v("Item Queue")]),
         _vm._v(" "),
         _c(
           "div",
           { staticClass: "card-body" },
           [
-            _c("div", { staticClass: "col-md-12" }),
+            _c("div", { staticClass: "col-md-12" }, [
+              _c(
+                "ul",
+                _vm._l(_vm.items, function(item, index) {
+                  return _c("li", [
+                    _c("span", [_vm._v(_vm._s(_vm.items[index].name))])
+                  ])
+                })
+              )
+            ]),
             _vm._v(" "),
-            _c(
-              "ul",
-              _vm._l(this.items, function(item) {
-                return _c("li", [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(item.name) +
-                      " atest\n              "
-                  )
-                ])
-              })
-            ),
-            _vm._v(" "),
-            _c(
-              "b-btn",
-              {
-                directives: [
+            _vm.owner == _vm.user
+              ? _c(
+                  "b-button",
                   {
-                    name: "b-modal",
-                    rawName: "v-b-modal.itemForm",
-                    modifiers: { itemForm: true }
-                  }
-                ],
-                staticClass: "btn btn-primary form-control"
-              },
-              [_c("i", { staticClass: "fa fa-plus" }), _vm._v(" Add Item")]
-            )
+                    staticClass: "btn btn-primary form-control",
+                    on: { click: _vm.showModal }
+                  },
+                  [_c("i", { staticClass: "fa fa-plus" }), _vm._v(" Add Item")]
+                )
+              : _vm._e()
           ],
           1
         )
@@ -67912,8 +67903,8 @@ var render = function() {
         _c(
           "b-modal",
           {
-            ref: "itemFormRef",
-            attrs: { id: "itemForm", "hide-footer": "", title: "Add Item" }
+            ref: "myModalRef",
+            attrs: { "hide-footer": "", title: "Add Item" }
           },
           [
             _c(
