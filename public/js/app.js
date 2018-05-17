@@ -61818,6 +61818,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['user'],
@@ -61850,48 +61851,51 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "input-group" }, [
-    _c("div", { staticClass: "col-sm-12 col-md-10 mt-1" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.newMessage,
-            expression: "newMessage"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { id: "btn-input", placeholder: "Type a message..." },
-        domProps: { value: _vm.newMessage },
-        on: {
-          keyup: function($event) {
-            if (
-              !("button" in $event) &&
-              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-            ) {
-              return null
-            }
-            return _vm.sendMessage($event)
-          },
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.newMessage = $event.target.value
-          }
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.newMessage,
+          expression: "newMessage"
         }
-      })
-    ]),
+      ],
+      staticClass: "form-control input-sm",
+      attrs: {
+        id: "btn-input",
+        type: "text",
+        name: "message",
+        placeholder: "Type your message here..."
+      },
+      domProps: { value: _vm.newMessage },
+      on: {
+        keyup: function($event) {
+          if (
+            !("button" in $event) &&
+            _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+          ) {
+            return null
+          }
+          return _vm.sendMessage($event)
+        },
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.newMessage = $event.target.value
+        }
+      }
+    }),
     _vm._v(" "),
-    _c("div", { staticClass: "col-sm-3 col-md-2 pull-right text-right mt-1" }, [
+    _c("span", { staticClass: "input-group-btn" }, [
       _c(
         "button",
         {
-          staticClass: "btn btn-primary ",
+          staticClass: "btn btn-primary btn-sm",
           attrs: { id: "btn-chat" },
           on: { click: _vm.sendMessage }
         },
-        [_vm._v("Send")]
+        [_vm._v("\n            Send\n        ")]
       )
     ])
   ])
