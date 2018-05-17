@@ -54,4 +54,9 @@ class AuctionController extends Controller
 
     }
 
+    public function new()
+    {
+        return view('pages.newAuction');	
+    }
+
 }

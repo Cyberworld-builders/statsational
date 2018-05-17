@@ -95,8 +95,6 @@
 
                               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                                <a class="dropdown-item" href="/chat">{{ __('Chat Demo') }}</a>
-
                                 <a class="dropdown-item" href="/auctions/new" >
                                     {{ __('New Auction') }}
 
