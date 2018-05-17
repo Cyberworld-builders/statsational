@@ -27,7 +27,7 @@ class AuctionController extends Controller
        $item->name = request('name');
 
        $auction = Auction::find(request('auction_id'));
-       // $auction->items()->save($item);
+       $auction->items()->save($item);
 
        return $auction->items;
 
@@ -45,13 +45,36 @@ class AuctionController extends Controller
 
     public function show( $auction_id )
     {
+
         $auction = Auction::find($auction_id);
+
+        // $auction->items = array('test2');
+
+        // var_dump($auction->items);
+
         if($auction->is_participant()){
-          return view('pages.auction',['auction' => $auction]);
+
+          return view('pages.auction',[
+            'auction' => $auction,
+            'user'=>Auth::User(),
+            'test'=>array('test1',"testtt2")
+          ]);
+
         } else {
-          return view('pages.joinAuction',['auction' => $auction]);
+
+          return view('pages.joinAuction',[
+            'auction' => $auction,
+            'user'=>Auth::User()
+          ]);
+
         }
 
     }
+
+    public function new()
+    {
+        return view('pages.newAuction');
+    }
+
 
 }
