@@ -47,7 +47,10 @@
 
           <auction-items
             auction_id="{{ $auction->id }}"
-            admin="{{ $auction->is_admin }}">
+            owner="{{ $auction->user->id }}"
+            :items="{{ $auction->items }}"
+            user="{{ $user->id }}"
+            >
           </auction-items>
 
           <div class="row messaging">

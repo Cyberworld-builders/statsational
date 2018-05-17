@@ -29,6 +29,8 @@ class UpdateItemsTable extends Migration
      */
     public function down()
     {
-        $table->dropColumn('auction_id');
+      Schema::table('items', function (Blueprint $table) {
+          $table->dropColumn('auction_id');
+      });
     }
 }
