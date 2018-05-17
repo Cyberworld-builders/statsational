@@ -58,24 +58,25 @@
                       <div class="col-md-12">
                         <div class="row">
                           <div class="col-sm-12 col-md-7">
-                            <textarea class="form-control" readonly></textarea>
+                            <div class="panel-body">
+                                <chat-messages :messages="messages"></chat-messages>
+                            </div>
                             <br />
                             <div class="row">
-                              <div class="col-sm-12 col-md-10 mt-1">
-                                <input class="form-control" placeholder="Type a message..."/>
-                              </div>
-                              <div class="col-sm-3 col-md-2 pull-right text-right mt-1">
-                                <button class="btn btn-primary ">Send</button>
-                              </div>
+                              <chat-form
+                                  v-on:messagesent="addMessage"
+                                  :user="{{ Auth::user() }}"
+                              ></chat-form>
                             </div>
                           </div>
                           <div class="col-sm-12 col-md-5">
                             <h4>Online Users:</h4>
+
                             <ul>
-                              <li>{{ $auction->user->name }} (owner)</li>
-                              @foreach ($auction->users as $user)
+                                {{ $auction->user->name }} (owner)
+                                @foreach ( $auction->users as $user)
                                 <li>{{ $user->name }}</li>
-                              @endforeach
+                                @endforeach
                             </ul>
                           </div>
                         </div>
