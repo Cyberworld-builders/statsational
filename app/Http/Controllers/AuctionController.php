@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Auction;
 use App\Item;
+use App\Bid;
 use Illuminate\Http\Request;
 
 class AuctionController extends Controller
@@ -29,7 +30,8 @@ class AuctionController extends Controller
 
        $auction = Auction::find(request('auction_id'));
        $auction->items()->save($item);
-       $queue = $auction->queue;
+       $queue = array();
+       $auction->queue = array();
        foreach($auction->items as $item){
          $queue[] = $item;
        }
@@ -54,12 +56,16 @@ class AuctionController extends Controller
 
         $auction = Auction::find($auction_id);
 
-        // var_dump($auction->queue);
-
+        if(isset($auction->queue[0])){
+          $item = Item::find($auction->queue[0]['id']);
+        } else {
+          $item = new Item;
+        }
         if($auction->is_participant()){
 
           return view('pages.auction',[
             'auction' => $auction,
+            'bids'  => $item->bids,
             'user'=>Auth::User()
           ]);
 
@@ -77,6 +83,23 @@ class AuctionController extends Controller
     public function new()
     {
         return view('pages.newAuction');
+    }
+
+    public function bid(Request $request){
+
+      $user = Auth::User();
+      $auction = Auction::find($request->auction_id);
+      $item = Item::find($request->item_id);
+
+      $bid = new Bid;
+      $bid->amount = $request->bid_amount;
+      $bid->user()->associate($user);
+      $bid->auction()->associate($auction);
+      $bid->item()->associate($item);
+      $bid->save();
+
+      return $bid;
+
     }
 
 
