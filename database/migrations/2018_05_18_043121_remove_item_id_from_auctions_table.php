@@ -14,7 +14,7 @@ class RemoveItemIdFromAuctionsTable extends Migration
     public function up()
     {
         Schema::table('auctions', function (Blueprint $table) {
-            $table->dropColumn('item_id');
+            // $table->dropColumn('item_id');
         });
     }
 
