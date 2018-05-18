@@ -9,7 +9,7 @@
               <ul>
                 <li>Bid: $ {{ bid_amount }}</li>
                 <li>Time Remaining: 00:01</li>
-                <li>High Bid: $ {{ Number(bids[0].amount) }}</li>
+                <li>High Bid: $ {{ high_bid }}</li>
               </ul>
             </div>
             <div class="hidden-xs hidden-sm col-md-1 "></div>
@@ -67,7 +67,8 @@
       return {
         bid_amount: 0,
         item_id: 0,
-        minimum_bid: 1
+        minimum_bid: 1,
+        high_bid: 0
       }
     },
     methods: {
@@ -86,13 +87,13 @@
       },
       lowerBid: function(){
         var new_bid = Number(this.bid_amount) - 1;
-        if(new_bid > this.minimum_bid){
+        if(new_bid >= this.minimum_bid){
           this.bid_amount = new_bid;
         }
       },
       raiseBid: function(){
         var new_bid = Number(this.bid_amount) + 1;
-        if(new_bid > this.minimum_bid){
+        if(new_bid >= this.minimum_bid){
           this.bid_amount = new_bid;
         }
       },
@@ -102,9 +103,13 @@
       }
     },
     mounted: function(){
-      console.log(this.bids);
-      this.minimum_bid = Number(this.bids[0].amount) + 1;
+      if(this.bids.length > 0){
+        this.high_bid = Number(this.bids[0].amount);
+      }
+      // console.log(this.bids);
+      this.minimum_bid = this.high_bid + 1;
       this.bid_amount = this.minimum_bid;
+
     }
   }
 </script>

@@ -44,7 +44,7 @@
           @endif
 
           @if(count($auction->items)>0)
-            <auction-bidding :auction="{{ $auction }}" :bids="{{ $item->bids }}"></auction-bidding>
+            <auction-bidding :auction="{{ $auction }}" :bids="{{ $bids }}"></auction-bidding>
           @endif
 
 

@@ -67543,7 +67543,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       bid_amount: 0,
       item_id: 0,
-      minimum_bid: 1
+      minimum_bid: 1,
+      high_bid: 0
     };
   },
   methods: {
@@ -67562,13 +67563,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     lowerBid: function lowerBid() {
       var new_bid = Number(this.bid_amount) - 1;
-      if (new_bid > this.minimum_bid) {
+      if (new_bid >= this.minimum_bid) {
         this.bid_amount = new_bid;
       }
     },
     raiseBid: function raiseBid() {
       var new_bid = Number(this.bid_amount) + 1;
-      if (new_bid > this.minimum_bid) {
+      if (new_bid >= this.minimum_bid) {
         this.bid_amount = new_bid;
       }
     },
@@ -67578,8 +67579,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   mounted: function mounted() {
-    console.log(this.bids);
-    this.minimum_bid = Number(this.bids[0].amount) + 1;
+    if (this.bids.length > 0) {
+      this.high_bid = Number(this.bids[0].amount);
+    }
+    // console.log(this.bids);
+    this.minimum_bid = this.high_bid + 1;
     this.bid_amount = this.minimum_bid;
   }
 });
@@ -67605,9 +67609,7 @@ var render = function() {
             _vm._v(" "),
             _c("li", [_vm._v("Time Remaining: 00:01")]),
             _vm._v(" "),
-            _c("li", [
-              _vm._v("High Bid: $ " + _vm._s(Number(_vm.bids[0].amount)))
-            ])
+            _c("li", [_vm._v("High Bid: $ " + _vm._s(_vm.high_bid))])
           ])
         ]),
         _vm._v(" "),

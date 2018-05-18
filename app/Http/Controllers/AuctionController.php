@@ -30,7 +30,8 @@ class AuctionController extends Controller
 
        $auction = Auction::find(request('auction_id'));
        $auction->items()->save($item);
-       $queue = $auction->queue;
+       $queue = array();
+       $auction->queue = array();
        foreach($auction->items as $item){
          $queue[] = $item;
        }
@@ -60,16 +61,11 @@ class AuctionController extends Controller
         } else {
           $item = new Item;
         }
-
-        $bids = $item->bids;
-
-        // var_dump($bids);
-
         if($auction->is_participant()){
 
           return view('pages.auction',[
             'auction' => $auction,
-            'item'  => $item,
+            'bids'  => $item->bids,
             'user'=>Auth::User()
           ]);
 
