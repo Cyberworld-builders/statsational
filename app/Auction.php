@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 
 class Auction extends Model
 {
+  protected $casts = [
+    'queue' =>  'array'
+  ];
 
   public function user(){
     return $this->belongsTo('App\User');
@@ -39,9 +42,12 @@ class Auction extends Model
   }
 
   public function items(){
-    return $this->hasMany('App\Item');
+    return $this->belongsToMany('App\Item');
   }
 
+  public function bids(){
+    return $this->hasMany('App\Bid');
+  }
 
 
 }

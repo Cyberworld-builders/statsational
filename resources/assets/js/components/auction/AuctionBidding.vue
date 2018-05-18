@@ -5,7 +5,7 @@
         <div class="row info-block">
             <div class="hidden-xs hidden-sm col-md-3"></div>
             <div class="col-md-8 col-lg-8">
-              <h3>Russell Henley (#50)</h3>
+              <h3>{{ auction.queue[0].name }}</h3>
               <ul>
                 <li>Bid: $ {{ bid_amount }}</li>
                 <li>Time Remaining: 00:01</li>
@@ -58,7 +58,7 @@
   import axios from 'axios'
   export default {
     name: 'auction-bidding',
-    props: ['auction_id','current_bid'],
+    props: ['auction','current_bid'],
     data: function(){
       return {
         bid_amount: 0
@@ -67,7 +67,7 @@
     methods: {
       auctionBidding: function(){
         axios.post('/auctions/bid',{
-          auction_id: this.auction_id,
+          auction_id: this.auction.id,
           bid_amount: this.bid_amount
         }).then(function(response){
           console.log(response.data);

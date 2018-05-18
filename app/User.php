@@ -31,6 +31,12 @@ class User extends Authenticatable
       return $this->hasMany('App\Auction');
     }
 
+
+    public function bids(){
+      return $this->hasMany('App\Bid');
+    }
+
+
     /**
      * A user can have many messages
      *
@@ -40,5 +46,7 @@ class User extends Authenticatable
     {
       return $this->hasMany(Message::class);
     }
+
+
 
 }

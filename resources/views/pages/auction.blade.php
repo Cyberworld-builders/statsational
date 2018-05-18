@@ -43,13 +43,11 @@
             </div>
           @endif
 
-          <auction-bidding auction_id="{{ $auction->id }}" current_bid="0"></auction-bidding>
+          <auction-bidding :auction="{{ $auction }}" current_bid="0"></auction-bidding>
 
           <auction-items
-            auction_id="{{ $auction->id }}"
-            owner="{{ $auction->user->id }}"
-            :items="{{ $auction->items }}"
             user="{{ $user->id }}"
+            :auction="{{ $auction }}"
             >
           </auction-items>
 

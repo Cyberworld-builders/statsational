@@ -67534,7 +67534,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'auction-bidding',
-  props: ['auction_id', 'current_bid'],
+  props: ['auction', 'current_bid'],
   data: function data() {
     return {
       bid_amount: 0
@@ -67543,7 +67543,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     auctionBidding: function auctionBidding() {
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/auctions/bid', {
-        auction_id: this.auction_id,
+        auction_id: this.auction.id,
         bid_amount: this.bid_amount
       }).then(function (response) {
         console.log(response.data);
@@ -67589,7 +67589,7 @@ var render = function() {
             _c("div", { staticClass: "hidden-xs hidden-sm col-md-3" }),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-8 col-lg-8" }, [
-              _c("h3", [_vm._v("Russell Henley (#50)")]),
+              _c("h3", [_vm._v(_vm._s(_vm.auction.queue[0].name))]),
               _vm._v(" "),
               _c("ul", [
                 _c("li", [_vm._v("Bid: $ " + _vm._s(_vm.bid_amount))]),
@@ -67813,7 +67813,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'auction-items',
-  props: ['auction_id', 'owner', 'items', 'user'],
+  props: ['auction', 'user'],
 
   data: function data() {
     return {
@@ -67833,17 +67833,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     addItem: function addItem() {
-      var items = this.items;
+      var items = this.auction.items;
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/auctions/addItem', {
         name: this.name,
-        auction_id: this.auction_id
+        auction_id: this.auction.id
       }).then(function (response) {
         items = response.data;
         location.reload();
       }).catch(function (e) {
         console.log(e);
       });
-      this.items = items;
+      this.auction.items = items;
       this.hideModal();
     }
   },
@@ -67872,15 +67872,19 @@ var render = function() {
             _c("div", { staticClass: "col-md-12" }, [
               _c(
                 "ul",
-                _vm._l(_vm.items, function(item, index) {
+                _vm._l(_vm.auction.queue, function(item, index) {
                   return _c("li", [
-                    _c("span", [_vm._v(_vm._s(_vm.items[index].name))])
+                    index != 0
+                      ? _c("span", [
+                          _vm._v(_vm._s(_vm.auction.queue[index].name))
+                        ])
+                      : _vm._e()
                   ])
                 })
               )
             ]),
             _vm._v(" "),
-            _vm.owner == _vm.user
+            _vm.auction.user.id == _vm.user
               ? _c(
                   "b-button",
                   {
