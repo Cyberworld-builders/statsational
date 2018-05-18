@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="icon" href="{{ asset('/images/favicon.png') }}">
-    <title>{{ config('app.name', 'Statsational') }}</title>
+    <title>{{ config('app.name', 'Auction Pools') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
