@@ -43,7 +43,11 @@
             </div>
           @endif
 
-          <auction-bidding :auction="{{ $auction }}" current_bid="0"></auction-bidding>
+          @if(count($auction->items)>0)
+            <auction-bidding :auction="{{ $auction }}" current_bid="0"></auction-bidding>
+          @endif
+
+
 
           <auction-items
             user="{{ $user->id }}"
