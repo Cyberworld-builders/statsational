@@ -8,7 +8,7 @@
               <h3>{{ auction.queue[0].name }}</h3>
               <ul>
                 <li>Bid: $ {{ bid_amount }}</li>
-                <li>Time Remaining: 00:01</li>
+                <li>Time Remaining: <Countdown :end="end_time"></Countdown></li>
                 <li>High Bid: $ {{ high_bid }}</li>
               </ul>
             </div>
@@ -60,7 +60,9 @@
 
 <script>
   import axios from 'axios'
+  import Countdown from 'vuejs-countdown'
   export default {
+    components: { Countdown },
     name: 'auction-bidding',
     props: ['auction','bids'],
     data: function(){
@@ -68,7 +70,9 @@
         bid_amount: 0,
         item_id: 0,
         minimum_bid: 1,
-        high_bid: 0
+        high_bid: 0,
+        test: new Date().getFullYear() + '-' + (new Date().getMonth() + 1 ) + '-' + (new Date().getDate() + 1),
+        end_time: new Date().getFullYear() + '-' + (new Date().getMonth() + 1 ) + '-' + (new Date().getDate() +1 )
       }
     },
     methods: {
@@ -109,7 +113,12 @@
       // console.log(this.bids);
       this.minimum_bid = this.high_bid + 1;
       this.bid_amount = this.minimum_bid;
+      var e = new Date();
+      e.setDate(e.getDate() + (1 / 24) );
+      // this.end_time = e.getFullYear() + '-' + e.getMonth() + '-' + e.getDate();
+      this.end_time = "2018-05-20";
 
+      console.log(this.test);
     }
   }
 </script>
