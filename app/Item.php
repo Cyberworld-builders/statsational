@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Item extends Model
 {
@@ -11,7 +12,9 @@ class Item extends Model
     }
 
     public function bids(){
-      return $this->hasMany('App\Bid');
+      return $this->hasMany('App\Bid')->orderBy('updated_at','desc');
     }
+
+
 
 }
