@@ -16,6 +16,7 @@ class AuctionController extends Controller
        $auction->name = request('name');
        $auction->start_time = date('Y-m-d h:i:s',strtotime(request('start_time')));
        $auction->private = request('private');
+       $auction->queue = array();
        $user = Auth::User();
        $user->auctions()->save($auction);
        return $auction->id;
@@ -28,10 +29,15 @@ class AuctionController extends Controller
 
        $auction = Auction::find(request('auction_id'));
        $auction->items()->save($item);
+       $queue = $auction->queue;
+       foreach($auction->items as $item){
+         $queue[] = $item;
+       }
+       $auction->queue = $queue;
+       $auction->save();
+
 
        return $auction->items;
-
-       // return $auction;
 
      }
 
@@ -48,16 +54,13 @@ class AuctionController extends Controller
 
         $auction = Auction::find($auction_id);
 
-        // $auction->items = array('test2');
-
-        // var_dump($auction->items);
+        // var_dump($auction->queue);
 
         if($auction->is_participant()){
 
           return view('pages.auction',[
             'auction' => $auction,
-            'user'=>Auth::User(),
-            'test'=>array('test1',"testtt2")
+            'user'=>Auth::User()
           ]);
 
         } else {
