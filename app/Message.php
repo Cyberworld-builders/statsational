@@ -18,9 +18,16 @@ class Message extends Model
    *
    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
    */
-  public function user()
-  {
-    return $this->belongsTo(User::class);
-  }
-  
+   public function user()
+   {
+     return $this->belongsTo(User::class);
+   }
+
+   public function auction()
+   {
+     return $this->belongsTo(Auction::class);
+   }
+
+
+
 }

@@ -49,5 +49,9 @@ class Auction extends Model
     return $this->hasMany('App\Bid');
   }
 
+  public function messages()
+  {
+    return $this->hasMany(Message::class);
+  }
 
 }

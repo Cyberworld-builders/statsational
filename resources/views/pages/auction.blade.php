@@ -61,36 +61,12 @@
                   <div class="card-header">Message Board</div>
                   <div class="card-body">
                       <div class="col-md-12">
-                        <div class="row">
-                          <div class="col-sm-12 col-md-7">
-                            <div class="panel-body">
-                                <chat-messages :messages="messages"></chat-messages>
-                            </div>
-                            <br />
-                            <div class="row">
-                              <chat-form
-                                  v-on:messagesent="addMessage"
-                                  :user="{{ Auth::user() }}"
-                              ></chat-form>
-                            </div>
-                          </div>
-                          <div class="col-sm-12 col-md-5">
-                            <h4>Online Users:</h4>
-
-                            <ul>
-                                {{ $auction->user->name }} (owner)
-                                @foreach ( $auction->users as $user)
-                                <li>{{ $user->name }}</li>
-                                @endforeach
-                            </ul>
-                          </div>
-                        </div>
+                            <chat :auction="{{ $auction }}" :user="{{ Auth::user() }}"></chat>                            
                       </div>
                   </div>
               </div>
             </div>
           </div>
-
 
         </div>
     </div>

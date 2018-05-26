@@ -6,6 +6,7 @@
                     <strong class="primary-font">
                         {{ message.user.name }}
                     </strong>
+                    <span>{{ message.created_at }}</span>
                 </div>
                 <p>
                     {{ message.message }}
@@ -17,6 +18,31 @@
 
 <script>
   export default {
-    props: ['messages']
+    props: ['auction','messages'],
+    data(){
+      return{
+        // messages: []
+      }
+    },
+    created() {
+        this.fetchMessages(this.auction.id);
+    },
+    methods: {
+        fetchMessages() {
+          var messages = this.messages;
+            axios.get('messages/' + this.auction.id).then(response => {
+                messages = response.data;
+                this.messages = messages;
+                console.log(messages);
+            });
+        },
+    //     addMessage(message) {
+    //         this.messages.push(message);
+    //
+    //         axios.post('/messages', message).then(response => {
+    //           console.log(response.data);
+    //         });
+    //     }
+    }
   };
 </script>
