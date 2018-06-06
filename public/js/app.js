@@ -20990,15 +20990,7 @@ Vue.component('Tabs', __webpack_require__(110));
 Vue.component('auction-control', __webpack_require__(113));
 Vue.component('auction-form', __webpack_require__(116));
 Vue.component('join-form', __webpack_require__(126));
-Vue.component('auction-bidding', __webpack_require__(129));
 Vue.component('auction-items', __webpack_require__(132));
-Vue.component('bidders-overview', __webpack_require__(267));
-
-// Vue.component('join-form', {props: ['auction'],template: '<h1>{{ auction }}</h1>'});
-
-Vue.component('chat', __webpack_require__(135));
-Vue.component('chat-messages', __webpack_require__(138));
-Vue.component('chat-form', __webpack_require__(141));
 
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_bootstrap_vue__["a" /* default */]);
@@ -21012,36 +21004,6 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_3_vue_datetime___default.a);
 
 new Vue({
   el: '#app'
-  // data: {
-  //   messages: []
-  // },
-  // created() {
-  //
-  //     Echo.private('chat')
-  //       .listen('MessageSent', (e) => {
-  //         this.messages.push({
-  //           message: e.message.message,
-  //           user: e.user
-  //         });
-  //       });
-  // },
-  //
-  // methods: {
-  //     fetchMessages(auction) {
-  //        // if(this.auction){
-  //          axios.get('messages/' + auction).then(response => {
-  //              this.messages = response.data;
-  //          });
-  //        // }
-  //     },
-  //
-  //     addMessage(message) {
-  //         axios.post('/messages', message).then(response => {
-  //           console.log(response.data);
-  //           this.messages.push(response.data);
-  //         });
-  //     }
-  // }
 });
 
 /***/ }),
@@ -59333,6 +59295,214 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuejs_countdown__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuejs_countdown___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuejs_countdown__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -59344,15 +59514,142 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['auctionAction', 'auction', 'bids', 'user'],
   data: function data() {
     return {
-      bid_amount: 0
+      bid_amount: 0,
+      item_id: 0,
+      minimum_bid: 1,
+      high_bid: 0,
+      newMessage: '',
+      messages: [],
+      bidders: [],
+      name: "",
+      modalShow: false
     };
   },
 
-  props: ['auctionAction'],
+  methods: {
+
+    // bidding
+    auctionBidding: function auctionBidding() {
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/auctions/bid', {
+        auction_id: this.auction.id,
+        bid_amount: this.bid_amount,
+        item_id: this.auction.queue[0].id
+      }).then(function (response) {
+        console.log(response.data);
+        location.reload();
+      }).catch(function (e) {
+        console.log(e);
+      });
+      console.log('bidding, yo!');
+    },
+    lowerBid: function lowerBid() {
+      var new_bid = Number(this.bid_amount) - 1;
+      if (new_bid >= this.minimum_bid) {
+        this.bid_amount = new_bid;
+      }
+    },
+    raiseBid: function raiseBid() {
+      var new_bid = Number(this.bid_amount) + 1;
+      if (new_bid >= this.minimum_bid) {
+        this.bid_amount = new_bid;
+      }
+    },
+    minimumBid: function minimumBid() {
+      this.bid_amount = this.minimum_bid;
+      this.auctionBidding();
+    },
+
+    // messaging
+    fetchMessages: function fetchMessages() {
+      var _this = this;
+
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('messages/' + this.auction.id).then(function (response) {
+        _this.messages = response.data;
+      });
+    },
+    addMessage: function addMessage(message) {
+      var _this2 = this;
+
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/messages', message).then(function (response) {
+        console.log(response.data);
+        _this2.messages.push(response.data);
+      });
+    },
+    sendMessage: function sendMessage() {
+      var _this3 = this;
+
+      this.$emit('messagesent', {
+        user: this.user,
+        message: this.newMessage,
+        auction: this.auction.id
+      });
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/messages', {
+        user: this.user,
+        message: this.newMessage,
+        auction: this.auction.id
+      }).then(function (response) {
+        console.log(response.data);
+        _this3.messages.unshift(response.data);
+        // $('#scrollToNewMessage').scrollTop($('#scrollToNewMessage')[0].scrollHeight - $('#scrollToNewMessage')[0].clientHeight);
+      });
+      this.newMessage = '';
+    },
+
+
+    // items widget/form
+    showModal: function showModal() {
+      this.$refs.myModalRef.show();
+    },
+    hideModal: function hideModal() {
+      this.$refs.myModalRef.hide();
+    },
+
+    addItem: function addItem() {
+      var items = this.auction.items;
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/auctions/addItem', {
+        name: this.name,
+        auction_id: this.auction.id
+      }).then(function (response) {
+        items = response.data;
+        location.reload();
+      }).catch(function (e) {
+        console.log(e);
+      });
+      this.auction.items = items;
+      this.hideModal();
+    }
+  },
   mounted: function mounted() {
+
     console.log('Auction mounted.');
+
+    // bidding controls
+    if (this.bids.length > 0) {
+      this.high_bid = Number(this.bids[0].amount);
+    }
+    this.minimum_bid = this.high_bid + 1;
+    this.bid_amount = this.minimum_bid;
+
+    // bidders  overview
+    this.bidders.push(this.auction.user);
+    for (var i = 0; i < this.auction.users.length; i++) {
+      this.bidders.push(this.auction.users[i]);
+    }
+  },
+  created: function created() {
+    var _this4 = this;
+
+    this.fetchMessages();
+    Echo.private('chat').listen('MessageSent', function (e) {
+      _this4.messages.unshift({
+        message: e.message.message,
+        user: e.user,
+        created_at: e.message.created_at
+      });
+    });
   }
 });
 
@@ -59370,9 +59667,673 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "auction" }, [_vm._t("default")], 2)
+  return _c("div", { staticClass: "auction" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "nav",
+      { staticClass: "bidding navbar-dash navbar-expand-md navbar-light" },
+      [
+        _c("div", { staticClass: "row" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "bidding-controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3"
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4"
+                  },
+                  [
+                    _c("p", [_vm._v("On the Block")]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(_vm.auction.queue[0].name))])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4"
+                  },
+                  [_c("p", [_vm._v("Current Bid: $ " + _vm._s(_vm.high_bid))])]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4"
+                  },
+                  [_c("p", [_vm._v(_vm._s(_vm.auction.queue[0].name))])]
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "bidding-controls controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-7"
+            },
+            [
+              _c("small", [_vm._v("Quick Bid")]),
+              _c(
+                "button",
+                {
+                  staticClass: "btn bid-button",
+                  on: { click: _vm.minimumBid }
+                },
+                [_vm._v("Bid $" + _vm._s(_vm.minimum_bid))]
+              ),
+              _vm._v(" "),
+              _c("small", [_vm._v("Mannual Bid")]),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn bid-button", on: { click: _vm.lowerBid } },
+                [_c("i", { staticClass: "fa fa-minus" })]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.bid_amount,
+                    expression: "bid_amount"
+                  }
+                ],
+                attrs: { type: "number" },
+                domProps: { value: _vm.bid_amount },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.bid_amount = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn bid-button", on: { click: _vm.raiseBid } },
+                [_c("i", { staticClass: "fa fa-plus" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn bid-button",
+                  on: { click: _vm.auctionBidding }
+                },
+                [_vm._m(2)]
+              )
+            ]
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-12 auction-room" }, [
+        _c("div", { staticClass: "row money-spent" }, [
+          _c(
+            "div",
+            {
+              staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-12"
+            },
+            [
+              _c("span", [_vm._v("Money Spent ($)")]),
+              _vm._v("  "),
+              _c("span", { staticClass: "spent" }, [_vm._v(_vm._s(200))])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row " }, [
+          _c(
+            "div",
+            { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-10" },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-8"
+                  },
+                  [
+                    _c("div", { staticClass: "row items" }, [
+                      _c("div", { staticClass: "col-sm-12 col-md-12 " }, [
+                        _c("div", { staticClass: "card" }, [
+                          _c("div", { staticClass: "card-header" }, [
+                            _vm._v("Items")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "card-body" },
+                            [
+                              _c("div", { staticClass: "col-md-12" }, [
+                                _c(
+                                  "ul",
+                                  _vm._l(_vm.auction.queue, function(
+                                    item,
+                                    index
+                                  ) {
+                                    return _c("li", [
+                                      index != 0
+                                        ? _c("span", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.auction.queue[index].name
+                                              )
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ])
+                                  })
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _vm.auction.user.id == _vm.user.id
+                                ? _c(
+                                    "b-button",
+                                    {
+                                      staticClass:
+                                        "btn btn-primary form-control",
+                                      on: { click: _vm.showModal }
+                                    },
+                                    [
+                                      _c("i", { staticClass: "fa fa-plus" }),
+                                      _vm._v(" Add Item")
+                                    ]
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-xs-3 col-md-2" },
+                        [
+                          _c(
+                            "b-modal",
+                            {
+                              ref: "myModalRef",
+                              attrs: { "hide-footer": "", title: "Add Item" }
+                            },
+                            [
+                              _c(
+                                "form",
+                                {
+                                  attrs: { id: "addItem", role: "form" },
+                                  on: {
+                                    submit: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.addItem($event)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c("label", { attrs: { for: "name" } }, [
+                                      _vm._v(
+                                        "\n                            Item Name\n                          "
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.name,
+                                          expression: "name"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "text", id: "itemName" },
+                                      domProps: { value: _vm.name },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.name = $event.target.value
+                                        }
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "b-btn",
+                                    {
+                                      staticClass: "mt-3",
+                                      attrs: { block: "" },
+                                      on: { click: _vm.addItem }
+                                    },
+                                    [_vm._v("Add")]
+                                  )
+                                ],
+                                1
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4"
+                })
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2" },
+            [
+              _c(
+                "div",
+                { staticClass: "bidders-overview" },
+                [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _vm._l(_vm.bidders, function(bidder) {
+                    return _c("div", [
+                      _c("div", { staticClass: "bidder-card" }, [
+                        _c("p", [_vm._v(_vm._s(bidder.name))]),
+                        _vm._v(" "),
+                        _c("span", [_vm._v("Bal: $" + _vm._s(200))]),
+                        _vm._v("  "),
+                        _c("span", [_vm._v("Max Bid: $" + _vm._s(193))]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "players-needed" }, [
+                          _vm._v("Players needed: " + _vm._s(8))
+                        ])
+                      ])
+                    ])
+                  })
+                ],
+                2
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row messaging" }, [
+          _c("div", { staticClass: "col-sm-12 col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _vm._v("Message Board")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-sm-12 col-md-7" }, [
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c(
+                          "ul",
+                          { staticClass: "chat" },
+                          _vm._l(_vm.messages, function(message) {
+                            return _c("li", { staticClass: "left clearfix" }, [
+                              _c("div", { staticClass: "chat-body clearfix" }, [
+                                _c("div", { staticClass: "header" }, [
+                                  _c(
+                                    "strong",
+                                    { staticClass: "primary-font" },
+                                    [
+                                      _vm._v(
+                                        "\n                                                      " +
+                                          _vm._s(message.user.name) +
+                                          "\n                                                  "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _vm._v(_vm._s(message.created_at))
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("p", [
+                                  _vm._v(
+                                    "\n                                                  " +
+                                      _vm._s(message.message) +
+                                      "\n                                              "
+                                  )
+                                ])
+                              ])
+                            ])
+                          })
+                        ),
+                        _vm._v(" "),
+                        _c("div", { attrs: { id: "scrollToNewMessage" } })
+                      ]),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "input-group",
+                            on: { messagesent: _vm.addMessage }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.newMessage,
+                                  expression: "newMessage"
+                                }
+                              ],
+                              staticClass: "form-control input-sm",
+                              attrs: {
+                                id: "btn-input",
+                                type: "text",
+                                name: "message",
+                                placeholder: "Type your message here..."
+                              },
+                              domProps: { value: _vm.newMessage },
+                              on: {
+                                keyup: function($event) {
+                                  if (
+                                    !("button" in $event) &&
+                                    _vm._k(
+                                      $event.keyCode,
+                                      "enter",
+                                      13,
+                                      $event.key,
+                                      "Enter"
+                                    )
+                                  ) {
+                                    return null
+                                  }
+                                  return _vm.sendMessage($event)
+                                },
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.newMessage = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "input-group-btn" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary btn-sm",
+                                  attrs: { id: "btn-chat" },
+                                  on: { click: _vm.sendMessage }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                              Send\n                                          "
+                                  )
+                                ]
+                              )
+                            ])
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-12 col-md-5" }, [
+                      _c("h4", [_vm._v("Online Users:")]),
+                      _vm._v(" "),
+                      _c(
+                        "ul",
+                        [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(_vm.auction.user.name) +
+                              " (owner)\n                                    "
+                          ),
+                          _vm._l(_vm.auction.users, function(user) {
+                            return _c("div", [
+                              _c("li", [_vm._v(_vm._s(user.name))])
+                            ])
+                          }),
+                          _vm._v("`\n                                ")
+                        ],
+                        2
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("nav", { staticClass: "top-bar" }, [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-8" },
+          [_vm._v("\n    \t\tDraft Room\n    \t")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "owner-tools col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2"
+          },
+          [
+            _c("ul", { staticClass: "navbar-nav" }, [
+              _c("li", { staticClass: "nav-item dropdown" }, [
+                _c(
+                  "a",
+                  {
+                    pre: true,
+                    attrs: {
+                      id: "owner-tools",
+                      class: "nav-link dropdown-toggle",
+                      href: "/auctions",
+                      role: "button",
+                      "data-toggle": "dropdown",
+                      "aria-haspopup": "true",
+                      "aria-expanded": "false"
+                    }
+                  },
+                  [_vm._v("\n                  Commissioner\n              ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "dropdown-menu",
+                    attrs: { "aria-labelledby": "owner-tools" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: { href: "/auction/test" }
+                      },
+                      [_vm._v("Start Next Item")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: { href: "/auction/test" }
+                      },
+                      [_vm._v("Restart Clock")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: { href: "/auction/test" }
+                      },
+                      [_vm._v("Undo Last Bid")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: { href: "/auction/test" }
+                      },
+                      [_vm._v("End Auction")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: { href: "/auction/test" }
+                      },
+                      [_vm._v("Reload App")]
+                    )
+                  ]
+                )
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "owner-tools col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2"
+          },
+          [
+            _c("div", { staticClass: "row icons" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3"
+                },
+                [
+                  _c("a", { attrs: { href: "#" } }, [
+                    _c("span", [_c("i", { staticClass: "fa fa-bell" })])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3"
+                },
+                [
+                  _c("a", { attrs: { href: "#" } }, [
+                    _c("span", [_c("i", { staticClass: "fa fa-flag" })])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3"
+                },
+                [
+                  _c("a", { attrs: { href: "#" } }, [
+                    _c("span", [_c("i", { staticClass: "fa fa-power-off" })])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3"
+                },
+                [
+                  _c("a", { attrs: { href: "#" } }, [
+                    _c("span", [_c("i", { staticClass: "fa fa-cog" })])
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "navbar-home col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2"
+      },
+      [
+        _c("a", { staticClass: "navbar-brand", attrs: { href: "/home" } }, [
+          _c("img", {
+            staticClass: "logo-small",
+            attrs: { src: "/images/logo.png" }
+          })
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("strong", [
+      _c("i", { staticClass: "fa fa-angle-left" }),
+      _vm._v("  Bid")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-8" },
+        [_c("h3", [_vm._v("Bidders Overview")])]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -67421,316 +68382,9 @@ if (false) {
 }
 
 /***/ }),
-/* 129 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(8)
-/* script */
-var __vue_script__ = __webpack_require__(130)
-/* template */
-var __vue_template__ = __webpack_require__(131)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/auction/AuctionBidding.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7b3c65fb", Component.options)
-  } else {
-    hotAPI.reload("data-v-7b3c65fb", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 130 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'auction-bidding',
-  props: ['auction', 'bids'],
-  data: function data() {
-    return {
-      bid_amount: 0,
-      item_id: 0,
-      minimum_bid: 1,
-      high_bid: 0
-    };
-  },
-  methods: {
-    auctionBidding: function auctionBidding() {
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/auctions/bid', {
-        auction_id: this.auction.id,
-        bid_amount: this.bid_amount,
-        item_id: this.auction.queue[0].id
-      }).then(function (response) {
-        console.log(response.data);
-        location.reload();
-      }).catch(function (e) {
-        console.log(e);
-      });
-      console.log('bidding, yo!');
-    },
-    lowerBid: function lowerBid() {
-      var new_bid = Number(this.bid_amount) - 1;
-      if (new_bid >= this.minimum_bid) {
-        this.bid_amount = new_bid;
-      }
-    },
-    raiseBid: function raiseBid() {
-      var new_bid = Number(this.bid_amount) + 1;
-      if (new_bid >= this.minimum_bid) {
-        this.bid_amount = new_bid;
-      }
-    },
-    minimumBid: function minimumBid() {
-      this.bid_amount = this.minimum_bid;
-      this.auctionBidding();
-    }
-  },
-  mounted: function mounted() {
-    if (this.bids.length > 0) {
-      this.high_bid = Number(this.bids[0].amount);
-    }
-    // console.log(this.bids);
-    this.minimum_bid = this.high_bid + 1;
-    this.bid_amount = this.minimum_bid;
-  }
-});
-
-/***/ }),
-/* 131 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "nav",
-      { staticClass: "bidding navbar-dash navbar-expand-md navbar-light" },
-      [
-        _c("div", { staticClass: "row" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "bidding-controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3"
-            },
-            [
-              _c("div", { staticClass: "row" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4"
-                  },
-                  [
-                    _c("p", [_vm._v("On the Block")]),
-                    _vm._v(" "),
-                    _c("p", [_vm._v(_vm._s(_vm.auction.queue[0].name))])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4"
-                  },
-                  [_c("p", [_vm._v("Current Bid: $ " + _vm._s(_vm.high_bid))])]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4"
-                  },
-                  [_c("p", [_vm._v(_vm._s(_vm.auction.queue[0].name))])]
-                )
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "bidding-controls controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-7"
-            },
-            [
-              _c("small", [_vm._v("Quick Bid")]),
-              _c(
-                "button",
-                {
-                  staticClass: "btn bid-button",
-                  on: { click: _vm.minimumBid }
-                },
-                [_vm._v("Bid $" + _vm._s(_vm.minimum_bid))]
-              ),
-              _vm._v(" "),
-              _c("small", [_vm._v("Mannual Bid")]),
-              _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "btn bid-button", on: { click: _vm.lowerBid } },
-                [_c("i", { staticClass: "fa fa-minus" })]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.bid_amount,
-                    expression: "bid_amount"
-                  }
-                ],
-                attrs: { type: "number" },
-                domProps: { value: _vm.bid_amount },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.bid_amount = $event.target.value
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "btn bid-button", on: { click: _vm.raiseBid } },
-                [_c("i", { staticClass: "fa fa-plus" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn bid-button",
-                  on: { click: _vm.auctionBidding }
-                },
-                [_vm._m(1)]
-              )
-            ]
-          )
-        ])
-      ]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "navbar-home col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2"
-      },
-      [
-        _c("a", { staticClass: "navbar-brand", attrs: { href: "/home" } }, [
-          _c("img", {
-            staticClass: "logo-small",
-            attrs: { src: "/images/logo.png" }
-          })
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("strong", [
-      _c("i", { staticClass: "fa fa-angle-left" }),
-      _vm._v("  Bid")
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7b3c65fb", module.exports)
-  }
-}
-
-/***/ }),
+/* 129 */,
+/* 130 */,
+/* 131 */,
 /* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -67992,600 +68646,15 @@ if (false) {
 }
 
 /***/ }),
-/* 135 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(8)
-/* script */
-var __vue_script__ = __webpack_require__(136)
-/* template */
-var __vue_template__ = __webpack_require__(137)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/messages/Chat.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-ffd6cf58", Component.options)
-  } else {
-    hotAPI.reload("data-v-ffd6cf58", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 136 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user', 'auction'],
-  data: function data() {
-    return {
-      newMessage: '',
-      messages: []
-    };
-  },
-  created: function created() {
-    var _this = this;
-
-    this.fetchMessages();
-    Echo.private('chat').listen('MessageSent', function (e) {
-      _this.messages.unshift({
-        message: e.message.message,
-        user: e.user,
-        created_at: e.message.created_at
-      });
-    });
-  },
-
-  methods: {
-    fetchMessages: function fetchMessages() {
-      var _this2 = this;
-
-      axios.get('messages/' + this.auction.id).then(function (response) {
-        _this2.messages = response.data;
-      });
-    },
-    addMessage: function addMessage(message) {
-      var _this3 = this;
-
-      axios.post('/messages', message).then(function (response) {
-        console.log(response.data);
-        _this3.messages.push(response.data);
-      });
-    },
-    sendMessage: function sendMessage() {
-      var _this4 = this;
-
-      this.$emit('messagesent', {
-        user: this.user,
-        message: this.newMessage,
-        auction: this.auction.id
-      });
-      axios.post('/messages', {
-        user: this.user,
-        message: this.newMessage,
-        auction: this.auction.id
-      }).then(function (response) {
-        console.log(response.data);
-        _this4.messages.unshift(response.data);
-        // $('#scrollToNewMessage').scrollTop($('#scrollToNewMessage')[0].scrollHeight - $('#scrollToNewMessage')[0].clientHeight);
-      });
-      this.newMessage = '';
-    }
-  }
-});
-
-/***/ }),
-/* 137 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-sm-12 col-md-7" }, [
-      _c("div", { staticClass: "panel-body" }, [
-        _c(
-          "ul",
-          { staticClass: "chat" },
-          _vm._l(_vm.messages, function(message) {
-            return _c("li", { staticClass: "left clearfix" }, [
-              _c("div", { staticClass: "chat-body clearfix" }, [
-                _c("div", { staticClass: "header" }, [
-                  _c("strong", { staticClass: "primary-font" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(message.user.name) +
-                        "\n                        "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("span", [_vm._v(_vm._s(message.created_at))])
-                ]),
-                _vm._v(" "),
-                _c("p", [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(message.message) +
-                      "\n                    "
-                  )
-                ])
-              ])
-            ])
-          })
-        ),
-        _vm._v(" "),
-        _c("div", { attrs: { id: "scrollToNewMessage" } })
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "input-group", on: { messagesent: _vm.addMessage } },
-          [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.newMessage,
-                  expression: "newMessage"
-                }
-              ],
-              staticClass: "form-control input-sm",
-              attrs: {
-                id: "btn-input",
-                type: "text",
-                name: "message",
-                placeholder: "Type your message here..."
-              },
-              domProps: { value: _vm.newMessage },
-              on: {
-                keyup: function($event) {
-                  if (
-                    !("button" in $event) &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.sendMessage($event)
-                },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.newMessage = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "input-group-btn" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary btn-sm",
-                  attrs: { id: "btn-chat" },
-                  on: { click: _vm.sendMessage }
-                },
-                [_vm._v("\n                    Send\n                ")]
-              )
-            ])
-          ]
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-sm-12 col-md-5" }, [
-      _c("h4", [_vm._v("Online Users:")]),
-      _vm._v(" "),
-      _c(
-        "ul",
-        [
-          _vm._v(
-            "\n          " +
-              _vm._s(_vm.auction.user.name) +
-              " (owner)\n          "
-          ),
-          _vm._l(_vm.auction.users, function(user) {
-            return _c("div", [_c("li", [_vm._v(_vm._s(user.name))])])
-          }),
-          _vm._v("`\n      ")
-        ],
-        2
-      )
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-ffd6cf58", module.exports)
-  }
-}
-
-/***/ }),
-/* 138 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(8)
-/* script */
-var __vue_script__ = __webpack_require__(139)
-/* template */
-var __vue_template__ = __webpack_require__(140)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/messages/ChatMessages.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0aa7ebc0", Component.options)
-  } else {
-    hotAPI.reload("data-v-0aa7ebc0", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 139 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['auction', 'messages'],
-  data: function data() {
-    return {
-      // messages: []
-    };
-  },
-  created: function created() {
-    this.fetchMessages(this.auction.id);
-  },
-
-  methods: {
-    fetchMessages: function fetchMessages() {
-      var _this = this;
-
-      var messages = this.messages;
-      axios.get('messages/' + this.auction.id).then(function (response) {
-        messages = response.data;
-        _this.messages = messages;
-        console.log(messages);
-      });
-    }
-  }
-});
-
-/***/ }),
-/* 140 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "ul",
-    { staticClass: "chat" },
-    _vm._l(_vm.messages, function(message) {
-      return _c("li", { staticClass: "left clearfix" }, [
-        _c("div", { staticClass: "chat-body clearfix" }, [
-          _c("div", { staticClass: "header" }, [
-            _c("strong", { staticClass: "primary-font" }, [
-              _vm._v(
-                "\n                    " +
-                  _vm._s(message.user.name) +
-                  "\n                "
-              )
-            ]),
-            _vm._v(" "),
-            _c("span", [_vm._v(_vm._s(message.created_at))])
-          ]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "\n                " + _vm._s(message.message) + "\n            "
-            )
-          ])
-        ])
-      ])
-    })
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0aa7ebc0", module.exports)
-  }
-}
-
-/***/ }),
-/* 141 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(8)
-/* script */
-var __vue_script__ = __webpack_require__(142)
-/* template */
-var __vue_template__ = __webpack_require__(143)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/messages/ChatForm.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-023c6d90", Component.options)
-  } else {
-    hotAPI.reload("data-v-023c6d90", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 142 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['user', 'auction'],
-
-    data: function data() {
-        return {
-            newMessage: ''
-        };
-    },
-
-
-    methods: {
-        sendMessage: function sendMessage() {
-            this.$emit('messagesent', {
-                user: this.user,
-                message: this.newMessage,
-                auction: this.auction
-            });
-
-            this.newMessage = '';
-        }
-    }
-});
-
-/***/ }),
-/* 143 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "input-group" }, [
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.newMessage,
-          expression: "newMessage"
-        }
-      ],
-      staticClass: "form-control input-sm",
-      attrs: {
-        id: "btn-input",
-        type: "text",
-        name: "message",
-        placeholder: "Type your message here..."
-      },
-      domProps: { value: _vm.newMessage },
-      on: {
-        keyup: function($event) {
-          if (
-            !("button" in $event) &&
-            _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-          ) {
-            return null
-          }
-          return _vm.sendMessage($event)
-        },
-        input: function($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.newMessage = $event.target.value
-        }
-      }
-    }),
-    _vm._v(" "),
-    _c("span", { staticClass: "input-group-btn" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary btn-sm",
-          attrs: { id: "btn-chat" },
-          on: { click: _vm.sendMessage }
-        },
-        [_vm._v("\n            Send\n        ")]
-      )
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-023c6d90", module.exports)
-  }
-}
-
-/***/ }),
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
 /* 144 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -79344,165 +79413,6 @@ exports.push([module.i, "/* workaround for https://github.com/bootstrap-vue/boot
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */,
-/* 266 */,
-/* 267 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(8)
-/* script */
-var __vue_script__ = __webpack_require__(268)
-/* template */
-var __vue_template__ = __webpack_require__(269)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/auction/BiddersOverview.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-39014036", Component.options)
-  } else {
-    hotAPI.reload("data-v-39014036", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 268 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'bidders-overview',
-  props: ['auction', 'bids'],
-  data: function data() {
-    return {
-      bidders: []
-    };
-  },
-  methods: {},
-  mounted: function mounted() {
-    console.log(this.auction.users);
-    this.bidders.push(this.auction.user);
-    for (var i = 0; i < this.auction.users.length; i++) {
-      this.bidders.push(this.auction.users[i]);
-    }
-  }
-});
-
-/***/ }),
-/* 269 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "bidders-overview" },
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _vm._l(_vm.bidders, function(bidder) {
-        return _c("div", [
-          _c("div", { staticClass: "bidder-card" }, [
-            _c("p", [_vm._v(_vm._s(bidder.name))]),
-            _vm._v(" "),
-            _c("span", [_vm._v("Bal: $" + _vm._s(200))]),
-            _vm._v("  "),
-            _c("span", [_vm._v("Max Bid: $" + _vm._s(193))]),
-            _vm._v(" "),
-            _c("p", { staticClass: "players-needed" }, [
-              _vm._v("Players needed: " + _vm._s(8))
-            ])
-          ])
-        ])
-      })
-    ],
-    2
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c(
-        "div",
-        { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-8" },
-        [_c("h3", [_vm._v("Bidders Overview")])]
-      )
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-39014036", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

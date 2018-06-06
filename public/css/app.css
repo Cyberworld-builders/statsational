@@ -13451,7 +13451,28 @@ a.text-dark:focus {
   color: #f4f6f5;
   font: Roboto;
   background-color: #143753;
-  padding: 10px;
+  padding: 15px;
+}
+
+.top-bar .owner-tools {
+  text-align: right;
+}
+
+.top-bar .owner-tools .icons {
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+.top-bar .owner-tools a {
+  color: #fff;
+}
+
+.top-bar .owner-tools span {
+  width: 175px;
+}
+
+.top-bar .owner-tools .dropdown-menu a {
+  color: #143753;
 }
 
 .dashboard {
@@ -13648,7 +13669,7 @@ a.text-dark:focus {
   width: 100%;
   height: 100%;
   border-radius: 4px;
-  padding: 15px;
+  padding: 10px;
   border: 1px solid #707070;
 }
 
@@ -13661,7 +13682,7 @@ a.text-dark:focus {
 .bidders-overview .bidder-card {
   background-color: #fff;
   width: 100%;
-  padding: 15px;
+  padding: 10px;
   border: 1px solid #707070;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -13670,7 +13691,6 @@ a.text-dark:focus {
 .bidders-overview p,
 .bidders-overview span {
   color: #143753;
-  font-weight: bolder;
   margin: 0px;
 }
 
