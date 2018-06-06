@@ -13476,7 +13476,7 @@ a.text-dark:focus {
 }
 
 .dashboard {
-  background-color: #f1f1f1;
+  background-color: #f5f6fa;
 }
 
 .auction {
@@ -13670,7 +13670,6 @@ a.text-dark:focus {
   height: 100%;
   border-radius: 4px;
   padding: 10px;
-  border: 1px solid #707070;
 }
 
 .bidders-overview h3 {
@@ -13696,6 +13695,19 @@ a.text-dark:focus {
 
 .bidders-overview .players-needed {
   color: #ff5722;
+}
+
+.items {
+  border: .5px solid #e7e8ec;
+  border-radius: 4px;
+  background-color: #fff;
+  padding: 20px;
+  color: #133854;
+}
+
+.items h3 {
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .navbar-laravel {

@@ -13,11 +13,15 @@
                     Commissioner
                 </a>
                 <div class="dropdown-menu" aria-labelledby="owner-tools">
-                  <a class="dropdown-item" href="/auction/test" >Start Next Item</a>
-                  <a class="dropdown-item" href="/auction/test" >Restart Clock</a>
-                  <a class="dropdown-item" href="/auction/test" >Undo Last Bid</a>
-                  <a class="dropdown-item" href="/auction/test" >End Auction</a>
-                  <a class="dropdown-item" href="/auction/test" >Reload App</a>
+                  <a class="dropdown-item" href="#" >Start Next Item</a>
+                  <a class="dropdown-item" href="#" >Restart Clock</a>
+                  <a class="dropdown-item" href="#" >Undo Last Bid</a>
+                  <a class="dropdown-item" href="#" >End Auction</a>
+                  <a class="dropdown-item" href="#" >Reload App</a>
+                  <a class="dropdown-item" href="#" @click="showModal"><i class="fa fa-plus"></i> Add Item</a>
+
+
+
                 </div>
             </li>
           </ul>
@@ -85,28 +89,20 @@
               <div class="row">
               	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-8">
 
-                  <!-- <auction-items
-                    user="{{ $user->id }}"
-                    :auction="{{ $auction }}"
-                    >
-                  </auction-items> -->
-
                   <div class="row items">
+
                     <div class="col-sm-12 col-md-12 ">
-                      <div class="card">
-                          <div class="card-header">Items</div>
-                          <div class="card-body">
-                              <div class="col-md-12">
-                                <ul>
-                                  <li v-for="(item,index) in auction.queue">
-                                    <span v-if="index != 0">{{ auction.queue[index].name }}</span>
-                                  </li>
-                                </ul>
-                              </div>
-                              <b-button v-if="auction.user.id == user.id" @click="showModal" class="btn btn-primary form-control"><i class="fa fa-plus"></i> Add Item</b-button>
-                          </div>
+                      <h3>Items</h3>
+                      <div class="col-md-12">
+                        <ul v-for="(item,index) in auction.queue">
+                          <li>
+                            <span v-if="index != 0">{{ auction.queue[index].name }}</span>
+                          </li>
+                          <hr />
+                        </ul>
                       </div>
                     </div>
+
                     <div class="col-xs-3 col-md-2">
                       <b-modal ref="myModalRef" hide-footer title="Add Item">
                         <form id="addItem" @submit.prevent="addItem" role="form">
@@ -120,11 +116,15 @@
                         </form>
                       </b-modal>
                     </div>
+
                   </div>
 
               	</div>
-              	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
-
+              	<div style="padding-left: 30px;" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
+                  <div class="row items">
+                  	<h3>Owned</h3>
+                    
+                  </div>
               	</div>
               </div>
           	</div>

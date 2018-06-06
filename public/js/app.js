@@ -59668,7 +59668,99 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "auction" }, [
-    _vm._m(0),
+    _c("nav", { staticClass: "top-bar" }, [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-8" },
+          [_vm._v("\n    \t\tDraft Room\n    \t")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "owner-tools col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2"
+          },
+          [
+            _c("ul", { staticClass: "navbar-nav" }, [
+              _c("li", { staticClass: "nav-item dropdown" }, [
+                _c(
+                  "a",
+                  {
+                    pre: true,
+                    attrs: {
+                      id: "owner-tools",
+                      class: "nav-link dropdown-toggle",
+                      href: "/auctions",
+                      role: "button",
+                      "data-toggle": "dropdown",
+                      "aria-haspopup": "true",
+                      "aria-expanded": "false"
+                    }
+                  },
+                  [_vm._v("\n                  Commissioner\n              ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "dropdown-menu",
+                    attrs: { "aria-labelledby": "owner-tools" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Start Next Item")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Restart Clock")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Undo Last Bid")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("End Auction")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Reload App")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: { href: "#" },
+                        on: { click: _vm.showModal }
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-plus" }),
+                        _vm._v(" Add Item")
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _vm._m(0)
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "nav",
@@ -59816,55 +59908,27 @@ var render = function() {
                   [
                     _c("div", { staticClass: "row items" }, [
                       _c("div", { staticClass: "col-sm-12 col-md-12 " }, [
-                        _c("div", { staticClass: "card" }, [
-                          _c("div", { staticClass: "card-header" }, [
-                            _vm._v("Items")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "card-body" },
-                            [
-                              _c("div", { staticClass: "col-md-12" }, [
-                                _c(
-                                  "ul",
-                                  _vm._l(_vm.auction.queue, function(
-                                    item,
-                                    index
-                                  ) {
-                                    return _c("li", [
-                                      index != 0
-                                        ? _c("span", [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.auction.queue[index].name
-                                              )
-                                            )
-                                          ])
-                                        : _vm._e()
+                        _c("h3", [_vm._v("Items")]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-md-12" },
+                          _vm._l(_vm.auction.queue, function(item, index) {
+                            return _c("ul", [
+                              _c("li", [
+                                index != 0
+                                  ? _c("span", [
+                                      _vm._v(
+                                        _vm._s(_vm.auction.queue[index].name)
+                                      )
                                     ])
-                                  })
-                                )
+                                  : _vm._e()
                               ]),
                               _vm._v(" "),
-                              _vm.auction.user.id == _vm.user.id
-                                ? _c(
-                                    "b-button",
-                                    {
-                                      staticClass:
-                                        "btn btn-primary form-control",
-                                      on: { click: _vm.showModal }
-                                    },
-                                    [
-                                      _c("i", { staticClass: "fa fa-plus" }),
-                                      _vm._v(" Add Item")
-                                    ]
-                                  )
-                                : _vm._e()
-                            ],
-                            1
-                          )
-                        ])
+                              _c("hr")
+                            ])
+                          })
+                        )
                       ]),
                       _vm._v(" "),
                       _c(
@@ -59941,9 +60005,7 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c("div", {
-                  staticClass: "col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4"
-                })
+                _vm._m(3)
               ])
             ]
           ),
@@ -59956,7 +60018,7 @@ var render = function() {
                 "div",
                 { staticClass: "bidders-overview" },
                 [
-                  _vm._m(3),
+                  _vm._m(4),
                   _vm._v(" "),
                   _vm._l(_vm.bidders, function(bidder) {
                     return _c("div", [
@@ -60139,158 +60201,56 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("nav", { staticClass: "top-bar" }, [
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-8" },
-          [_vm._v("\n    \t\tDraft Room\n    \t")]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "owner-tools col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2"
-          },
-          [
-            _c("ul", { staticClass: "navbar-nav" }, [
-              _c("li", { staticClass: "nav-item dropdown" }, [
-                _c(
-                  "a",
-                  {
-                    pre: true,
-                    attrs: {
-                      id: "owner-tools",
-                      class: "nav-link dropdown-toggle",
-                      href: "/auctions",
-                      role: "button",
-                      "data-toggle": "dropdown",
-                      "aria-haspopup": "true",
-                      "aria-expanded": "false"
-                    }
-                  },
-                  [_vm._v("\n                  Commissioner\n              ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "dropdown-menu",
-                    attrs: { "aria-labelledby": "owner-tools" }
-                  },
-                  [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "dropdown-item",
-                        attrs: { href: "/auction/test" }
-                      },
-                      [_vm._v("Start Next Item")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "dropdown-item",
-                        attrs: { href: "/auction/test" }
-                      },
-                      [_vm._v("Restart Clock")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "dropdown-item",
-                        attrs: { href: "/auction/test" }
-                      },
-                      [_vm._v("Undo Last Bid")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "dropdown-item",
-                        attrs: { href: "/auction/test" }
-                      },
-                      [_vm._v("End Auction")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "dropdown-item",
-                        attrs: { href: "/auction/test" }
-                      },
-                      [_vm._v("Reload App")]
-                    )
-                  ]
-                )
+    return _c(
+      "div",
+      {
+        staticClass:
+          "owner-tools col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2"
+      },
+      [
+        _c("div", { staticClass: "row icons" }, [
+          _c(
+            "div",
+            { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3" },
+            [
+              _c("a", { attrs: { href: "#" } }, [
+                _c("span", [_c("i", { staticClass: "fa fa-bell" })])
               ])
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "owner-tools col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2"
-          },
-          [
-            _c("div", { staticClass: "row icons" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3"
-                },
-                [
-                  _c("a", { attrs: { href: "#" } }, [
-                    _c("span", [_c("i", { staticClass: "fa fa-bell" })])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3"
-                },
-                [
-                  _c("a", { attrs: { href: "#" } }, [
-                    _c("span", [_c("i", { staticClass: "fa fa-flag" })])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3"
-                },
-                [
-                  _c("a", { attrs: { href: "#" } }, [
-                    _c("span", [_c("i", { staticClass: "fa fa-power-off" })])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3"
-                },
-                [
-                  _c("a", { attrs: { href: "#" } }, [
-                    _c("span", [_c("i", { staticClass: "fa fa-cog" })])
-                  ])
-                ]
-              )
-            ])
-          ]
-        )
-      ])
-    ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3" },
+            [
+              _c("a", { attrs: { href: "#" } }, [
+                _c("span", [_c("i", { staticClass: "fa fa-flag" })])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3" },
+            [
+              _c("a", { attrs: { href: "#" } }, [
+                _c("span", [_c("i", { staticClass: "fa fa-power-off" })])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3" },
+            [
+              _c("a", { attrs: { href: "#" } }, [
+                _c("span", [_c("i", { staticClass: "fa fa-cog" })])
+              ])
+            ]
+          )
+        ])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -60320,6 +60280,19 @@ var staticRenderFns = [
       _c("i", { staticClass: "fa fa-angle-left" }),
       _vm._v("  Bid")
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4",
+        staticStyle: { "padding-left": "30px" }
+      },
+      [_c("div", { staticClass: "row items" }, [_c("h3", [_vm._v("Owned")])])]
+    )
   },
   function() {
     var _vm = this
