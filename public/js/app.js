@@ -79425,6 +79425,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -79462,7 +79465,15 @@ var render = function() {
       _vm._l(_vm.bidders, function(bidder) {
         return _c("div", [
           _c("div", { staticClass: "bidder-card" }, [
-            _vm._v("\n      \t" + _vm._s(bidder.name) + "\n    ")
+            _c("p", [_vm._v(_vm._s(bidder.name))]),
+            _vm._v(" "),
+            _c("span", [_vm._v("Bal: $" + _vm._s(200))]),
+            _vm._v("  "),
+            _c("span", [_vm._v("Max Bid: $" + _vm._s(193))]),
+            _vm._v(" "),
+            _c("p", { staticClass: "players-needed" }, [
+              _vm._v("Players needed: " + _vm._s(8))
+            ])
           ])
         ])
       })

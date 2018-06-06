@@ -13667,6 +13667,17 @@ a.text-dark:focus {
   margin-bottom: 10px;
 }
 
+.bidders-overview p,
+.bidders-overview span {
+  color: #143753;
+  font-weight: bolder;
+  margin: 0px;
+}
+
+.bidders-overview .players-needed {
+  color: #ff5722;
+}
+
 .navbar-laravel {
   background-color: #fff;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);

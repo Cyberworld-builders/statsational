@@ -8,7 +8,10 @@
 
       <div v-for="bidder in bidders" >
         <div class="bidder-card">
-          	{{ bidder.name }}
+          <p>{{ bidder.name }}</p>
+          <span>Bal: ${{ 200 }}</span>&nbsp&nbsp<span>Max Bid: ${{ 193 }}</span>
+          <p class="players-needed">Players needed: {{ 8 }}</p>
+
         </div>
       </div>
 
