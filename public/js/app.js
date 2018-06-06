@@ -67606,11 +67606,7 @@ var render = function() {
                     staticClass:
                       "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4"
                   },
-                  [
-                    _c("p", [
-                      _vm._v("Current Bid: $ " + _vm._s(_vm.bid_amount))
-                    ])
-                  ]
+                  [_c("p", [_vm._v("Current Bid: $ " + _vm._s(_vm.high_bid))])]
                 ),
                 _vm._v(" "),
                 _c(

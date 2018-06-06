@@ -14,7 +14,7 @@
                   <p>{{ auction.queue[0].name }}</p>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                  <p>Current Bid: $ {{ bid_amount }}</p>
+                  <p>Current Bid: $ {{ high_bid }}</p>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                   <p>{{ auction.queue[0].name }}</p>
