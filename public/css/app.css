@@ -13663,6 +13663,8 @@ a.text-dark:focus {
   width: 100%;
   padding: 15px;
   border: 1px solid #707070;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .navbar-laravel {

@@ -6,7 +6,7 @@
       	</div>
       </div>
 
-      <div v-for="bidder in auction.users" >
+      <div v-for="bidder in bidders" >
         <div class="bidder-card">
           	{{ bidder.name }}
         </div>
@@ -23,7 +23,7 @@
     props: ['auction','bids'],
     data: function(){
       return {
-
+        bidders: []
       }
     },
     methods: {
@@ -31,7 +31,10 @@
     },
     mounted: function(){
       console.log(this.auction.users);
-
+      this.bidders.push(this.auction.user);
+      for(var i=0;i<this.auction.users.length;i++){
+        this.bidders.push(this.auction.users[i]);
+      }
     }
   }
 </script>

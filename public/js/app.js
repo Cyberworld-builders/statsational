@@ -79431,11 +79431,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   name: 'bidders-overview',
   props: ['auction', 'bids'],
   data: function data() {
-    return {};
+    return {
+      bidders: []
+    };
   },
   methods: {},
   mounted: function mounted() {
     console.log(this.auction.users);
+    this.bidders.push(this.auction.user);
+    for (var i = 0; i < this.auction.users.length; i++) {
+      this.bidders.push(this.auction.users[i]);
+    }
   }
 });
 
@@ -79453,7 +79459,7 @@ var render = function() {
     [
       _vm._m(0),
       _vm._v(" "),
-      _vm._l(_vm.auction.users, function(bidder) {
+      _vm._l(_vm.bidders, function(bidder) {
         return _c("div", [
           _c("div", { staticClass: "bidder-card" }, [
             _vm._v("\n      \t" + _vm._s(bidder.name) + "\n    ")
