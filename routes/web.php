@@ -19,24 +19,28 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-// user nav items
 
-Route::get('settings', 'UserController@showSettings');
+Route::group(['middleware' => 'auth'],function(){
+  // user nav items
+  Route::get('settings', 'UserController@showSettings');
 
-// Route::get('auctions', 'AuctionController@list');
-Route::get('auction/{id}', 'AuctionController@show');
-Route::get('auctions/new', 'AuctionController@new');
+  // Route::get('auctions', 'AuctionController@list');
+  Route::get('auction/{id}', 'AuctionController@show');
+  Route::get('auctions/new', 'AuctionController@new');
 
-Route::post('auctions/store','AuctionController@store');
-Route::post('auctions/join','AuctionController@join');
-Route::post('auctions/addItem','AuctionController@addItem');
-Route::post('auctions/bid','AuctionController@bid');
+  Route::post('auctions/store','AuctionController@store');
+  Route::post('auctions/join','AuctionController@join');
+  Route::post('auctions/addItem','AuctionController@addItem');
+  Route::post('auctions/bid','AuctionController@bid');
 
 
 
-Route::get('chat', 'ChatsController@index');
-Route::get('auction/messages/{id}', 'ChatsController@fetchMessages');
-Route::post('messages', 'ChatsController@sendMessage');
+  Route::get('chat', 'ChatsController@index');
+  Route::get('auction/messages/{id}', 'ChatsController@fetchMessages');
+  Route::post('messages', 'ChatsController@sendMessage');
+});
+
+
 
 
 // Route::get('auctions',function(){
