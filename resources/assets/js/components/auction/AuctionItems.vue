@@ -3,7 +3,7 @@
   <div class="row items">
     <div class="col-sm-12 col-md-12 ">
       <div class="card">
-          <div class="card-header">Item Queue</div>
+          <div class="card-header">Items</div>
           <div class="card-body">
               <div class="col-md-12">
                 <ul>

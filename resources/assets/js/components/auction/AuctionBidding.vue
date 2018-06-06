@@ -1,61 +1,37 @@
 <template>
-
-    <div class="row bidding">
-      <div class="col-sm-12 col-md-6 ">
-        <div class="row info-block">
-            <div class="hidden-xs hidden-sm col-md-3"></div>
-            <div class="col-md-8 col-lg-8">
-              <h3>{{ auction.queue[0].name }}</h3>
-              <ul>
-                <li>Bid: $ {{ bid_amount }}</li>
-                <li>Time Remaining: 00:01</li>
-                <li>High Bid: $ {{ high_bid }}</li>
-              </ul>
+    <div>
+      <nav class="bidding navbar-dash navbar-expand-md navbar-light">
+          <div class="row">
+            <div class="navbar-home col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2">
+              <a class="navbar-brand" href="/home">
+                  <img class="logo-small" src="/images/logo.png" />
+              </a>
             </div>
-            <div class="hidden-xs hidden-sm col-md-1 "></div>
-            <div class="col-md-12 text-center">
-              <hr />
-              <p>Current Purchases: ($0) - Total: ($0)</p>
-              <input type="hidden" v-model="minimum_bid">
-              <button @click="minimumBid" class="btn btn-primary form-control input-block-level">${{ minimum_bid }} (min bid)</button>
-              <br /><br />
+            <div class="bidding-controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3">
               <div class="row">
-                <div class="hidden-xs hidden-sm col-md-3"></div>
-                <div class="col-sm-12 col-md-6">
-                    <div class="row text-center">
-                      <div class="col-md-3 bid-button">
-                        <button @click="lowerBid" class="btn btn-secondary small form-control"><i class="fa fa-minus"></i></button>
-                      </div>
-                      <div class="col-md-3 bid-button">
-                        <input class="form-control" type="number" v-model="bid_amount">
-                      </div>
-                      <div class="col-md-3 bid-button">
-                        <button @click="raiseBid" class="btn btn-secondary small form-control"><i class="fa fa-plus"></i></button>
-                      </div>
-                      <div class="col-md-3 bid-button">
-                        <button @click="auctionBidding" class="btn btn-primary small form-control"><strong>Bid</strong></button>
-                      </div>
-                    </div>
-                  </div>
-                <div class="hidden-xs hidden-sm col-md-3"></div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                  <p>On the Block</p>
+                  <p>{{ auction.queue[0].name }}</p>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                  <p>Current Bid: $ {{ bid_amount }}</p>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                  <p>{{ auction.queue[0].name }}</p>
+                </div>
               </div>
             </div>
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-6 ">
-        <div class="card">
-            <div class="card-header">Bids</div>
-            <div class="card-body">
-                <div class="col-md-12">
-                  <ul v-for="(bid, index) in bids">
-                    <li>${{ Number(bid.amount) }}</li>
-                  </ul>
-                </div>
+            <div class="bidding-controls controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-7">
+              <small>Quick Bid</small><button @click="minimumBid" class="btn bid-button">Bid ${{ minimum_bid }}</button>
+              <small>Mannual Bid</small>
+              <button @click="lowerBid" class="btn bid-button"><i class="fa fa-minus"></i></button>
+              <input class="" type="number" v-model="bid_amount">
+              <button @click="raiseBid" class="btn bid-button"><i class="fa fa-plus"></i></button>
+              <button @click="auctionBidding" class="btn bid-button"><strong><i class="fa fa-angle-left"></i> &nbspBid</strong></button>
             </div>
-        </div>
-      </div>
+          </div>
+      </nav>
     </div>
-
 </template>
 
 <script>

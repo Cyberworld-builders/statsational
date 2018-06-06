@@ -59368,7 +59368,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container auction" }, [_vm._t("default")], 2)
+  return _c("div", { staticClass: "auction" }, [_vm._t("default")], 2)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -67509,30 +67509,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -67595,153 +67571,158 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row bidding" }, [
-    _c("div", { staticClass: "col-sm-12 col-md-6 " }, [
-      _c("div", { staticClass: "row info-block" }, [
-        _c("div", { staticClass: "hidden-xs hidden-sm col-md-3" }),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-8 col-lg-8" }, [
-          _c("h3", [_vm._v(_vm._s(_vm.auction.queue[0].name))]),
+  return _c("div", [
+    _c(
+      "nav",
+      { staticClass: "bidding navbar-dash navbar-expand-md navbar-light" },
+      [
+        _c("div", { staticClass: "row" }, [
+          _vm._m(0),
           _vm._v(" "),
-          _c("ul", [
-            _c("li", [_vm._v("Bid: $ " + _vm._s(_vm.bid_amount))]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Time Remaining: 00:01")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("High Bid: $ " + _vm._s(_vm.high_bid))])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "hidden-xs hidden-sm col-md-1 " }),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-12 text-center" }, [
-          _c("hr"),
-          _vm._v(" "),
-          _c("p", [_vm._v("Current Purchases: ($0) - Total: ($0)")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.minimum_bid,
-                expression: "minimum_bid"
-              }
-            ],
-            attrs: { type: "hidden" },
-            domProps: { value: _vm.minimum_bid },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.minimum_bid = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary form-control input-block-level",
-              on: { click: _vm.minimumBid }
-            },
-            [_vm._v("$" + _vm._s(_vm.minimum_bid) + " (min bid)")]
-          ),
-          _vm._v(" "),
-          _c("br"),
-          _c("br"),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "hidden-xs hidden-sm col-md-3" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-              _c("div", { staticClass: "row text-center" }, [
-                _c("div", { staticClass: "col-md-3 bid-button" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary small form-control",
-                      on: { click: _vm.lowerBid }
-                    },
-                    [_c("i", { staticClass: "fa fa-minus" })]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3 bid-button" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.bid_amount,
-                        expression: "bid_amount"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "number" },
-                    domProps: { value: _vm.bid_amount },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.bid_amount = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3 bid-button" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary small form-control",
-                      on: { click: _vm.raiseBid }
-                    },
-                    [_c("i", { staticClass: "fa fa-plus" })]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3 bid-button" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary small form-control",
-                      on: { click: _vm.auctionBidding }
-                    },
-                    [_c("strong", [_vm._v("Bid")])]
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "hidden-xs hidden-sm col-md-3" })
-          ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-sm-12 col-md-6 " }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [_vm._v("Bids")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
           _c(
             "div",
-            { staticClass: "col-md-12" },
-            _vm._l(_vm.bids, function(bid, index) {
-              return _c("ul", [
-                _c("li", [_vm._v("$" + _vm._s(Number(bid.amount)))])
+            {
+              staticClass:
+                "bidding-controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3"
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4"
+                  },
+                  [
+                    _c("p", [_vm._v("On the Block")]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(_vm.auction.queue[0].name))])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4"
+                  },
+                  [
+                    _c("p", [
+                      _vm._v("Current Bid: $ " + _vm._s(_vm.bid_amount))
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4"
+                  },
+                  [_c("p", [_vm._v(_vm._s(_vm.auction.queue[0].name))])]
+                )
               ])
-            })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "bidding-controls controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-7"
+            },
+            [
+              _c("small", [_vm._v("Quick Bid")]),
+              _c(
+                "button",
+                {
+                  staticClass: "btn bid-button",
+                  on: { click: _vm.minimumBid }
+                },
+                [_vm._v("Bid $" + _vm._s(_vm.minimum_bid))]
+              ),
+              _vm._v(" "),
+              _c("small", [_vm._v("Mannual Bid")]),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn bid-button", on: { click: _vm.lowerBid } },
+                [_c("i", { staticClass: "fa fa-minus" })]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.bid_amount,
+                    expression: "bid_amount"
+                  }
+                ],
+                attrs: { type: "number" },
+                domProps: { value: _vm.bid_amount },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.bid_amount = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn bid-button", on: { click: _vm.raiseBid } },
+                [_c("i", { staticClass: "fa fa-plus" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn bid-button",
+                  on: { click: _vm.auctionBidding }
+                },
+                [_vm._m(1)]
+              )
+            ]
           )
         ])
-      ])
-    ])
+      ]
+    )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "navbar-home col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2"
+      },
+      [
+        _c("a", { staticClass: "navbar-brand", attrs: { href: "/home" } }, [
+          _c("img", {
+            staticClass: "logo-small",
+            attrs: { src: "/images/logo.png" }
+          })
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("strong", [
+      _c("i", { staticClass: "fa fa-angle-left" }),
+      _vm._v("  Bid")
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -67895,7 +67876,7 @@ var render = function() {
   return _c("div", { staticClass: "row items" }, [
     _c("div", { staticClass: "col-sm-12 col-md-12 " }, [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [_vm._v("Item Queue")]),
+        _c("div", { staticClass: "card-header" }, [_vm._v("Items")]),
         _vm._v(" "),
         _c(
           "div",

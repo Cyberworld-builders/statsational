@@ -55,4 +55,22 @@
     }
   }
 
+  .auction-room {
+    padding-left: 75px;
+    padding-right: 75px;
+
+    // margin-right: 75px;
+
+    .money-spent {
+      text-align: right;
+      margin: 15px;
+      span {
+        color: #143753;
+        font-weight: 550;
+      }
+      span.spent{ color: #ff5722; }
+    }
+
+  }
+
 }

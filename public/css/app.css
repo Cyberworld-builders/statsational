@@ -13444,8 +13444,18 @@ a.text-dark:focus {
 }
 
 .navbar img.logo-small {
-  width: 225px;
-  height: auto;
+  height: 60px;
+}
+
+.top-bar {
+  color: #f4f6f5;
+  font: Roboto;
+  background-color: #143753;
+  padding: 10px;
+}
+
+.dashboard {
+  background-color: #f1f1f1;
 }
 
 .auction {
@@ -13510,6 +13520,127 @@ a.text-dark:focus {
 
 .auction .messaging textarea {
   min-height: 200px;
+}
+
+.auction .auction-room {
+  padding-left: 75px;
+  padding-right: 75px;
+}
+
+.auction .auction-room .money-spent {
+  text-align: right;
+  margin: 15px;
+}
+
+.auction .auction-room .money-spent span {
+  color: #143753;
+  font-weight: 550;
+}
+
+.auction .auction-room .money-spent span.spent {
+  color: #ff5722;
+}
+
+.chat {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chat li {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat li .chat-body p {
+  margin: 0;
+  color: #777777;
+}
+
+.panel-body {
+  overflow-y: scroll;
+  height: 350px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #555;
+}
+
+.bidding {
+  background-color: #fe5722;
+}
+
+.bidding .bidding-controls {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.bidding .bidding-controls p,
+.bidding .bidding-controls small {
+  font-size: 14px;
+  font-weight: 550;
+  color: #fff;
+  margin: 2px;
+}
+
+.bidding .bidding-controls button {
+  border-radius: 16px;
+  width: 78px;
+  height: 22px;
+  padding: 0px;
+  font-size: 14px;
+  color: #143753;
+  font-weight: bold;
+  background-color: #fff;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.bidding .bidding-controls input[type=number] {
+  width: 78px;
+  text-align: center;
+}
+
+.bidding .controls {
+  padding: 25px;
+  text-align: right;
+}
+
+.bidding a {
+  background-color: #fff;
+  padding: 10px;
+}
+
+.bidding img.logo-small {
+  height: 60px;
+  background-color: #fff;
+  margin: 0px;
+  padding: 0px;
+}
+
+.bidding .navbar-dash {
+  padding: 0px;
+}
+
+.bidding .navbar-home {
+  background-color: #fff;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .navbar-laravel {
