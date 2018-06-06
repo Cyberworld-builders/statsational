@@ -47,7 +47,7 @@
 
           <div class="row ">
 
-          	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-9">
+          	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-10">
 
 
               <div class="row">
@@ -65,8 +65,8 @@
 
           	</div>
 
-          	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3">
-
+          	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2">
+              <bidders-overview :auction="{{ $auction }}" :bids="{{ $bids }}"></bidders-overview>
           	</div>
 
           </div>

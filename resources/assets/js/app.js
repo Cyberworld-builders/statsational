@@ -10,6 +10,8 @@ Vue.component('auction-form', require('./components/auction/AuctionForm.vue'));
 Vue.component('join-form', require('./components/auction/AuctionJoinForm.vue'));
 Vue.component('auction-bidding', require('./components/auction/AuctionBidding.vue'));
 Vue.component('auction-items', require('./components/auction/AuctionItems.vue'));
+Vue.component('bidders-overview', require('./components/auction/BiddersOverview.vue'));
+
 // Vue.component('join-form', {props: ['auction'],template: '<h1>{{ auction }}</h1>'});
 
 Vue.component('chat', require('./components/messages/Chat.vue'));

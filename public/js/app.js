@@ -20992,6 +20992,8 @@ Vue.component('auction-form', __webpack_require__(116));
 Vue.component('join-form', __webpack_require__(126));
 Vue.component('auction-bidding', __webpack_require__(129));
 Vue.component('auction-items', __webpack_require__(132));
+Vue.component('bidders-overview', __webpack_require__(267));
+
 // Vue.component('join-form', {props: ['auction'],template: '<h1>{{ auction }}</h1>'});
 
 Vue.component('chat', __webpack_require__(135));
@@ -79342,6 +79344,148 @@ exports.push([module.i, "/* workaround for https://github.com/bootstrap-vue/boot
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(8)
+/* script */
+var __vue_script__ = __webpack_require__(268)
+/* template */
+var __vue_template__ = __webpack_require__(269)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/auction/BiddersOverview.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-39014036", Component.options)
+  } else {
+    hotAPI.reload("data-v-39014036", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 268 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'bidders-overview',
+  props: ['auction', 'bids'],
+  data: function data() {
+    return {};
+  },
+  methods: {},
+  mounted: function mounted() {
+    console.log(this.auction.users);
+  }
+});
+
+/***/ }),
+/* 269 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "bidders-overview" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._l(_vm.auction.users, function(bidder) {
+        return _c("div", [
+          _c("div", { staticClass: "bidder-card" }, [
+            _vm._v("\n      \t" + _vm._s(bidder.name) + "\n    ")
+          ])
+        ])
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-8" },
+        [_c("h3", [_vm._v("Bidders Overview")])]
+      )
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-39014036", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
