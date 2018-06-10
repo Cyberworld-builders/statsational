@@ -59541,17 +59541,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     // bidding
     auctionBidding: function auctionBidding() {
+      console.log(this.high_bid);
+      var self = this;
+      // this.high_bid = this.bid_amount;
       __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/auctions/bid', {
         auction_id: this.auction.id,
         bid_amount: this.bid_amount,
         item_id: this.auction.queue[0].id
       }).then(function (response) {
-        console.log(response.data);
-        location.reload();
-      }).catch(function (e) {
+        // console.log(bid);
+        // location.reload();
+        // bid = response.data.amount;
+        this.high_bid = response.data.amount;
+        this.minimum_bid = this.high_bid + 1;
+        this.bid_amount = this.minimum_bid;
+      }.bind(this)).catch(function (e) {
         console.log(e);
       });
-      console.log('bidding, yo!');
     },
     lowerBid: function lowerBid() {
       var new_bid = Number(this.bid_amount) - 1;
