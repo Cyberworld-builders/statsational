@@ -1,7 +1,8 @@
 <template>
 
-  <div class="auction">
-    <nav class="top-bar">
+
+  <div class="auction">   <!-- the entire auction room -->
+    <nav class="top-bar"> <!-- top bar nav -->
       <div class="row">
       	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-8">
       		Draft Room
@@ -19,9 +20,6 @@
                   <a class="dropdown-item" href="#" >End Auction</a>
                   <a class="dropdown-item" href="#" >Reload App</a>
                   <a class="dropdown-item" href="#" @click="showModal"><i class="fa fa-plus"></i> Add Item</a>
-
-
-
                 </div>
             </li>
           </ul>
@@ -43,57 +41,54 @@
           </div>
       	</div>
       </div>
-    </nav>
-    <nav class="bidding navbar-dash navbar-expand-md navbar-light">
-        <div class="row">
-          <div class="navbar-home col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2">
-            <a class="navbar-brand" href="/home">
-                <img class="logo-small" src="/images/logo.png" />
-            </a>
-          </div>
-          <div class="bidding-controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3">
-            <div class="row">
-              <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <p>On the Block</p>
-                <p>{{ auction.queue[0].name }}</p>
-              </div>
-              <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <p>Current Bid: $ {{ high_bid }}</p>
-              </div>
-              <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <p>{{ auction.queue[0].name }}</p>
-              </div>
+    </nav> <!-- end top bar nav -->
+    <nav class="bidding navbar-dash navbar-expand-md navbar-light"> <!-- bidding controls bar     -->
+      <div class="row">
+        <div class="navbar-home col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2">
+          <a class="navbar-brand" href="/home">
+              <img class="logo-small" src="/images/logo.png" />
+          </a>
+        </div>
+        <div class="bidding-controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+              <p>On the Block</p>
+              <p>{{ auction.queue[0].name }}</p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+              <p>Current Bid: $ {{ high_bid }}</p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+              <p>{{ auction.queue[0].name }}</p>
             </div>
           </div>
-          <div class="bidding-controls controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-7">
-            <small>Quick Bid</small><button @click="minimumBid" class="btn bid-button">Bid ${{ minimum_bid }}</button>
-            <small>Mannual Bid</small>
-            <button @click="lowerBid" class="btn bid-button"><i class="fa fa-minus"></i></button>
-            <input class="" type="number" v-model="bid_amount">
-            <button @click="raiseBid" class="btn bid-button"><i class="fa fa-plus"></i></button>
-            <button @click="auctionBidding" class="btn bid-button"><strong><i class="fa fa-angle-left"></i> &nbspBid</strong></button>
-          </div>
         </div>
-    </nav>
-    <div class="row justify-content-center">
-        <div class="col-md-12 auction-room">
+        <div class="bidding-controls controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-7">
+          <small>Quick Bid</small><button @click="minimumBid" class="btn bid-button">Bid ${{ minimum_bid }}</button>
+          <small>Mannual Bid</small>
+          <button @click="lowerBid" class="btn bid-button"><i class="fa fa-minus"></i></button>
+          <input class="" type="number" v-model="bid_amount">
+          <button @click="raiseBid" class="btn bid-button"><i class="fa fa-plus"></i></button>
+          <button @click="auctionBidding" class="btn bid-button"><strong><i class="fa fa-angle-left"></i> &nbspBid</strong></button>
+        </div>
+      </div>
+    </nav> <!-- end bidding controls bar -->
+    <div class="row justify-content-center"> <!-- the main content area     -->
+      <div class="col-md-12 auction-room"> <!-- full width container for the auction room    -->
           <div class="row money-spent">
           	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-12">
           		<span>Money Spent ($)</span> &nbsp<span class="spent">{{ 200 }}</span>
           	</div>
           </div>
-
-
           <div class="row ">
-          	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-10">
+          	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-10"> <!-- main widget area     -->
               <div class="row">
-              	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-8">
+              	<div class=" col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-8">
 
-                  <div class="row items">
-
-                    <div class="col-sm-12 col-md-12 ">
+                  <div class="row">
+                    <div class="widget-card">
                       <h3>Items</h3>
-                      <div class="col-md-12">
+                      <div class="widget-body scrollable col-md-12">
                         <ul v-for="(item,index) in auction.queue">
                           <li>
                             <span v-if="index != 0">{{ auction.queue[index].name }}</span>
@@ -120,15 +115,87 @@
                   </div>
 
               	</div>
-              	<div style="padding-left: 30px;" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
-                  <div class="row items">
-                  	<h3>Owned</h3>
-                    
+
+              	<div class=" col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
+                  <div class="row">
+
+                    <div class="widget-card ">
+                      <h3>Owned</h3>
+                      <div class="widget-body scrollable col-md-12">
+
+                      </div>
+                    </div>
+
                   </div>
               	</div>
+
               </div>
-          	</div>
-          	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2">
+
+              <div class="row ">
+
+                <div class=" col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
+                  <div class="row">
+
+                    <div class="widget-card ">
+                      <h3>Queue</h3>
+                      <div class="widget-body scrollable col-md-12">
+
+                      </div>
+                    </div>
+
+                  </div>
+              	</div>
+
+                <div class="col-sm-12 col-md-12 col-lg-7 col-xl-8">
+                  <div class="widget-card chat-widget">
+                      <h3>Chat</h3>
+                      <div class="widget-body">
+                          <div class="col-md-12">
+                                <!-- <chat :auction="{{ $auction }}" :user="{{ Auth::user() }}"></chat> -->
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12">
+                                      <div class="panel-body">
+                                        <ul class="chat">
+                                            <li class="left clearfix" v-for="message in messages">
+                                                <div class="chat-body clearfix">
+                                                    <div class="header">
+                                                        <strong class="primary-font">
+                                                            {{ message.user.name }}
+                                                        </strong>
+                                                        <span>{{ message.created_at }}</span>
+                                                    </div>
+                                                    <p>
+                                                        {{ message.message }}
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                          <div id="scrollToNewMessage"></div>
+                                      </div>
+                                      <br />
+                                      <div class="row">
+                                        <div v-on:messagesent="addMessage" class="input-group">
+                                            <input id="btn-input" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." v-model="newMessage" @keyup.enter="sendMessage">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-primary btn-sm" id="btn-chat" @click="sendMessage">
+                                                    Send
+                                                </button>
+                                            </span>
+                                        </div>
+
+                                      </div>
+                                    </div>
+
+                                  </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+
+          	</div> <!-- end main widget area -->
+          	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2"> <!-- right sidebar -->
               <div class="bidders-overview">
                 <div class="row">
                 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
@@ -143,71 +210,12 @@
                   </div>
                 </div>
               </div>
-          	</div>
+          	</div> <!-- end right sidebar -->
           </div>
 
-
-
-          <div class="row messaging">
-            <div class="col-sm-12 col-md-12">
-              <div class="card">
-                  <div class="card-header">Message Board</div>
-                  <div class="card-body">
-                      <div class="col-md-12">
-                            <!-- <chat :auction="{{ $auction }}" :user="{{ Auth::user() }}"></chat> -->
-                            <div class="row">
-                                <div class="col-sm-12 col-md-7">
-                                  <div class="panel-body">
-                                    <ul class="chat">
-                                        <li class="left clearfix" v-for="message in messages">
-                                            <div class="chat-body clearfix">
-                                                <div class="header">
-                                                    <strong class="primary-font">
-                                                        {{ message.user.name }}
-                                                    </strong>
-                                                    <span>{{ message.created_at }}</span>
-                                                </div>
-                                                <p>
-                                                    {{ message.message }}
-                                                </p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                      <div id="scrollToNewMessage"></div>
-                                  </div>
-                                  <br />
-                                  <div class="row">
-                                    <div v-on:messagesent="addMessage" class="input-group">
-                                        <input id="btn-input" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." v-model="newMessage" @keyup.enter="sendMessage">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-primary btn-sm" id="btn-chat" @click="sendMessage">
-                                                Send
-                                            </button>
-                                        </span>
-                                    </div>
-
-                                  </div>
-                                </div>
-                                <div class="col-sm-12 col-md-5">
-                                  <h4>Online Users:</h4>
-
-                                  <ul>
-                                      {{ auction.user.name }} (owner)
-                                      <div v-for="user in auction.users">
-                                        <li>{{ user.name }}</li>
-                                      </div>`
-                                  </ul>
-                                </div>
-                              </div>
-                      </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-    </div>
-
-  </div>
+        </div> <!-- end full width container -->
+    </div> <!-- end main content area     -->
+  </div> <!-- end auction room -->
 
 </template>
 

@@ -13482,6 +13482,7 @@ a.text-dark:focus {
 .auction {
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 35px;
 }
 
 .auction input::-webkit-outer-spin-button,
@@ -13492,8 +13493,27 @@ a.text-dark:focus {
   /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-.auction .card {
-  margin-bottom: 20px;
+.auction .widget-card {
+  width: 100%;
+  border: .5px solid #e7e8ec;
+  border-radius: 4px;
+  background-color: #fff;
+  padding: 20px;
+  color: #133854;
+  margin: 10px;
+}
+
+.auction .widget-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.auction .widget-card .widget-body {
+  max-height: 300px;
+}
+
+.auction .widget-card .scrollable {
+  overflow-y: scroll;
 }
 
 .auction .info-block {
@@ -13562,39 +13582,52 @@ a.text-dark:focus {
   font-weight: 550;
 }
 
-.chat {
+.chat-widget button {
+  border-radius: 16px;
+  width: 78px;
+  height: 22px;
+  padding: 0px;
+  font-size: 14px;
+  color: #143753;
+  font-weight: bold;
+  background-color: #fff;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.chat-widget .chat {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.chat li {
+.chat-widget .chat li {
   margin-bottom: 10px;
   padding-bottom: 5px;
   border-bottom: 1px dotted #B3A9A9;
 }
 
-.chat li .chat-body p {
+.chat-widget .chat li .chat-body p {
   margin: 0;
   color: #777777;
 }
 
-.panel-body {
+.chat-widget .panel-body {
   overflow-y: scroll;
-  height: 350px;
+  height: 225px;
 }
 
-::-webkit-scrollbar-track {
+.chat-widget ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #F5F5F5;
 }
 
-::-webkit-scrollbar {
+.chat-widget ::-webkit-scrollbar {
   width: 12px;
   background-color: #F5F5F5;
 }
 
-::-webkit-scrollbar-thumb {
+.chat-widget ::-webkit-scrollbar-thumb {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #555;
 }
@@ -13695,19 +13728,6 @@ a.text-dark:focus {
 
 .bidders-overview .players-needed {
   color: #ff5722;
-}
-
-.items {
-  border: .5px solid #e7e8ec;
-  border-radius: 4px;
-  background-color: #fff;
-  padding: 20px;
-  color: #133854;
-}
-
-.items h3 {
-  font-size: 16px;
-  font-weight: 600;
 }
 
 .navbar-laravel {

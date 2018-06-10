@@ -1,6 +1,7 @@
 .auction {
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 35px;
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
       /* display: none; <- Crashes Chrome on hover */
@@ -11,9 +12,31 @@
     // margin-bottom: 25px;
 
   }
-  .card {
-    margin-bottom: 20px;
+
+  .widget-card {
+    width: 100%;
+    border: .5px solid #e7e8ec;
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 20px;
+    color: #133854;
+    // margin-left: 10px;
+    // margin-right: 10px;
+    margin: 10px;
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .widget-body {
+      max-height: 300px;
+
+    }
+    .scrollable {
+      overflow-y: scroll;
+    }
   }
+
+
   .info-block {
     margin-left: auto;
     margin-right: auto;
