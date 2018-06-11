@@ -361,7 +361,7 @@
 
           }
 
-          setInterval(function(){ this.getStatus() }.bind(this),3000);
+          setInterval(function(){ this.getStatus() }.bind(this),60000);
 
       },
       created() {
