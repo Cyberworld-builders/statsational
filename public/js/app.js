@@ -59518,6 +59518,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -59530,6 +59541,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       minimum_bid: 1,
       high_bid: 0,
       newMessage: '',
+      messagers: [{ name: "Everyone" }],
+      messageTo: "Everyone",
       messages: [],
       bidders: [],
       name: "",
@@ -59541,17 +59554,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     // bidding
     auctionBidding: function auctionBidding() {
-      console.log(this.high_bid);
-      var self = this;
-      // this.high_bid = this.bid_amount;
       __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/auctions/bid', {
         auction_id: this.auction.id,
         bid_amount: this.bid_amount,
         item_id: this.auction.queue[0].id
       }).then(function (response) {
-        // console.log(bid);
-        // location.reload();
-        // bid = response.data.amount;
         this.high_bid = response.data.amount;
         this.minimum_bid = this.high_bid + 1;
         this.bid_amount = this.minimum_bid;
@@ -59588,7 +59595,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this2 = this;
 
       __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/messages', message).then(function (response) {
-        console.log(response.data);
+        // console.log(response.data);
         _this2.messages.push(response.data);
       });
     },
@@ -59605,11 +59612,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         message: this.newMessage,
         auction: this.auction.id
       }).then(function (response) {
-        console.log(response.data);
+        // console.log(response.data);
         _this3.messages.unshift(response.data);
         // $('#scrollToNewMessage').scrollTop($('#scrollToNewMessage')[0].scrollHeight - $('#scrollToNewMessage')[0].clientHeight);
       });
       this.newMessage = '';
+    },
+    getStatus: function getStatus() {
+      console.log("word123");
     },
 
 
@@ -59651,7 +59661,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.bidders.push(this.auction.user);
     for (var i = 0; i < this.auction.users.length; i++) {
       this.bidders.push(this.auction.users[i]);
+      this.messagers.push(this.auction.users[i]);
     }
+
+    setInterval(function () {
+      this.getStatus();
+    }.bind(this), 3000);
   },
   created: function created() {
     var _this4 = this;
@@ -60160,14 +60175,68 @@ var render = function() {
                                             attrs: { id: "btn-chat" },
                                             on: { click: _vm.sendMessage }
                                           },
-                                          [
-                                            _vm._v(
-                                              "\n                                                  Send\n                                              "
-                                            )
-                                          ]
+                                          [_vm._v("Send")]
                                         )
                                       ]
                                     )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-8"
+                                  },
+                                  [
+                                    _c("div", { staticClass: "input-group" }, [
+                                      _vm._m(5),
+                                      _vm._v(" "),
+                                      _c(
+                                        "select",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.messageTo,
+                                              expression: "messageTo"
+                                            }
+                                          ],
+                                          staticClass: "form-control input-sm",
+                                          attrs: { id: "messageTo" },
+                                          on: {
+                                            change: function($event) {
+                                              var $$selectedVal = Array.prototype.filter
+                                                .call(
+                                                  $event.target.options,
+                                                  function(o) {
+                                                    return o.selected
+                                                  }
+                                                )
+                                                .map(function(o) {
+                                                  var val =
+                                                    "_value" in o
+                                                      ? o._value
+                                                      : o.value
+                                                  return val
+                                                })
+                                              _vm.messageTo = $event.target
+                                                .multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            }
+                                          }
+                                        },
+                                        _vm._l(_vm.messagers, function(bidder) {
+                                          return _c("option", [
+                                            _vm._v(_vm._s(bidder.name))
+                                          ])
+                                        })
+                                      )
+                                    ])
                                   ]
                                 )
                               ])
@@ -60190,7 +60259,7 @@ var render = function() {
                 "div",
                 { staticClass: "bidders-overview" },
                 [
-                  _vm._m(5),
+                  _vm._m(6),
                   _vm._v(" "),
                   _vm._l(_vm.bidders, function(bidder) {
                     return _c("div", [
@@ -60337,6 +60406,14 @@ var staticRenderFns = [
         ])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "messageTo" } }, [
+      _c("span", [_vm._v("To (private)")])
+    ])
   },
   function() {
     var _vm = this

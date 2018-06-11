@@ -1,4 +1,5 @@
 .chat-widget {
+  padding: 25px;
   button {
     border-radius: 16px;
     width: 78px;
@@ -28,5 +29,9 @@
   .panel-body {
     overflow-y: scroll;
     height: 225px;
+  }
+  .input-group {
+    margin: 5px;
+    label { padding: 10px;}
   }
 }

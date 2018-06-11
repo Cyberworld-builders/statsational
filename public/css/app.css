@@ -13524,7 +13524,7 @@ a.text-dark:focus {
 }
 
 .auction .widget-card .widget-body {
-  max-height: 300px;
+  max-height: 345px;
 }
 
 .auction .widget-card .scrollable {
@@ -13597,6 +13597,10 @@ a.text-dark:focus {
   font-weight: 550;
 }
 
+.chat-widget {
+  padding: 25px;
+}
+
 .chat-widget button {
   border-radius: 16px;
   width: 78px;
@@ -13630,6 +13634,14 @@ a.text-dark:focus {
 .chat-widget .panel-body {
   overflow-y: scroll;
   height: 225px;
+}
+
+.chat-widget .input-group {
+  margin: 5px;
+}
+
+.chat-widget .input-group label {
+  padding: 10px;
 }
 
 .bidding {

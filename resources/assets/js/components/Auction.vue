@@ -177,11 +177,22 @@
                                         <div v-on:messagesent="addMessage" class="input-group">
                                             <input id="btn-input" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." v-model="newMessage" @keyup.enter="sendMessage">
                                             <span class="input-group-btn">
-                                                <button class="btn btn-primary btn-sm" id="btn-chat" @click="sendMessage">
-                                                    Send
-                                                </button>
+                                                <button class="btn btn-primary btn-sm" id="btn-chat" @click="sendMessage">Send</button>
                                             </span>
+
                                         </div>
+
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
+                                          <div class="input-group">
+                                            <label for="messageTo"><span>To (private)</span></label>
+                                            <select id="messageTo" class="form-control input-sm" v-model="messageTo">
+                                              <option v-for="bidder in messagers" >{{ bidder.name }}</option>
+                                            </select>
+                                          </div>
+                                        </div>
+
 
                                       </div>
                                     </div>
@@ -231,6 +242,8 @@
           minimum_bid: 1,
           high_bid: 0,
           newMessage: '',
+          messagers: [{ name: "Everyone" }],
+          messageTo: "Everyone",
           messages: [],
           bidders: [],
           name: "",
@@ -241,17 +254,11 @@
 
         // bidding
         auctionBidding: function(){
-          console.log(this.high_bid);
-          let self = this;
-          // this.high_bid = this.bid_amount;
           axios.post('/auctions/bid',{
             auction_id: this.auction.id,
             bid_amount: this.bid_amount,
             item_id: this.auction.queue[0].id
           }).then(function(response){
-            // console.log(bid);
-            // location.reload();
-            // bid = response.data.amount;
             this.high_bid = response.data.amount;
             this.minimum_bid = this.high_bid + 1;
             this.bid_amount = this.minimum_bid;
@@ -285,7 +292,7 @@
         },
         addMessage(message) {
             axios.post('/messages', message).then(response => {
-              console.log(response.data);
+              // console.log(response.data);
               this.messages.push(response.data);
             });
         },
@@ -300,11 +307,15 @@
                 message: this.newMessage,
                 auction: this.auction.id
             }).then(response => {
-              console.log(response.data);
+              // console.log(response.data);
               this.messages.unshift(response.data);
               // $('#scrollToNewMessage').scrollTop($('#scrollToNewMessage')[0].scrollHeight - $('#scrollToNewMessage')[0].clientHeight);
             });
             this.newMessage = ''
+        },
+
+        getStatus(){
+          console.log("word123");
         },
 
         // items widget/form
@@ -346,7 +357,11 @@
           this.bidders.push(this.auction.user);
           for(var i=0;i<this.auction.users.length;i++){
             this.bidders.push(this.auction.users[i]);
+            this.messagers.push(this.auction.users[i]);
+
           }
+
+          setInterval(function(){ this.getStatus() }.bind(this),3000);
 
       },
       created() {
@@ -358,6 +373,7 @@
                 user: e.user,
                 created_at: e.message.created_at
               });
+
             });
       }
     }
