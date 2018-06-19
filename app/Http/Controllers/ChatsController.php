@@ -63,7 +63,7 @@ class ChatsController extends Controller
     $message->message = $request->input('message');
     $message->auction()->associate($auction);
     $new_message = $user->messages()->save($message);
-    broadcast(new MessageSent($user, $message))->toOthers();
+    broadcast(new MessageSent($user, $message, 'chat'))->toOthers();
     $message = Message::find($new_message->id);
     $message->user->name = $new_message->user->name;
     return $message;

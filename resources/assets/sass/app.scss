@@ -38,3 +38,12 @@
   // color: #fff;
   // background-color: $light;
 }
+
+.blinking {
+  animation: blinker 0.35s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

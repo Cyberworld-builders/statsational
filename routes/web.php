@@ -26,18 +26,29 @@ Route::group(['middleware' => 'auth'],function(){
 
   // Route::get('auctions', 'AuctionController@list');
   Route::get('auction/{id}', 'AuctionController@show');
+  Route::get('auction/data/{id}', 'AuctionController@getAuctionData');
   Route::get('auctions/new', 'AuctionController@new');
 
   Route::post('auctions/store','AuctionController@store');
   Route::post('auctions/join','AuctionController@join');
   Route::post('auctions/addItem','AuctionController@addItem');
+  Route::post('auctions/items/next','AuctionController@startNextItem');
+
+  Route::get('auctions/item/switch/{id}','ItemController@switchItem');
+
+
+
+
   Route::post('auctions/bid','AuctionController@bid');
 
+  Route::post('auctions/timer','AuctionController@resetTimer');
 
 
-  Route::get('chat', 'ChatsController@index');
   Route::get('auction/messages/{id}', 'ChatsController@fetchMessages');
   Route::post('messages', 'ChatsController@sendMessage');
+
+  Route::get('auction/users/{id}', 'AuctionController@getUsers');
+
 });
 
 

@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('content')
 
-  <Auction>
+<div class="auction">   <!-- the entire auction room -->
+
     <div class="row justify-content-center">
         <div class="col-md-12">
 
@@ -24,5 +25,7 @@
 
         </div>
     </div>
-  <Auction>
+</div>
+
+</div>
 @endsection
