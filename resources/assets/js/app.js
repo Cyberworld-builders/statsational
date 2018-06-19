@@ -178,7 +178,7 @@ new Vue({
        }).then(response => {
          this.getAuctionData(this.auction.id);
        }).catch(e => {
-         // console.log(e);
+         console.log(e);
        });
        // this.auction.items = items;
        this.hideModal();
@@ -269,12 +269,13 @@ new Vue({
      startNextItem(){
        axios.post('/auctions/items/next',{
          auction_id: this.auction.id,
-         item_id: this.current_item.id,
-         bid_id: this.current_item.high_bid.id
+         item_id: this.auction.item.id,
+         bid_id: this.getCurrentBid()
        }).then(response => {
-         // this.time_remaining = 30;
-         // this.updateClock();
          console.log(response.data);
+         this.getAuctionData(this.auction.id);
+         this.time_remaining = 30;
+         this.updateClock();
        }).catch(e => {
          console.log(e);
        });

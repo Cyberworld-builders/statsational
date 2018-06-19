@@ -143,23 +143,25 @@ class AuctionController extends Controller
     public function startNextItem(Request $request){
       $item = Item::find($request->item_id);
       $auction = Auction::find($request->auction_id);
-
       $queue_ids = array();
-
       foreach($auction->queue as $key => $queue_item){
-        // while you're in there, remove the current item from the queue
-        if($item->id == $queue_item['id']){
-          unset($auction->queue[$key]);
-        } else {
-          if(!in_array($item['id'],$queue_ids)){
-            $queue_ids[] = $item['id'];
-          }
+        if( $item->id != $queue_item['id'] ){
+          $queue_ids[] = $queue_item['id'];
         }
       }
-      // persist the changes in the database
-      $this->save();
-
+      $queue = array();
+      foreach($auction->items as $queue_item){
+        if(in_array($queue_item['id'],$queue_ids)){
+          $queue[] = $queue_item;
+        }
+      }
+      $auction->queue = $queue;
+      $auction->save();
+      $user = Auth::User();
       $auction = $this->getAuctionData($auction->id);
+      $debug = $queue;
+      broadcast(new MessageSent($user, "update", "update"))->toOthers();
+      // return array('queue_ids'=>$queue_ids,'queue'=>$queue,'auction'=>$auction);
       return $auction;
 
       // $queue = $auction->queue;

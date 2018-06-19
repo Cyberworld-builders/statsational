@@ -37551,7 +37551,7 @@ new Vue({
       }).then(function (response) {
         _this2.getAuctionData(_this2.auction.id);
       }).catch(function (e) {
-        // console.log(e);
+        console.log(e);
       });
       // this.auction.items = items;
       this.hideModal();
@@ -37634,23 +37634,26 @@ new Vue({
   }, _defineProperty(_methods, 'updateClock', function updateClock() {
     this.timer = __WEBPACK_IMPORTED_MODULE_6_moment___default()().startOf('day').seconds(this.time_remaining).format('m:ss');
   }), _defineProperty(_methods, 'startNextItem', function startNextItem() {
+    var _this7 = this;
+
     __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auctions/items/next', {
       auction_id: this.auction.id,
-      item_id: this.current_item.id,
-      bid_id: this.current_item.high_bid.id
+      item_id: this.auction.item.id,
+      bid_id: this.getCurrentBid()
     }).then(function (response) {
-      // this.time_remaining = 30;
-      // this.updateClock();
       console.log(response.data);
+      _this7.getAuctionData(_this7.auction.id);
+      _this7.time_remaining = 30;
+      _this7.updateClock();
     }).catch(function (e) {
       console.log(e);
     });
   }), _defineProperty(_methods, 'getAuctionData', function getAuctionData(auction_id) {
-    var _this7 = this;
+    var _this8 = this;
 
     __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('/auction/data/' + auction_id, {}).then(function (response) {
       console.log(response);
-      _this7.updatePool(response.data);
+      _this8.updatePool(response.data);
     }).catch(function (e) {
       console.log(e);
     });
@@ -37669,7 +37672,7 @@ new Vue({
     }
   },
   created: function created() {
-    var _this8 = this;
+    var _this9 = this;
 
     if (this.auction.id) {
       this.fetchMessages();
@@ -37679,14 +37682,14 @@ new Vue({
     Echo.private('chat').listen('MessageSent', function (e) {
       if (e.type == "chat") {
         console.log(e);
-        _this8.messages.unshift({
+        _this9.messages.unshift({
           message: e.message.message,
           user: e.user,
           created_at: e.message.created_at
         });
       } else if (e.type == "bid") {
         console.log(e);
-        _this8.getAuctionData(document.getElementById('auction_id').value);
+        _this9.getAuctionData(document.getElementById('auction_id').value);
         // this.updatePool(e.message.auction);
         var current_bid = document.getElementById('current_bid');
         current_bid.classList.add('blinking');
@@ -37694,20 +37697,20 @@ new Vue({
           current_bid.classList.remove('blinking');
         }, 2000);
       } else if (e.type == "timer") {
-        _this8.time_remaining = Number(e.message);
-        _this8.updateClock();
+        _this9.time_remaining = Number(e.message);
+        _this9.updateClock();
       } else if (e.type == "next") {
-        _this8.time_remaining = 30;
-        _this8.updateClock();
-        _this8.auction.queue = e.message.queue;
+        _this9.time_remaining = 30;
+        _this9.updateClock();
+        _this9.auction.queue = e.message.queue;
       } else if (e.type == "update") {
-        _this8.auction = e.message;
-        _this8.getAuctionData(document.getElementById('auction_id').value);
+        _this9.auction = e.message;
+        _this9.getAuctionData(document.getElementById('auction_id').value);
       } else if (e.type == "switchItem") {
         console.log(e.message);
-        _this8.updateCurrentItem(e.message);
-        _this8.time_remaining = 30;
-        _this8.updateClock();
+        _this9.updateCurrentItem(e.message);
+        _this9.time_remaining = 30;
+        _this9.updateClock();
       }
     });
   }

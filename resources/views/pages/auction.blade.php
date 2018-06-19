@@ -69,7 +69,7 @@
               <p v-else>No bids yet.</p>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-              <p v-if="this.bidders[auction.item.bids[0]]" id="hightest_bidder"> @{{ this.bidders[auction.item.bids[0].user_id].name }}</p>
+              <p v-if="auction.item.bids.length > 0 && bidders[auction.item.bids[0].user_id]" id="hightest_bidder"> @{{ bidders[auction.item.bids[0].user_id].name }}</p>
             </div>
 
           </div>
