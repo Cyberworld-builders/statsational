@@ -62,39 +62,16 @@ class Auction extends Model
     foreach( $this->users as $user){
       $bidders[$user->id] = $user;
     }
-
-    // get a list of ids for queued items.
-    $queue_ids = array();
-    foreach($this->queue as $key => $queue_item){
-      if(!in_array($queue_item['id'],$queue_ids)){
-        $queue_ids[] = $queue_item['id'];
-      }
+    foreach($bidders as $id => $bidder){
+      $bidders[$id]->spend = 0;
+      $bidders[$id]->item_count = 0;
     }
 
     // now loop through all items, both queued and completed
     foreach($this->items as $item){
-      // we only want to check completed items, so make sure the id is not in the queued item ids array
-      if(!in_array($item->id,$queue_ids)){
-        $item = Item::find($item->id);
-        $high_bid = false;
-        // loop through all bids for completed items to get the highest (winning) bid
-        foreach($item->bids() as $bid){
-          if($bid->amount > $high_bid->amount){
-            $high_bid = $bid;
-          }
-        }
-        // now loop through the bidders array, updating their total spend and won items array
-        foreach($bidders as $key => $bidder){
-          if( !isset( $bidder->spend ) ){
-            $bidders[$key]->spend = 0;
-            $bidders[$key]->items = array();
-          }
-          // return $high_bid;
-          if( ( $high_bid !== false ) && ( $bidder->id == $high_bid->user_id ) ){
-            $bidders[$key]->items[] = $item;
-            $bidders[$key]->spend += round($high_bid->amount);
-          }
-        }
+      if($winning_bid = $this->is_owned($item)){
+        $bidders[$winning_bid->user_id]->spend += round($winning_bid->amount);
+        $bidders[$winning_bid->user_id]->item_count++;
       }
     }
 
@@ -114,6 +91,27 @@ class Auction extends Model
 
     return $sorted_bidders;
 
+  }
+
+  public function is_owned($item){
+    $winning_bid = false;
+    $queue_ids = array();
+    foreach($this->queue as $key => $queue_item){
+      if(!in_array($queue_item['id'],$queue_ids)){
+        $queue_ids[] = $queue_item['id'];
+      }
+    }
+    if(in_array($item->id,$queue_ids)){
+      return false;
+    } else {
+      $winning_bid = false;
+      foreach($item->bids as $bid){
+        if($winning_bid === false || $bid->amount > $winning_bid->amount){
+          $winning_bid = $bid;
+        }
+      }
+    }
+    return $winning_bid;
   }
 
 }

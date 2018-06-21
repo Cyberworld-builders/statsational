@@ -31,7 +31,7 @@ new Vue({
        name: "",
        bids: [
          {
-           amount: 1,
+           amount: 0,
            bidder: {
              name: ""
            }
@@ -39,23 +39,19 @@ new Vue({
        ]
      }
    },
-   item: {},
+
    user: {
      bid: {
        amount: 1,
        minimum: 1
      }
    },
-   bids: [],
-   bid_amount: 0,
-   item_id: 0,
-   minimum_bid: 1,
-   high_bid: {},
-   high_bidder: "",
+
    newMessage: '',
    messagers: [{ name: "Everyone" }],
    messageTo: "Everyone",
    messages: [],
+
    bidders: [
      {
        name: "",
@@ -64,26 +60,12 @@ new Vue({
        ]
      }
    ],
+
    name: "",
    modalShow: false,
    imActive: true,
    time_remaining: "30",
    timer: "0:30",
-   current_item: {
-     high_bid: {
-       amount: 0,
-       bidder: {
-         name: ""
-       }
-     }
-   },
-   new_bid: {},
-
-   current_bid: false,
-   my_bid: {
-     amount: 1,
-     minimum: 1
-   },
 
    selectedBidder: false
 
@@ -291,9 +273,45 @@ new Vue({
        });
      },
 
+     updateSelectedBidder(bidder_id){
+       axios.post('/auction/bidder/data' ,{
+         bidder_id: bidder_id,
+         auction_id: this.auction.id
+       }).then(response => {
+         console.log(response.data);
+         if(response.data.id){
+           this.selectedBidder = response.data;
+         }
+       }).catch(e => {
+         console.log(e);
+       });
+     },
+
+     inArray(needle,haystack){
+       for(var i=0;i<haystack.length;i++){
+         if(needle == haystack[i]){
+           return true;
+         }
+       }
+       return false;
+     },
+
+     calculateBidderStats(){
+       var bidders = Object.values(this.bidders);
+       for(var i=0; i<bidders.length;i++){
+         var bidder = bidders[i];
+         if(bidder.item_count > 0){
+           this.bidders[bidder.id].average_spend = Math.round(bidder.spend / bidder.item_count);
+         } else {
+           this.bidders[bidder.id].average_spend = 0;
+         }
+       }
+     },
+
      updatePool(auction){
        this.auction = auction;
        this.bidders = auction.bidders;
+       this.calculateBidderStats();
        this.user.bid.amount = this.getMinimumBid();
      }
 

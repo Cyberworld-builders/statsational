@@ -146,10 +146,10 @@
                       </div>
 
 
-                      <div v-if="selectedBidder.id && this.bidders[selectedBidder.id].items" class="widget-body scrollable col-md-12">
-                        <ul v-for="(item,index) in bidders[selectedBidder.id].items">
+                      <div v-if="selectedBidder.id && selectedBidder.owned_items" class="widget-body scrollable col-md-12">
+                        <ul v-for="(owned,index) in selectedBidder.owned_items">
                           <li>
-                            <span>@{{ auction.item.name }}</span>
+                            <span>@{{ owned.item.name }} ( $ @{{ Math.round(owned.winning_bid.amount) }} )</span>
                           </li>
                           <hr />
                         </ul>
@@ -245,11 +245,11 @@
                 	</div>
                 </div>
                 <div v-for="(bidder,index) in bidders" >
-                  <a href="#" @click="selectedBidder = bidder">
+                  <a href="#" @click="updateSelectedBidder(bidder.id)">
                     <div class="bidder-card">
                       <p>@{{ bidder.name }} <span v-if="bidders[index].active" class="">@{{ bidders[index].active }}</span> </p>
-                      <span>Bal: $@{{ bidder.spend }}</span>&nbsp&nbsp<span>Avg Spend: $@{{ bidder.average }}</span>
-                      <p class="players-needed" v-if="bidder.items">Items Owned: @{{ bidder.items.length }}</p>
+                      <span>Bal: $@{{ bidder.spend }}</span>&nbsp&nbsp<span>Avg Spend: $@{{ bidder.average_spend }}</span>
+                      <p class="players-needed" v-if="bidder.item_count > 0">Items Owned: @{{ bidder.item_count }}</p>
                     </div>
                   </a>
 

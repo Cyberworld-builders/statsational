@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'],function(){
   // Route::get('auctions', 'AuctionController@list');
   Route::get('auction/{id}', 'AuctionController@show');
   Route::get('auction/data/{id}', 'AuctionController@getAuctionData');
+  Route::post('auction/bidder/data', 'AuctionController@getBidderData');
   Route::get('auctions/new', 'AuctionController@new');
 
   Route::post('auctions/store','AuctionController@store');
@@ -35,7 +36,6 @@ Route::group(['middleware' => 'auth'],function(){
   Route::post('auctions/items/next','AuctionController@startNextItem');
 
   Route::get('auctions/item/switch/{id}','ItemController@switchItem');
-
 
 
 

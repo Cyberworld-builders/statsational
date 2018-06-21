@@ -37406,54 +37406,36 @@ new Vue({
       item: {
         name: "",
         bids: [{
-          amount: 1,
+          amount: 0,
           bidder: {
             name: ""
           }
         }]
       }
     },
-    item: {},
+
     user: {
       bid: {
         amount: 1,
         minimum: 1
       }
     },
-    bids: [],
-    bid_amount: 0,
-    item_id: 0,
-    minimum_bid: 1,
-    high_bid: {},
-    high_bidder: "",
+
     newMessage: '',
     messagers: [{ name: "Everyone" }],
     messageTo: "Everyone",
     messages: [],
+
     bidders: [{
       name: "",
       items: [{}]
     }],
+
     name: "",
     modalShow: false,
     imActive: true,
     time_remaining: "30",
     timer: "0:30",
-    current_item: {
-      high_bid: {
-        amount: 0,
-        bidder: {
-          name: ""
-        }
-      }
-    },
-    new_bid: {},
-
-    current_bid: false,
-    my_bid: {
-      amount: 1,
-      minimum: 1
-    },
 
     selectedBidder: false
 
@@ -37657,9 +37639,41 @@ new Vue({
     }).catch(function (e) {
       console.log(e);
     });
+  }), _defineProperty(_methods, 'updateSelectedBidder', function updateSelectedBidder(bidder_id) {
+    var _this9 = this;
+
+    __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auction/bidder/data', {
+      bidder_id: bidder_id,
+      auction_id: this.auction.id
+    }).then(function (response) {
+      console.log(response.data);
+      if (response.data.id) {
+        _this9.selectedBidder = response.data;
+      }
+    }).catch(function (e) {
+      console.log(e);
+    });
+  }), _defineProperty(_methods, 'inArray', function inArray(needle, haystack) {
+    for (var i = 0; i < haystack.length; i++) {
+      if (needle == haystack[i]) {
+        return true;
+      }
+    }
+    return false;
+  }), _defineProperty(_methods, 'calculateBidderStats', function calculateBidderStats() {
+    var bidders = Object.values(this.bidders);
+    for (var i = 0; i < bidders.length; i++) {
+      var bidder = bidders[i];
+      if (bidder.item_count > 0) {
+        this.bidders[bidder.id].average_spend = Math.round(bidder.spend / bidder.item_count);
+      } else {
+        this.bidders[bidder.id].average_spend = 0;
+      }
+    }
   }), _defineProperty(_methods, 'updatePool', function updatePool(auction) {
     this.auction = auction;
     this.bidders = auction.bidders;
+    this.calculateBidderStats();
     this.user.bid.amount = this.getMinimumBid();
   }), _methods),
 
@@ -37672,7 +37686,7 @@ new Vue({
     }
   },
   created: function created() {
-    var _this9 = this;
+    var _this10 = this;
 
     if (this.auction.id) {
       this.fetchMessages();
@@ -37682,14 +37696,14 @@ new Vue({
     Echo.private('chat').listen('MessageSent', function (e) {
       if (e.type == "chat") {
         console.log(e);
-        _this9.messages.unshift({
+        _this10.messages.unshift({
           message: e.message.message,
           user: e.user,
           created_at: e.message.created_at
         });
       } else if (e.type == "bid") {
         console.log(e);
-        _this9.getAuctionData(document.getElementById('auction_id').value);
+        _this10.getAuctionData(document.getElementById('auction_id').value);
         // this.updatePool(e.message.auction);
         var current_bid = document.getElementById('current_bid');
         current_bid.classList.add('blinking');
@@ -37697,20 +37711,20 @@ new Vue({
           current_bid.classList.remove('blinking');
         }, 2000);
       } else if (e.type == "timer") {
-        _this9.time_remaining = Number(e.message);
-        _this9.updateClock();
+        _this10.time_remaining = Number(e.message);
+        _this10.updateClock();
       } else if (e.type == "next") {
-        _this9.time_remaining = 30;
-        _this9.updateClock();
-        _this9.auction.queue = e.message.queue;
+        _this10.time_remaining = 30;
+        _this10.updateClock();
+        _this10.auction.queue = e.message.queue;
       } else if (e.type == "update") {
-        _this9.auction = e.message;
-        _this9.getAuctionData(document.getElementById('auction_id').value);
+        _this10.auction = e.message;
+        _this10.getAuctionData(document.getElementById('auction_id').value);
       } else if (e.type == "switchItem") {
         console.log(e.message);
-        _this9.updateCurrentItem(e.message);
-        _this9.time_remaining = 30;
-        _this9.updateClock();
+        _this10.updateCurrentItem(e.message);
+        _this10.time_remaining = 30;
+        _this10.updateClock();
       }
     });
   }

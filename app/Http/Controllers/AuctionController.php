@@ -96,6 +96,30 @@ class AuctionController extends Controller
          return $auction;
      }
 
+     public function getBidderData( Request $request )
+     {
+         $auction = Auction::find($request->auction_id);
+         $bidders = $auction->bidders();
+         $bidder = $bidders[$request->bidder_id];
+         $owned_items = array();
+
+         foreach($auction->items as $item){
+           if($winning_bid = $auction->is_owned($item)){
+             if ($winning_bid->user_id == $request->bidder_id){
+               // $item->cost = rount($winning_bid->amount);
+               $owned_items[] = array(
+                 'item'=>$item,
+                 'winning_bid'=>$winning_bid
+               );
+             }
+           }
+         }
+         $bidder->owned_items = $owned_items;
+         return $bidder;
+     }
+
+
+
 
 
     public function new()
@@ -164,49 +188,6 @@ class AuctionController extends Controller
       // return array('queue_ids'=>$queue_ids,'queue'=>$queue,'auction'=>$auction);
       return $auction;
 
-      // $queue = $auction->queue;
-      // $queue_ids = array();
-      // foreach($queue as $key => $item){
-      //   if($request->item_id == $item['id']){
-      //     unset($queue[$key]);
-      //   } else {
-      //     $queue_ids[] = $item['id'];
-      //   }
-      // }
-      // $auction->queue = $queue;
-      // // $auction->save();
-      //
-      // $bidders = $auction->users;
-      // $bidders[] = $auction->user;
-      //
-      // foreach($auction->items as $item){
-      //   // $item = Item::find($item->id);
-      //   $high_bid = false;
-      //   // return json_encode($item);
-      //   foreach($item->bids() as $bid){
-      //     if($bid->amount > $high_bid->amount){
-      //       $high_bid = $bid;
-      //     }
-      //   }
-      //   foreach($bidders as $key => $bidder){
-      //     if( !isset( $bidder->spend ) ){
-      //       $bidders[$key]->spend = 0;
-      //       $bidders[$key]->items = array();
-      //     }
-      //     // return $high_bid;
-      //     if( ( $high_bid !== false ) && ( $bidder->id == $high_bid->user_id ) && ( !in_array($item->id,$queue_ids) ) ){
-      //       $bidders[$key]->items[] = $item;
-      //       $bidders[$key]->spend += round($high_bid->amount);
-      //     }
-      //   }
-      //
-      // }
-      //
-      // $response = array(
-      //   'queue' =>  $auction->queue,
-      //   'bidders' =>  $bidders
-      // );
-      // return $response;
     }
 
 }
