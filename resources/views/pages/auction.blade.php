@@ -147,7 +147,7 @@
 
 
                       <div v-if="selectedBidder.id && selectedBidder.owned_items" class="widget-body scrollable col-md-12">
-                        <ul v-for="(owned,index) in selectedBidder.owned_items">
+                        <ul v-for="(owned,index) in bidders[selectedBidder.id].owned_items">
                           <li>
                             <span>@{{ owned.item.name }} ( $ @{{ Math.round(owned.winning_bid.amount) }} )</span>
                           </li>

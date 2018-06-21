@@ -37416,8 +37416,8 @@ new Vue({
 
     user: {
       bid: {
-        amount: 1,
-        minimum: 1
+        amount: 0,
+        minimum: 0
       }
     },
 
@@ -37475,7 +37475,7 @@ new Vue({
       }
     },
     getMinimumBid: function getMinimumBid() {
-      var lowest_bid = 1;
+      var lowest_bid = 0;
       for (var i = 0; i < this.auction.item.bids.length; i++) {
         if (this.auction.item.bids[i].amount > lowest_bid) {
           lowest_bid = Number(this.auction.item.bids[i].amount);
@@ -37649,6 +37649,8 @@ new Vue({
       console.log(response.data);
       if (response.data.id) {
         _this9.selectedBidder = response.data;
+        _this9.bidders[_this9.selectedBidder.id] = _this9.selectedBidder;
+        _this9.calculateBidderStats();
       }
     }).catch(function (e) {
       console.log(e);
