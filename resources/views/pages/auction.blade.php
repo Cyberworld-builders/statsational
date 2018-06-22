@@ -3,7 +3,7 @@
   {{-- <Auction :auction="{{ $auction }}" :bids="{{ $bids }}" :user="{{ $user }}"></Auction> --}}
 
   <input id="auction_id" type="hidden" value="{{ $auction->id }}">
-  <input id="user" type="hidden" value="{{ $user }}">
+  <input id="user_id" type="hidden" value="{{ $user->id }}">
 
 
 
@@ -145,14 +145,28 @@
                       	</div>
                       </div>
 
+                      <div class="clearfix">
+                        <br />
+                      </div>
 
                       <div v-if="selectedBidder.id && selectedBidder.owned_items" class="widget-body scrollable col-md-12">
-                        <ul v-for="(owned,index) in bidders[selectedBidder.id].owned_items">
-                          <li>
-                            <span>@{{ owned.item.name }} ( $ @{{ Math.round(owned.winning_bid.amount) }} )</span>
-                          </li>
-                          <hr />
-                        </ul>
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Item</th>
+                              <th scope="col" class="text-right">Cost</th>
+                            </tr>
+                            <tbody>
+                              <tr v-for="(owned,index) in bidders[selectedBidder.id].owned_items">
+                                <th scope="row">@{{ index + 1 }}</th>
+                                <td>@{{ owned.item.name }}</td>
+                                <td class="text-right">$ @{{ Math.round(owned.winning_bid.amount) }}</td>
+                              </tr>
+                            </tbody>
+                          </thead>
+                        </table>
+
                       </div>
 
                     </div>
@@ -244,10 +258,10 @@
                 		<h3>Bidders Overview</h3>
                 	</div>
                 </div>
-                <div v-for="(bidder,index) in bidders" >
+                <div v-for="(bidder,index) in sorted_bidders" >
                   <a href="#" @click="updateSelectedBidder(bidder.id)">
                     <div class="bidder-card">
-                      <p>@{{ bidder.name }} <span v-if="bidders[index].active" class="">@{{ bidders[index].active }}</span> </p>
+                      <p>@{{ bidder.name }} <span v-if="" class="">@{{  }}</span> </p>
                       <span>Bal: $@{{ bidder.spend }}</span>&nbsp&nbsp<span>Avg Spend: $@{{ bidder.average_spend }}</span>
                       <p class="players-needed" v-if="bidder.item_count > 0">Items Owned: @{{ bidder.item_count }}</p>
                     </div>

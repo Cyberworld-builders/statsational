@@ -61,6 +61,8 @@ new Vue({
      }
    ],
 
+   sorted_bidders: [],
+
    name: "",
    modalShow: false,
    imActive: true,
@@ -266,7 +268,6 @@ new Vue({
      getAuctionData(auction_id){
        axios.get('/auction/data/' + auction_id,{
        }).then(response => {
-         console.log(response);
          this.updatePool(response.data);
        }).catch(e => {
          console.log(e);
@@ -278,7 +279,7 @@ new Vue({
          bidder_id: bidder_id,
          auction_id: this.auction.id
        }).then(response => {
-         console.log(response.data);
+         // console.log(response.data);
          if(response.data.id){
            this.selectedBidder = response.data;
            this.bidders[this.selectedBidder.id] = this.selectedBidder;
@@ -300,13 +301,27 @@ new Vue({
 
      calculateBidderStats(){
        var bidders = Object.values(this.bidders);
-       for(var i=0; i<bidders.length;i++){
-         var bidder = bidders[i];
-         if(bidder.item_count > 0){
-           this.bidders[bidder.id].average_spend = Math.round(bidder.spend / bidder.item_count);
-         } else {
-           this.bidders[bidder.id].average_spend = 0;
-         }
+       var spend_values = {};
+       for(var i=0;i<bidders.length;i++){
+         spend_values[bidders[i].id] = bidders[i].spend;
+       }
+       var sorted_values = [];
+       for (var bidder in spend_values){
+         sorted_values.push([bidder,spend_values[bidder]]);
+       }
+       sorted_values.sort(function(a,b){
+         return b[1] - a[1];
+       });
+       this.sorted_bidders = [];
+       for(var i=0;i<sorted_values.length;i++){
+         var bidder = this.bidders[ sorted_values[i][0] ];
+           if(bidder.item_count > 0){
+             this.bidders[bidder.id].average_spend = Math.round(bidder.spend / bidder.item_count);
+           } else {
+             this.bidders[bidder.id].average_spend = 0;
+           }
+         bidder.average_spend = this.bidders[bidder.id].average_spend;
+         this.sorted_bidders.push( bidder );
        }
      },
 
@@ -314,6 +329,11 @@ new Vue({
        this.auction = auction;
        this.bidders = auction.bidders;
        this.calculateBidderStats();
+       this.user = this.bidders[this.user.id];
+       this.user.bid = {
+         minimum: 0,
+         amount: 0
+       };
        this.user.bid.amount = this.getMinimumBid();
      }
 
@@ -322,8 +342,12 @@ new Vue({
  mounted() {
    if(document.getElementById('auction_id')){
      this.getAuctionData(document.getElementById('auction_id').value);
+     if(document.getElementById('user_id')){
+       this.user.id = document.getElementById('user_id').value;
+     }
      setInterval(function(){ this.countDown() }.bind(this),1000);
    }
+
 
  },
 

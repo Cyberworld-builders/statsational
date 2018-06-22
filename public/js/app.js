@@ -37431,6 +37431,8 @@ new Vue({
       items: [{}]
     }],
 
+    sorted_bidders: [],
+
     name: "",
     modalShow: false,
     imActive: true,
@@ -37634,7 +37636,6 @@ new Vue({
     var _this8 = this;
 
     __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('/auction/data/' + auction_id, {}).then(function (response) {
-      console.log(response);
       _this8.updatePool(response.data);
     }).catch(function (e) {
       console.log(e);
@@ -37646,7 +37647,7 @@ new Vue({
       bidder_id: bidder_id,
       auction_id: this.auction.id
     }).then(function (response) {
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data.id) {
         _this9.selectedBidder = response.data;
         _this9.bidders[_this9.selectedBidder.id] = _this9.selectedBidder;
@@ -37664,24 +37665,46 @@ new Vue({
     return false;
   }), _defineProperty(_methods, 'calculateBidderStats', function calculateBidderStats() {
     var bidders = Object.values(this.bidders);
+    var spend_values = {};
     for (var i = 0; i < bidders.length; i++) {
-      var bidder = bidders[i];
+      spend_values[bidders[i].id] = bidders[i].spend;
+    }
+    var sorted_values = [];
+    for (var bidder in spend_values) {
+      sorted_values.push([bidder, spend_values[bidder]]);
+    }
+    sorted_values.sort(function (a, b) {
+      return b[1] - a[1];
+    });
+    this.sorted_bidders = [];
+    for (var i = 0; i < sorted_values.length; i++) {
+      var bidder = this.bidders[sorted_values[i][0]];
       if (bidder.item_count > 0) {
         this.bidders[bidder.id].average_spend = Math.round(bidder.spend / bidder.item_count);
       } else {
         this.bidders[bidder.id].average_spend = 0;
       }
+      bidder.average_spend = this.bidders[bidder.id].average_spend;
+      this.sorted_bidders.push(bidder);
     }
   }), _defineProperty(_methods, 'updatePool', function updatePool(auction) {
     this.auction = auction;
     this.bidders = auction.bidders;
     this.calculateBidderStats();
+    this.user = this.bidders[this.user.id];
+    this.user.bid = {
+      minimum: 0,
+      amount: 0
+    };
     this.user.bid.amount = this.getMinimumBid();
   }), _methods),
 
   mounted: function mounted() {
     if (document.getElementById('auction_id')) {
       this.getAuctionData(document.getElementById('auction_id').value);
+      if (document.getElementById('user_id')) {
+        this.user.id = document.getElementById('user_id').value;
+      }
       setInterval(function () {
         this.countDown();
       }.bind(this), 1000);
