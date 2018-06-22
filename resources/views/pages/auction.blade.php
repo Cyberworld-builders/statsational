@@ -261,8 +261,8 @@
                 <div v-for="(bidder,index) in sorted_bidders" >
                   <a href="#" @click="updateSelectedBidder(bidder.id)">
                     <div class="bidder-card">
-                      <p>@{{ bidder.name }} <span v-if="" class="">@{{  }}</span> </p>
-                      <span>Bal: $@{{ bidder.spend }}</span>&nbsp&nbsp<span>Avg Spend: $@{{ bidder.average_spend }}</span>
+                      <p>@{{ bidder.name }} </p>
+                      <span>Bal: $ @{{ bidder.spend }}</span>&nbsp&nbsp<span>Avg Spend: $@{{ bidder.average_spend }}</span>
                       <p class="players-needed" v-if="bidder.item_count > 0">Items Owned: @{{ bidder.item_count }}</p>
                     </div>
                   </a>
