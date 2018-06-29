@@ -37439,7 +37439,9 @@ new Vue({
     time_remaining: "30",
     timer: "0:30",
 
-    selectedBidder: false
+    selectedBidder: false,
+
+    bid_increment: 5
 
   },
   methods: (_methods = {
@@ -37464,14 +37466,14 @@ new Vue({
       this.bid();
     },
     lowerBid: function lowerBid() {
-      var new_bid = Number(this.user.bid.amount) - 1;
-      if (new_bid > this.getCurrentBid()) {
+      var new_bid = Number(this.user.bid.amount) - this.auction.bid_increment;
+      if (new_bid > this.user.bid.minimum) {
         this.user.bid.amount = new_bid;
       }
     },
     raiseBid: function raiseBid() {
-      var minimum_bid = this.getMinimumBid();
-      var new_bid = Number(this.user.bid.amount) + 1;
+      var minimum_bid = this.user.bid.minimum;
+      var new_bid = Number(this.user.bid.amount) + this.auction.bid_increment;
       if (new_bid >= minimum_bid) {
         this.user.bid.amount = new_bid;
       }
@@ -37483,7 +37485,7 @@ new Vue({
           lowest_bid = Number(this.auction.item.bids[i].amount);
         }
       }
-      return lowest_bid + 1;
+      return lowest_bid + this.bid_increment;
     },
     getCurrentBid: function getCurrentBid() {
       var current_bid = 0;
@@ -37697,6 +37699,7 @@ new Vue({
       amount: 0
     };
     this.user.bid.amount = this.getMinimumBid();
+    this.user.bid.minimum = this.getMinimumBid();
   }), _methods),
 
   mounted: function mounted() {
@@ -77868,6 +77871,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -77881,7 +77888,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/auctions/store', {
         name: this.name,
         start_time: this.start_time,
-        private: this.private
+        private: this.private,
+        bid_increment: this.bid_increment
       }).then(function (response) {
         console.log(response.data);
         window.location.href = '/auction/' + response.data;
@@ -77895,7 +77903,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       name: "",
       start_time: "",
-      private: false
+      private: false,
+      bid_increment: 1
     };
   }
 
@@ -85374,46 +85383,72 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
         _c("div", { staticClass: "checkbox" }, [
-          _c("label", [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.private,
-                  expression: "private"
-                }
-              ],
-              attrs: { type: "checkbox" },
-              domProps: {
-                checked: Array.isArray(_vm.private)
-                  ? _vm._i(_vm.private, null) > -1
-                  : _vm.private
-              },
-              on: {
-                change: function($event) {
-                  var $$a = _vm.private,
-                    $$el = $event.target,
-                    $$c = $$el.checked ? true : false
-                  if (Array.isArray($$a)) {
-                    var $$v = null,
-                      $$i = _vm._i($$a, $$v)
-                    if ($$el.checked) {
-                      $$i < 0 && (_vm.private = $$a.concat([$$v]))
-                    } else {
-                      $$i > -1 &&
-                        (_vm.private = $$a
-                          .slice(0, $$i)
-                          .concat($$a.slice($$i + 1)))
-                    }
+          _c("label", { attrs: { for: "private" } }, [_vm._v("Make Private:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.private,
+                expression: "private"
+              }
+            ],
+            attrs: { id: "private", type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.private)
+                ? _vm._i(_vm.private, null) > -1
+                : _vm.private
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.private,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.private = $$a.concat([$$v]))
                   } else {
-                    _vm.private = $$c
+                    $$i > -1 &&
+                      (_vm.private = $$a
+                        .slice(0, $$i)
+                        .concat($$a.slice($$i + 1)))
                   }
+                } else {
+                  _vm.private = $$c
                 }
               }
-            }),
-            _vm._v(" Make Private\n      ")
-          ])
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "number" }, [
+          _c("label", { attrs: { for: "bid_increment" } }, [
+            _vm._v("Bidding Increment: ")
+          ]),
+          _vm._v("\n      $ "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.bid_increment,
+                expression: "bid_increment"
+              }
+            ],
+            attrs: { id: "bid_increment", type: "number" },
+            domProps: { value: _vm.bid_increment },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.bid_increment = $event.target.value
+              }
+            }
+          })
         ])
       ]),
       _vm._v(" "),

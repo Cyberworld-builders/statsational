@@ -25,6 +25,7 @@ class AuctionController extends Controller
        $auction->name = request('name');
        $auction->start_time = date('Y-m-d h:i:s',strtotime(request('start_time')));
        $auction->private = request('private');
+       $auction->bid_increment = request('bid_increment');
        $auction->queue = array();
        $user = Auth::User();
        $user->auctions()->save($auction);

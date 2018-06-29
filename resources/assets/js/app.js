@@ -69,7 +69,9 @@ new Vue({
    time_remaining: "30",
    timer: "0:30",
 
-   selectedBidder: false
+   selectedBidder: false,
+
+   bid_increment: 5
 
  },
  methods: {
@@ -94,14 +96,15 @@ new Vue({
        this.bid();
      },
      lowerBid(){
-       var new_bid = Number(this.user.bid.amount) - 1;
-       if(new_bid > this.getCurrentBid()){
+       var new_bid = Number(this.user.bid.amount) - this.auction.bid_increment;
+       if(new_bid > this.user.bid.minimum){
          this.user.bid.amount = new_bid;
        }
+
      },
      raiseBid(){
-       var minimum_bid = this.getMinimumBid();
-       var new_bid = Number(this.user.bid.amount) + 1;
+       var minimum_bid = this.user.bid.minimum;
+       var new_bid = Number(this.user.bid.amount) + this.auction.bid_increment;
        if(new_bid >= minimum_bid){
          this.user.bid.amount = new_bid;
        }
@@ -113,7 +116,7 @@ new Vue({
            lowest_bid = Number(this.auction.item.bids[i].amount);
          }
        }
-       return lowest_bid + 1;
+       return lowest_bid + this.bid_increment;
      },
      getCurrentBid(){
        var current_bid = 0;
@@ -335,6 +338,7 @@ new Vue({
          amount: 0
        };
        this.user.bid.amount = this.getMinimumBid();
+       this.user.bid.minimum = this.getMinimumBid();
      }
 
  },

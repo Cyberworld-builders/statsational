@@ -23,10 +23,14 @@
 
     <div class="form-group">
       <div class="checkbox">
-        <label>
-          <input v-model="private" type="checkbox" /> Make Private
-        </label>
+        <label for="private">Make Private:</label>
+        <input id="private" v-model="private" type="checkbox" />
       </div>
+      <div class="number">
+        <label for="bid_increment">Bidding Increment: </label>
+        $ <input id="bid_increment" v-model="bid_increment" type="number" />
+      </div>
+
     </div>
 
     <div class="form-group">
@@ -54,7 +58,8 @@
             axios.post('/auctions/store',{
               name: this.name,
               start_time: this.start_time,
-              private: this.private
+              private: this.private,
+              bid_increment: this.bid_increment
             }).then(function(response){
               console.log(response.data);
               window.location.href = '/auction/' + response.data;
@@ -68,7 +73,8 @@
           return {
             name: "",
             start_time: "",
-            private: false
+            private: false,
+            bid_increment: 1
           }
         },
 

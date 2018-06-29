@@ -76,12 +76,11 @@
         </div>
         <div class="bidding-controls controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-6">
           <div v-if="auction.queue && auction.queue.length">
-            <small>Quick Bid</small><button @click="bidMinimum" class="btn bid-button">Bid $ @{{ getMinimumBid() }}</button>
-            <small>Mannual Bid</small>
+
             <button @click="lowerBid" class="btn bid-button"><i class="fa fa-minus"></i></button>
-            <input class="" type="number" v-model="user.bid.amount">
+            <button @click="bid" class="btn bid-button">Bid $@{{ user.bid.amount }}</button>
             <button @click="raiseBid" class="btn bid-button"><i class="fa fa-plus"></i></button>
-            <button @click="bid" class="btn bid-button"><strong><i class="fa fa-angle-left"></i> &nbspBid</strong></button>
+
           </div>
 
         </div>
