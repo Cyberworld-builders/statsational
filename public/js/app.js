@@ -37485,7 +37485,7 @@ new Vue({
           lowest_bid = Number(this.auction.item.bids[i].amount);
         }
       }
-      return lowest_bid + this.bid_increment;
+      return lowest_bid + this.auction.bid_increment;
     },
     getCurrentBid: function getCurrentBid() {
       var current_bid = 0;
