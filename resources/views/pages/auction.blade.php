@@ -269,7 +269,7 @@
                       <tbody>
                         <tr v-for="(bidder,index) in sorted_bidders"  @click="updateSelectedBidder(bidder.id)" class="bidder-card ">
                           <td><strong>@{{ bidder.name }} </strong></td>
-                          <td class="text-right"><span>$ @{{ bidder.spend }}</span></td>
+                          <td class="text-right"><span>$@{{ bidder.spend }}</span></td>
                           <td class="text-right"><span>$@{{ bidder.average_spend }}</span></td>
                           <td class="text-right"><span class="players-needed" v-if="bidder.item_count > 0"> @{{ bidder.item_count }}</span></td>
                         </tr>
