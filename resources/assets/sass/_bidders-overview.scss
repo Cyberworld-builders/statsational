@@ -14,8 +14,16 @@
     border: 1px solid #707070;
     margin-top: 10px;
     margin-bottom: 10px;
+
   }
-  p,span {
+  tr.bidder-card {
+    border-top: 10px solid #143753;
+    border-bottom: 10px solid #143753;
+  }
+  td {
+    cursor: pointer;
+  }
+  p,span,strong,th {
     color: #143753;
     margin: 0px;
   }

@@ -97,7 +97,7 @@
           	</div>
           </div>
           <div class="row ">
-          	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-10"> <!-- main widget area     -->
+          	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-9"> <!-- main widget area     -->
               <div class="row">
               	<div class=" col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-8">
 
@@ -251,22 +251,31 @@
 
 
           	</div> <!-- end main widget area -->
-          	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2"> <!-- right sidebar -->
+          	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3"> <!-- right sidebar -->
               <div class="bidders-overview">
                 <div class="row">
                 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
                 		<h3>Bidders Overview</h3>
                 	</div>
                 </div>
-                <div v-for="(bidder,index) in sorted_bidders" >
-                  <a href="#" @click="updateSelectedBidder(bidder.id)">
-                    <div class="bidder-card">
-                      <p>@{{ bidder.name }} </p>
-                      <span>Bal: $ @{{ bidder.spend }}</span>&nbsp&nbsp<span>Avg Spend: $@{{ bidder.average_spend }}</span>
-                      <p class="players-needed" v-if="bidder.item_count > 0">Items Owned: @{{ bidder.item_count }}</p>
-                    </div>
-                  </a>
-
+                  <table class="table">
+                    <thead>
+                      <tr class="bidder-card ">
+                        <th scope="col">Name</th>
+                        <th scope="col" class="text-right">Bal</th>
+                        <th scope="col" class="text-right">Avg. Spend</th>
+                        <th scope="col" class="text-right">Owned</th>
+                      </tr>
+                      <tbody>
+                        <tr v-for="(bidder,index) in sorted_bidders"  @click="updateSelectedBidder(bidder.id)" class="bidder-card ">
+                          <td><strong>@{{ bidder.name }} </strong></td>
+                          <td class="text-right"><span>$ @{{ bidder.spend }}</span></td>
+                          <td class="text-right"><span>$@{{ bidder.average_spend }}</span></td>
+                          <td class="text-right"><span class="players-needed" v-if="bidder.item_count > 0"> @{{ bidder.item_count }}</span></td>
+                        </tr>
+                      </tbody>
+                    </thead>
+                  </table>
                 </div>
               </div>
           	</div> <!-- end right sidebar -->

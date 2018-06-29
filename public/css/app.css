@@ -13748,8 +13748,19 @@ a.text-dark:focus {
   margin-bottom: 10px;
 }
 
+.bidders-overview tr.bidder-card {
+  border-top: 10px solid #143753;
+  border-bottom: 10px solid #143753;
+}
+
+.bidders-overview td {
+  cursor: pointer;
+}
+
 .bidders-overview p,
-.bidders-overview span {
+.bidders-overview span,
+.bidders-overview strong,
+.bidders-overview th {
   color: #143753;
   margin: 0px;
 }
