@@ -22,14 +22,26 @@
     </div>
 
     <div class="form-group">
-      <div class="checkbox">
-        <label for="private">Make Private:</label>
-        <input id="private" v-model="private" type="checkbox" />
+
+          <div class="checkbox">
+            <label for="private">Make Private:</label>
+            <input id="private" v-model="private" type="checkbox" />
+          </div>
+
+          <div class="checkbox">
+            <label for="manual_next">Require admin to manualy start the next item:</label>
+            <input id="manual_next" v-model="manual_next" type="checkbox" />
+          </div>
+
+          <div class="number">
+            <label for="bid_increment">Bidding Increment: </label>
+            $ <input id="bid_increment" v-model="bid_increment" type="number" />
+          </div>
+
       </div>
-      <div class="number">
-        <label for="bid_increment">Bidding Increment: </label>
-        $ <input id="bid_increment" v-model="bid_increment" type="number" />
-      </div>
+
+
+
 
     </div>
 
@@ -59,6 +71,7 @@
               name: this.name,
               start_time: this.start_time,
               private: this.private,
+              manual_next: this.manual_next,
               bid_increment: this.bid_increment
             }).then(function(response){
               console.log(response.data);
@@ -74,6 +87,7 @@
             name: "",
             start_time: "",
             private: false,
+            manual_next: false,
             bid_increment: 1
           }
         },

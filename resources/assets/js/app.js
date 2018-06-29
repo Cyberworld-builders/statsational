@@ -204,6 +204,10 @@ new Vue({
          this.timer = moment().startOf('day')
            .seconds(this.time_remaining)
            .format('m:ss');
+       } else {
+         if(this.auction.manual_next == 0){
+           this.startNextItem();
+         }
        }
      },
 

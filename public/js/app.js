@@ -37578,6 +37578,10 @@ new Vue({
       if (this.time_remaining > 0) {
         this.time_remaining--;
         this.timer = __WEBPACK_IMPORTED_MODULE_6_moment___default()().startOf('day').seconds(this.time_remaining).format('m:ss');
+      } else {
+        if (this.auction.manual_next == 0) {
+          this.startNextItem();
+        }
       }
     },
     resetTimer: function resetTimer(seconds) {
@@ -77875,6 +77879,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -77889,6 +77905,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         name: this.name,
         start_time: this.start_time,
         private: this.private,
+        manual_next: this.manual_next,
         bid_increment: this.bid_increment
       }).then(function (response) {
         console.log(response.data);
@@ -77904,6 +77921,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       name: "",
       start_time: "",
       private: false,
+      manual_next: false,
       bid_increment: 1
     };
   }
@@ -85424,11 +85442,55 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
+        _c("div", { staticClass: "checkbox" }, [
+          _c("label", { attrs: { for: "manual_next" } }, [
+            _vm._v("Require admin to manualy start the next item:")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.manual_next,
+                expression: "manual_next"
+              }
+            ],
+            attrs: { id: "manual_next", type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.manual_next)
+                ? _vm._i(_vm.manual_next, null) > -1
+                : _vm.manual_next
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.manual_next,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.manual_next = $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      (_vm.manual_next = $$a
+                        .slice(0, $$i)
+                        .concat($$a.slice($$i + 1)))
+                  }
+                } else {
+                  _vm.manual_next = $$c
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
         _c("div", { staticClass: "number" }, [
           _c("label", { attrs: { for: "bid_increment" } }, [
             _vm._v("Bidding Increment: ")
           ]),
-          _vm._v("\n      $ "),
+          _vm._v("\n          $ "),
           _c("input", {
             directives: [
               {
