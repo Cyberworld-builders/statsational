@@ -199,16 +199,19 @@ new Vue({
        } else {
          timer.classList.remove('blinking');
        }
-       if(this.time_remaining > 0){
-         this.time_remaining--;
-         this.timer = moment().startOf('day')
-           .seconds(this.time_remaining)
-           .format('m:ss');
-       } else {
-         if(this.auction.manual_next == 0){
-           this.startNextItem();
+       if(this.auction.queue.length > 0){
+         if(this.time_remaining > 0){
+           this.time_remaining--;
+           this.timer = moment().startOf('day')
+             .seconds(this.time_remaining)
+             .format('m:ss');
+         } else {
+           if(this.auction.manual_next == 0){
+             this.startNextItem();
+           }
          }
        }
+
      },
 
      resetTimer(seconds){
@@ -220,6 +223,10 @@ new Vue({
          }).catch(e => {
            console.log(e);
          });
+     },
+
+     undoLastBid(){
+
      },
 
      updateClock(){
@@ -343,6 +350,19 @@ new Vue({
        };
        this.user.bid.amount = this.getMinimumBid();
        this.user.bid.minimum = this.getMinimumBid();
+
+       console.log(this.auction);
+     },
+
+     isActive(item_id){
+       // for(var i=0;i<this.auction.items.length; i++){
+         for(var i=0;i<this.auction.queue.length;i++){
+           if(item_id == this.auction.queue[i].id){
+             return true;
+           }
+         }
+       // }
+       return false;
      }
 
  },

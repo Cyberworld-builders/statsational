@@ -24,7 +24,7 @@
                 <div class="dropdown-menu" aria-labelledby="owner-tools">
                   <a class="dropdown-item" href="#" @click="startNextItem">Start Next Item</a>
                   <a class="dropdown-item" href="#" @click="resetTimer(30)">Restart Clock</a>
-                  <a class="dropdown-item" href="#" >Undo Last Bid</a>
+                  <a class="dropdown-item" href="#" @click="undoLastBid">Undo Last Bid</a>
                   <a class="dropdown-item" href="#" >End Auction</a>
                   <a class="dropdown-item" href="#" >Reload App</a>
                   <a class="dropdown-item" href="#" @click="showModal"><i class="fa fa-plus"></i> Add Item</a>
@@ -57,24 +57,30 @@
               <img class="logo-small" src="/images/logo.png" />
           </a>
         </div>
-        <div class="bidding-controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="bidding-controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-6">
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-              <p>On the Block</p>
-              <p>@{{ auction.item.name }}</p>
+              <p>
+                On the Block:&nbsp&nbsp&nbsp
+                <span>@{{ auction.item.name }}</span>
+              </p>
             </div>
 
             <div id="current_bid" class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-              <p v-if="auction.item.bids.length" >Current Bid: $ @{{ Number(auction.item.bids[0].amount) }}</p>
+              <p v-if="auction.item.bids.length" >
+                Current Bid:&nbsp&nbsp&nbsp <span>$ @{{ Number(auction.item.bids[0].amount) }}</span>
+              </p>
               <p v-else>No bids yet.</p>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-              <p v-if="auction.item.bids.length > 0 && bidders[auction.item.bids[0].user_id]" id="hightest_bidder"> @{{ bidders[auction.item.bids[0].user_id].name }}</p>
+              <p v-if="auction.item.bids.length > 0 && bidders[auction.item.bids[0].user_id]" id="hightest_bidder">
+                Highest Bidder:&nbsp&nbsp&nbsp <span>@{{ bidders[auction.item.bids[0].user_id].name }}</span>
+              </p>
             </div>
 
           </div>
         </div>
-        <div class="bidding-controls controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-6">
+        <div class="bidding-controls controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
           <div v-if="auction.queue && auction.queue.length">
 
             <button @click="lowerBid" class="btn bid-button"><i class="fa fa-minus"></i></button>
@@ -100,16 +106,19 @@
               <div class="row">
               	<div class=" col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-8">
 
-                  <div class="row">
+                  <div class="row items">
                     <div class="widget-card">
                       <h3>Items</h3>
                       <div v-if="auction.queue" class="widget-body scrollable col-md-12">
-                        <ul v-for="(item,index) in auction.queue">
+                        <ul v-for="(item,index) in auction.items">
                           <li>
-                            <span>@{{ auction.queue[index].name }}</span>
+                            <span v-if="isActive(item.id)">@{{ auction.items[index].name }}</span>
+                            <span v-if="!isActive(item.id)" class="disabled">@{{ auction.items[index].name }}</span>
+
                           </li>
                           <hr />
                         </ul>
+
                       </div>
                     </div>
 

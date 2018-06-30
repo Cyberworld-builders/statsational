@@ -13667,6 +13667,10 @@ a.text-dark:focus {
   padding-right: 25px;
 }
 
+.bidding .bidding-controls span {
+  font-size: 24px;
+}
+
 .bidding .bidding-controls p,
 .bidding .bidding-controls small {
   font-size: 14px;
@@ -13767,6 +13771,12 @@ a.text-dark:focus {
 
 .bidders-overview .players-needed {
   color: #ff5722;
+}
+
+.items .disabled {
+  text-decoration: line-through;
+  font-style: italic;
+  opacity: .55;
 }
 
 .navbar-laravel {

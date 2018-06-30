@@ -37575,12 +37575,14 @@ new Vue({
       } else {
         timer.classList.remove('blinking');
       }
-      if (this.time_remaining > 0) {
-        this.time_remaining--;
-        this.timer = __WEBPACK_IMPORTED_MODULE_6_moment___default()().startOf('day').seconds(this.time_remaining).format('m:ss');
-      } else {
-        if (this.auction.manual_next == 0) {
-          this.startNextItem();
+      if (this.auction.queue.length > 0) {
+        if (this.time_remaining > 0) {
+          this.time_remaining--;
+          this.timer = __WEBPACK_IMPORTED_MODULE_6_moment___default()().startOf('day').seconds(this.time_remaining).format('m:ss');
+        } else {
+          if (this.auction.manual_next == 0) {
+            this.startNextItem();
+          }
         }
       }
     },
@@ -37596,6 +37598,7 @@ new Vue({
         console.log(e);
       });
     },
+    undoLastBid: function undoLastBid() {},
     updateClock: function updateClock() {
       this.timer = __WEBPACK_IMPORTED_MODULE_6_moment___default()().startOf('day').seconds(this.time_remaining).format('m:ss');
     },
@@ -37704,6 +37707,17 @@ new Vue({
     };
     this.user.bid.amount = this.getMinimumBid();
     this.user.bid.minimum = this.getMinimumBid();
+
+    console.log(this.auction);
+  }), _defineProperty(_methods, 'isActive', function isActive(item_id) {
+    // for(var i=0;i<this.auction.items.length; i++){
+    for (var i = 0; i < this.auction.queue.length; i++) {
+      if (item_id == this.auction.queue[i].id) {
+        return true;
+      }
+    }
+    // }
+    return false;
   }), _methods),
 
   mounted: function mounted() {

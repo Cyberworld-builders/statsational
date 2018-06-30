@@ -1,1 +1,7 @@
-
+.items {
+  .disabled{
+    text-decoration: line-through;
+    font-style: italic;
+    opacity: .55;
+  }
+}
