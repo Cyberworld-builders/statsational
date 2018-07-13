@@ -438,11 +438,12 @@ new Vue({
      .listen('MessageSent', (e) => {
        if(e.type == "chat"){
          console.log(e);
-         this.messages.unshift({
-           message: e.message.message,
-           user: e.user,
-           created_at: e.message.created_at
-         });
+         // this.messages.unshift({
+         //   message: e.message.message,
+         //   user: e.user,
+         //   created_at: e.message.created_at
+         // });
+         this.fetchMessages();
        } else if (e.type == "bid"){
          console.log(e);
          this.getAuctionData(document.getElementById('auction_id').value);
