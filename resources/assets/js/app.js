@@ -92,7 +92,7 @@ new Vue({
            bid_amount: this.user.bid.amount,
            item_id: this.auction.item.id
          }).then(function(response){
-           console.log(response);
+           // console.log(response);
            this.updatePool(response.data.auction);
            this.resetTimer(30);
          }.bind(this)).catch(e => {
@@ -282,6 +282,7 @@ new Vue({
      },
 
      startNextItem(){
+       console.log(this.auction.item);
        axios.post('/auctions/items/next',{
          auction_id: this.auction.id,
          item_id: this.auction.item.id,
@@ -303,7 +304,7 @@ new Vue({
          if(this.user.id == this.auction.user.id){
            this.showOwnerControls = true;
          }
-         console.log(response.data.items);
+         // console.log(response.data.items);
        }).catch(e => {
          console.log(e);
        });
@@ -373,7 +374,7 @@ new Vue({
        this.user.bid.amount = this.getMinimumBid();
        this.user.bid.minimum = this.getMinimumBid();
        this.bid_amount = this.user.bid.minimum;
-       console.log(this.auction);
+       // console.log(this.auction);
      },
 
      formatMoney(number){

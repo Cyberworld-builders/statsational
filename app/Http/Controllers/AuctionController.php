@@ -88,9 +88,9 @@ class AuctionController extends Controller
          $auction = Auction::find($auction_id);
          $items = $auction->items;
          if( isset( $auction->queue ) && count( $auction->queue ) > 0 ){
-           $item = Item::find($auction->queue[0]['id']);
+           $current_item = Item::find($auction->queue[0]['id']);
          } else {
-           $item = new Item;
+           $current_item = new Item;
          }
 
          if( count($items) > 0) {
@@ -113,9 +113,9 @@ class AuctionController extends Controller
            $auction->items = $items_reversed;
          }
 
-         $item->bids = $item->bids;
+         $current_item->bids = $current_item->bids;
          $auction->bidders = $auction->bidders();
-         $auction->item = $item;
+         $auction->item = $current_item;
 
          return $auction;
      }

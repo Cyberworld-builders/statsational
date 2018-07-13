@@ -37462,7 +37462,7 @@ new Vue({
           bid_amount: this.user.bid.amount,
           item_id: this.auction.item.id
         }).then(function (response) {
-          console.log(response);
+          // console.log(response);
           this.updatePool(response.data.auction);
           this.resetTimer(30);
         }.bind(this)).catch(function (e) {
@@ -37646,6 +37646,7 @@ new Vue({
   }), _defineProperty(_methods, 'startNextItem', function startNextItem() {
     var _this7 = this;
 
+    console.log(this.auction.item);
     __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auctions/items/next', {
       auction_id: this.auction.id,
       item_id: this.auction.item.id,
@@ -37666,7 +37667,7 @@ new Vue({
       if (_this8.user.id == _this8.auction.user.id) {
         _this8.showOwnerControls = true;
       }
-      console.log(response.data.items);
+      // console.log(response.data.items);
     }).catch(function (e) {
       console.log(e);
     });
@@ -37730,7 +37731,7 @@ new Vue({
     this.user.bid.amount = this.getMinimumBid();
     this.user.bid.minimum = this.getMinimumBid();
     this.bid_amount = this.user.bid.minimum;
-    console.log(this.auction);
+    // console.log(this.auction);
   }), _defineProperty(_methods, 'formatMoney', function formatMoney(number) {
     return number;
   }), _defineProperty(_methods, 'isActive', function isActive(item_id) {
