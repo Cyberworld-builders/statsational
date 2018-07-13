@@ -10,6 +10,15 @@
     </div>
 
     <div class="form-group">
+      <label for="poolRules">
+        Rules
+      </label>
+      <editor id="poolRules" v-model="rules" api-key="xecwpxd2so72hu32w8wv7l3aoa2q3c66qkr2f5hufeuisljj" :init="{plugins: 'wordcount'}"></editor>
+    </div>
+
+
+
+    <div class="form-group">
       <label for="start_time">
         Start Time
       </label>
@@ -61,9 +70,22 @@
     import Datetime from 'vue-datetime'
     import 'vue-datetime/dist/vue-datetime.css'
     import axios from 'axios'
+    // es modules
+    import Editor from '@tinymce/tinymce-vue';
+    // commonjs require
+    // var Editor = require('@tinymce/tinymce-vue');
+
+
+    // tinymce api key
+    // xecwpxd2so72hu32w8wv7l3aoa2q3c66qkr2f5hufeuisljj
+
     export default {
 
         name: 'auction-form',
+
+        components: {
+          'editor': Editor
+        },
 
         methods:{
           createAuction: function(){
@@ -85,6 +107,7 @@
         data: function(){
           return {
             name: "",
+            rules: "",
             start_time: "",
             private: false,
             manual_next: false,

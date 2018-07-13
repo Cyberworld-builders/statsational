@@ -1,6 +1,7 @@
 
 require('./bootstrap');
 
+
 var Vue = require('vue');
 
 Vue.component('Auction', require('./components/Auction.vue'));
@@ -20,6 +21,8 @@ import 'vue-datetime/dist/vue-datetime.css'
 
 import axios from 'axios'
 import moment from 'moment'
+
+
 
 Vue.use(Datetime)
 
