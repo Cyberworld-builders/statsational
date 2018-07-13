@@ -37667,6 +37667,9 @@ new Vue({
       if (_this8.user.id == _this8.auction.user.id) {
         _this8.showOwnerControls = true;
       }
+
+      _this8.fetchMessages();
+
       console.log(response.data);
     }).catch(function (e) {
       console.log(e);
@@ -37758,10 +37761,6 @@ new Vue({
   },
   created: function created() {
     var _this10 = this;
-
-    if (this.auction.id) {
-      this.fetchMessages();
-    }
 
     // let the same message event handle all real-time updates
     Echo.private('chat').listen('MessageSent', function (e) {

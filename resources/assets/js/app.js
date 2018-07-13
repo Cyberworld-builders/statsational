@@ -304,6 +304,9 @@ new Vue({
          if(this.user.id == this.auction.user.id){
            this.showOwnerControls = true;
          }
+
+        this.fetchMessages();
+
          console.log(response.data);
        }).catch(e => {
          console.log(e);
@@ -408,9 +411,7 @@ new Vue({
 
  created() {
 
-   if(this.auction.id){
-     this.fetchMessages();
-   }
+
 
 
    // let the same message event handle all real-time updates
