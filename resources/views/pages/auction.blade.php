@@ -87,7 +87,7 @@
                 <label for="manualBid">Manual Bid:</label>
 
                 <input id="manualBid" type="number" value="bid_amount" v-model="bid_amount">
-                <b-alert class="pull-right" variant="danger"
+                <b-alert class="minimum-bid-warning" variant="danger"
                          dismissible
                          :show="showMinimumBidWarning"
                          @dismissed="showMinimumBidWarning=false">

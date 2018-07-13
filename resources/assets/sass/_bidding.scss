@@ -2,6 +2,13 @@
 
   background-color: #fe5722;
 
+  .minimum-bid-warning {
+    position: fixed;
+    top: 55px;
+    right: 55px;
+    z-index: 1000;
+  }
+
   .bidding-controls {
     label {
       color: #fff;

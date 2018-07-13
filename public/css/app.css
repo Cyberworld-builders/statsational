@@ -13660,6 +13660,13 @@ a.text-dark:focus {
   background-color: #fe5722;
 }
 
+.bidding .minimum-bid-warning {
+  position: fixed;
+  top: 55px;
+  right: 55px;
+  z-index: 1000;
+}
+
 .bidding .bidding-controls {
   padding-top: 15px;
   padding-bottom: 15px;
