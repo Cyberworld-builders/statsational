@@ -234,7 +234,12 @@ new Vue({
 
      },
 
-     resetTimer(){
+     resetTimer(seconds){
+        if(!seconds){
+          seconds = this.time_remaining;
+        } else {
+          this.time_remaining = seconds;
+        }
          axios.post('/auctions/timer',{
            seconds: this.time_remaining
          }).then(response => {

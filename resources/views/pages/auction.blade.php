@@ -23,7 +23,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="owner-tools">
                   <a class="dropdown-item" href="#" @click="startNextItem">Start Next Item</a>
-                  <a class="dropdown-item" href="#" @click="resetTimer">Restart Clock</a>
+                  <a class="dropdown-item" href="#" @click="resetTimer(auction.bid_timer)">Restart Clock</a>
                   <a class="dropdown-item" href="#" @click="undoLastBid">Undo Last Bid</a>
                   <a class="dropdown-item" href="#" >End Auction</a>
                   <a class="dropdown-item" href="#" >Reload App</a>

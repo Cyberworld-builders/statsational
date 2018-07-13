@@ -37749,9 +37749,14 @@ new Vue({
         }
       }
     },
-    resetTimer: function resetTimer() {
+    resetTimer: function resetTimer(seconds) {
       var _this5 = this;
 
+      if (!seconds) {
+        seconds = this.time_remaining;
+      } else {
+        this.time_remaining = seconds;
+      }
       __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auctions/timer', {
         seconds: this.time_remaining
       }).then(function (response) {
