@@ -37928,11 +37928,12 @@ new Vue({
     Echo.private('chat').listen('MessageSent', function (e) {
       if (e.type == "chat") {
         console.log(e);
-        _this10.messages.unshift({
-          message: e.message.message,
-          user: e.user,
-          created_at: e.message.created_at
-        });
+        // this.messages.unshift({
+        //   message: e.message.message,
+        //   user: e.user,
+        //   created_at: e.message.created_at
+        // });
+        _this10.fetchMessages();
       } else if (e.type == "bid") {
         console.log(e);
         _this10.getAuctionData(document.getElementById('auction_id').value);
