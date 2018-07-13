@@ -84,9 +84,12 @@
           <div v-if="auction.queue && auction.queue.length">
 
 
-                <label for="manualBid">Manual Bid:</label>
 
-                <input id="manualBid" type="number" value="bid_amount" v-model="bid_amount">
+
+            		<button @click="lowerBid" class="btn bid-button"><i class="fa fa-minus"></i></button>
+
+
+                <input  @focus="$event.target.select()" id="manualBid" type="number" value="bid_amount" v-model="bid_amount">
                 <b-alert class="minimum-bid-warning" variant="danger"
                          dismissible
                          :show="showMinimumBidWarning"
@@ -94,18 +97,9 @@
                 Your bid cannot be lower than the minimum bid!
                 </b-alert>
 
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                <small>Quick Bid: </small>
-
-            		<button @click="lowerBid" class="btn bid-button"><i class="fa fa-minus"></i></button>
-
-
-
-                <button id="bidButton" @click="bid" class="btn bid-button">Bid $@{{ bid_amount }}</button>
-
 
             		<button @click="raiseBid" class="btn bid-button"><i class="fa fa-plus"></i></button>
+                <button id="bidButton" @click="bid" class="btn bid-button">Bid</button>
 
           </div>
 
