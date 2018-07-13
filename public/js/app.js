@@ -37440,6 +37440,7 @@ new Vue({
     timer: "0:30",
 
     selectedBidder: false,
+    showCompletedItems: false,
 
     bid_increment: 5
 
@@ -37646,6 +37647,7 @@ new Vue({
 
     __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('/auction/data/' + auction_id, {}).then(function (response) {
       _this8.updatePool(response.data);
+      console.log(response.data.items);
     }).catch(function (e) {
       console.log(e);
     });
@@ -37698,6 +37700,7 @@ new Vue({
     }
   }), _defineProperty(_methods, 'updatePool', function updatePool(auction) {
     this.auction = auction;
+    // this.auction.items = [];
     this.bidders = auction.bidders;
     this.calculateBidderStats();
     this.user = this.bidders[this.user.id];
@@ -37709,6 +37712,8 @@ new Vue({
     this.user.bid.minimum = this.getMinimumBid();
 
     console.log(this.auction);
+  }), _defineProperty(_methods, 'formatMoney', function formatMoney(number) {
+    return number;
   }), _defineProperty(_methods, 'isActive', function isActive(item_id) {
     // for(var i=0;i<this.auction.items.length; i++){
     for (var i = 0; i < this.auction.queue.length; i++) {
@@ -37750,7 +37755,6 @@ new Vue({
       } else if (e.type == "bid") {
         console.log(e);
         _this10.getAuctionData(document.getElementById('auction_id').value);
-        // this.updatePool(e.message.auction);
         var current_bid = document.getElementById('current_bid');
         current_bid.classList.add('blinking');
         setTimeout(function () {

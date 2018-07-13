@@ -92,9 +92,31 @@ class AuctionController extends Controller
          } else {
            $item = new Item;
          }
+
+         if( count($items) > 0) {
+           unset($auction->items);
+           $auction->items = [];
+           $items_reversed = [];
+           $last_item_key = (count($items)-1);
+           for($i=$last_item_key;$i>=0;$i--){
+             $item = $items[$i];
+             if( isset($item->bids) ){
+               if( count($item->bids) > 0 ) {
+                   foreach($item->bids as $key => $bid){
+                     $item->bids[$key]->amount = round($bid->amount);
+                   }
+               }
+
+             }
+             $items_reversed[] = $item;
+           }
+           $auction->items = $items_reversed;
+         }
+
          $item->bids = $item->bids;
          $auction->bidders = $auction->bidders();
          $auction->item = $item;
+
          return $auction;
      }
 

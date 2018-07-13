@@ -109,14 +109,24 @@
                   <div class="row items">
                     <div class="widget-card">
                       <h3>Items</h3>
+                      <input id="showCompletedItems" type="checkbox" v-model="showCompletedItems" name="" value="">
+                      <label for="showCompletedItems">
+                        <span v-if="showCompletedItems">Hide Completed Items</span>
+                        <span v-else>Show Completed Items</span>
+                      </label>
                       <div v-if="auction.queue" class="widget-body scrollable col-md-12">
-                        <ul v-for="(item,index) in auction.items">
-                          <li>
-                            <span v-if="isActive(item.id)">@{{ auction.items[index].name }}</span>
-                            <span v-if="!isActive(item.id)" class="disabled">@{{ auction.items[index].name }}</span>
+                        <table class="table">
+                          <tr>
+                            <th>Item</th><th v-if="showCompletedItems">Winning Bid</th>
+                          </tr>
+                          <tr v-for="(item,index) in auction.items">
+                              <td v-if="isActive(item.id)">@{{ auction.items[index].name }}</td>
+                              <td v-if="!isActive(item.id) && showCompletedItems" class="disabled">@{{ auction.items[index].name }}</td>
+                              <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems" class="">$ @{{ auction.items[index].bids[0].amount }} </td>
+                              <td v-if="( isActive(item.id) || ( !(item.bids.length > 0) ) ) && showCompletedItems "> - </td>
+                          </tr>
+                        </table>
 
-                          </li>
-                          <hr />
                         </ul>
 
                       </div>

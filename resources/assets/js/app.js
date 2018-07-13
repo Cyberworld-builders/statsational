@@ -70,6 +70,7 @@ new Vue({
    timer: "0:30",
 
    selectedBidder: false,
+   showCompletedItems: false,
 
    bid_increment: 5
 
@@ -283,6 +284,7 @@ new Vue({
        axios.get('/auction/data/' + auction_id,{
        }).then(response => {
          this.updatePool(response.data);
+         console.log(response.data.items);
        }).catch(e => {
          console.log(e);
        });
@@ -341,6 +343,7 @@ new Vue({
 
      updatePool(auction){
        this.auction = auction;
+       // this.auction.items = [];
        this.bidders = auction.bidders;
        this.calculateBidderStats();
        this.user = this.bidders[this.user.id];
@@ -352,6 +355,10 @@ new Vue({
        this.user.bid.minimum = this.getMinimumBid();
 
        console.log(this.auction);
+     },
+
+     formatMoney(number){
+       return number;
      },
 
      isActive(item_id){
@@ -399,7 +406,6 @@ new Vue({
        } else if (e.type == "bid"){
          console.log(e);
          this.getAuctionData(document.getElementById('auction_id').value);
-         // this.updatePool(e.message.auction);
          var current_bid = document.getElementById('current_bid');
          current_bid.classList.add('blinking');
          setTimeout(function(){ current_bid.classList.remove('blinking') },2000);
