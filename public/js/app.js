@@ -78071,6 +78071,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     createAuction: function createAuction() {
       __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/auctions/store', {
         name: this.name,
+        rules: this.rules,
         start_time: this.start_time,
         private: this.private,
         manual_next: this.manual_next,
@@ -85712,11 +85713,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'join-form',
-  props: ['auction_id', 'auction_name'],
+  props: ['auction_id', 'auction'],
+  data: function data() {
+    return {
+      name: "",
+      rules: ""
+    };
+  },
+
   methods: {
     joinAuction: function joinAuction() {
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/auctions/join', {
@@ -85728,6 +85737,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log(e);
       });
     }
+  },
+  mounted: function mounted() {
+    var auction = JSON.parse(this.auction);
+    this.name = auction.name;
+    this.rules = auction.rules;
+    console.log(auction.name);
   }
 });
 
@@ -85752,9 +85767,9 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "form-group" }, [
-        _c("h2", [
-          _vm._v("Do you want to join " + _vm._s(_vm.auction_name) + "?")
-        ])
+        _c("h2", [_vm._v("Do you want to join " + _vm._s(this.name) + "?")]),
+        _vm._v(" "),
+        _c("p", { domProps: { innerHTML: _vm._s(this.rules) } })
       ]),
       _vm._v(" "),
       _vm._m(0)
