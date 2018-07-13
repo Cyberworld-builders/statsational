@@ -69,7 +69,7 @@ new Vue({
    name: "",
    modalShow: false,
    imActive: true,
-   time_remaining: "30",
+   time_remaining: "",
    timer: "",
 
    selectedBidder: false,
@@ -393,8 +393,13 @@ new Vue({
          this.auction.snipe_time = 15;
        }
 
-       this.time_remaining = this.auction.bid_timer;
-       this.timer = "0:" + this.auction.bid_timer;
+       if(this.time_remaining == ""){
+         this.time_remaining = this.auction.bid_timer;
+       }
+
+       if(this.timer == ""){
+         this.timer = "0:" + this.auction.bid_timer;
+       }
 
        console.log(auction);
      },
@@ -438,6 +443,7 @@ new Vue({
      .listen('MessageSent', (e) => {
        if(e.type == "chat"){
          console.log(e);
+         // removed this code to get around cross talk. now the broadcast just triggers everybody to pull fetchMessages()
          // this.messages.unshift({
          //   message: e.message.message,
          //   user: e.user,
