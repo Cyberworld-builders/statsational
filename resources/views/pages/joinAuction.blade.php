@@ -13,7 +13,7 @@
           		</div>
           		<div class="col-md-6">
 
-                <join-form auction_id="{{ $auction->id }}" auction_name="{{ $auction->name }}"></join-form>
+                <join-form auction_id="{{ $auction->id }}" auction="{{ $auction }}"></join-form>
 
 
           		</div>

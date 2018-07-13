@@ -91,6 +91,7 @@
           createAuction: function(){
             axios.post('/auctions/store',{
               name: this.name,
+              rules: this.rules,
               start_time: this.start_time,
               private: this.private,
               manual_next: this.manual_next,

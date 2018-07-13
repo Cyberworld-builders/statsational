@@ -23,6 +23,7 @@ class AuctionController extends Controller
      {
        $auction = new Auction;
        $auction->name = request('name');
+       $auction->rules = request('rules');
        $auction->start_time = date('Y-m-d h:i:s',strtotime(request('start_time')));
        $auction->private = request('private');
        $auction->manual_next = request('manual_next');
