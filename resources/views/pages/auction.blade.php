@@ -15,7 +15,7 @@
           <button class="btn "><span id="timer">@{{ timer }}</span></button>
           Status: In Progress
       	</div>
-      	<div class="owner-tools col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2">
+      	<div v-if="showOwnerControls" class="owner-tools col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2">
           <ul class="navbar-nav">
             <li class="nav-item dropdown">
                 <a id="owner-tools" class="nav-link dropdown-toggle" href="/auctions" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -32,7 +32,7 @@
             </li>
           </ul>
       	</div>
-        <div class="owner-tools col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2">
+        <div v-if="showOwnerControls" class="owner-tools col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2">
           <div class="row icons">
           	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3">
           		<a href="#"><span><i class="fa fa-bell"></i></span></a>
@@ -182,7 +182,7 @@
                       		<h3>Owned</h3>
                       	</div>
                       	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                      		<input class="form-control" v-model="selectedBidder.name" />
+                      		<input class="form-control" v-model="selectedBidder.name" disabled />
                       	</div>
                       </div>
 
@@ -269,7 +269,7 @@
                                         </div>
 
                                       </div>
-                                      <div class="row">
+                                      {{-- <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
                                           <div class="input-group">
                                             <label for="messageTo"><span>To (private)</span></label>
@@ -280,7 +280,7 @@
                                         </div>
 
 
-                                      </div>
+                                      </div> --}}
                                     </div>
 
                                   </div>

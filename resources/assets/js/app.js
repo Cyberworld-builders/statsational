@@ -73,6 +73,7 @@ new Vue({
    showCompletedItems: false,
    showBidEditor: false,
    showMinimumBidWarning: false,
+   showOwnerControls: false,
 
    bid_increment: 5,
 
@@ -299,6 +300,9 @@ new Vue({
        axios.get('/auction/data/' + auction_id,{
        }).then(response => {
          this.updatePool(response.data);
+         if(this.user.id == this.auction.user.id){
+           this.showOwnerControls = true;
+         }
          console.log(response.data.items);
        }).catch(e => {
          console.log(e);

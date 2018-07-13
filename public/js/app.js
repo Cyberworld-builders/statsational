@@ -37443,6 +37443,7 @@ new Vue({
     showCompletedItems: false,
     showBidEditor: false,
     showMinimumBidWarning: false,
+    showOwnerControls: false,
 
     bid_increment: 5,
 
@@ -37662,6 +37663,9 @@ new Vue({
 
     __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('/auction/data/' + auction_id, {}).then(function (response) {
       _this8.updatePool(response.data);
+      if (_this8.user.id == _this8.auction.user.id) {
+        _this8.showOwnerControls = true;
+      }
       console.log(response.data.items);
     }).catch(function (e) {
       console.log(e);
