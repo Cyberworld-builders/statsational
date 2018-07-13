@@ -236,9 +236,13 @@ new Vue({
 
      resetTimer(){
          axios.post('/auctions/timer',{
-           seconds: this.auction.bid_timer
+           seconds: this.time_remaining
          }).then(response => {
-           this.time_remaining = this.auction.bid_timer;
+           if(this.time_remaining <= this.auction.snipe_time){
+             this.time_remaining = this.auction.snipe_time;
+           } else {
+             this.time_remaining = this.auction.bid_timer;
+           }
            this.updateClock();
          }).catch(e => {
            console.log(e);
@@ -457,7 +461,11 @@ new Vue({
          current_bid.classList.add('blinking');
          setTimeout(function(){ current_bid.classList.remove('blinking') },2000);
        } else if (e.type == "timer"){
-         this.time_remaining = Number(e.message);
+         if(Number(e.message) <= this.auction.snipe_time){
+           this.time_remaining = this.auction.snipe_time;
+         } else {
+           this.time_remaining = this.auction.bid_timer;
+         }
          this.updateClock();
        } else if (e.type == "next") {
          this.time_remaining = this.auction.bid_timer;

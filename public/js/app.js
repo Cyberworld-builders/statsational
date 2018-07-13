@@ -37753,9 +37753,13 @@ new Vue({
       var _this5 = this;
 
       __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auctions/timer', {
-        seconds: this.auction.bid_timer
+        seconds: this.time_remaining
       }).then(function (response) {
-        _this5.time_remaining = _this5.auction.bid_timer;
+        if (_this5.time_remaining <= _this5.auction.snipe_time) {
+          _this5.time_remaining = _this5.auction.snipe_time;
+        } else {
+          _this5.time_remaining = _this5.auction.bid_timer;
+        }
         _this5.updateClock();
       }).catch(function (e) {
         console.log(e);
@@ -37949,7 +37953,11 @@ new Vue({
           current_bid.classList.remove('blinking');
         }, 2000);
       } else if (e.type == "timer") {
-        _this10.time_remaining = Number(e.message);
+        if (Number(e.message) <= _this10.auction.snipe_time) {
+          _this10.time_remaining = _this10.auction.snipe_time;
+        } else {
+          _this10.time_remaining = _this10.auction.bid_timer;
+        }
         _this10.updateClock();
       } else if (e.type == "next") {
         _this10.time_remaining = _this10.auction.bid_timer;
