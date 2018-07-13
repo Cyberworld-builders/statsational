@@ -3,10 +3,13 @@
   background-color: #fe5722;
 
   .bidding-controls {
+    label {
+      color: #fff;
+    }
     span {
       font-size: 24px;
     }
-    p, small {
+    p, small, label {
       font-size: 14px;
       font-weight: 550;
       color: #fff;
@@ -17,7 +20,7 @@
     padding-left: 25px;
     padding-right: 25px;
 
-    button {
+    button.bid-button {
       border-radius: 16px;
       width: 78px;
       height: 22px;

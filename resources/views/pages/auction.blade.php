@@ -57,7 +57,7 @@
               <img class="logo-small" src="/images/logo.png" />
           </a>
         </div>
-        <div class="bidding-controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-6">
+        <div class="bidding-controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-5">
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
               <p>
@@ -80,16 +80,39 @@
 
           </div>
         </div>
-        <div class="bidding-controls controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="bidding-controls controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-5">
           <div v-if="auction.queue && auction.queue.length">
 
-            <button @click="lowerBid" class="btn bid-button"><i class="fa fa-minus"></i></button>
-            <button @click="bid" class="btn bid-button">Bid $@{{ user.bid.amount }}</button>
-            <button @click="raiseBid" class="btn bid-button"><i class="fa fa-plus"></i></button>
+
+                <label for="manualBid">Manual Bid:</label>
+
+                <input id="manualBid" type="number" value="bid_amount" v-model="bid_amount">
+                <b-alert class="pull-right" variant="danger"
+                         dismissible
+                         :show="showMinimumBidWarning"
+                         @dismissed="showMinimumBidWarning=false">
+                Your bid cannot be lower than the minimum bid!
+                </b-alert>
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <small>Quick Bid: </small>
+
+            		<button @click="lowerBid" class="btn bid-button"><i class="fa fa-minus"></i></button>
+
+
+
+                <button id="bidButton" @click="bid" class="btn bid-button">Bid $@{{ bid_amount }}</button>
+
+
+            		<button @click="raiseBid" class="btn bid-button"><i class="fa fa-plus"></i></button>
 
           </div>
 
+
+
         </div>
+
       </div>
     </nav> <!-- end bidding controls bar -->
     <div class="row justify-content-center"> <!-- the main content area     -->

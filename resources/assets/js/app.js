@@ -71,8 +71,12 @@ new Vue({
 
    selectedBidder: false,
    showCompletedItems: false,
+   showBidEditor: false,
+   showMinimumBidWarning: false,
 
-   bid_increment: 5
+   bid_increment: 5,
+
+   bid_amount: 0
 
  },
  methods: {
@@ -80,17 +84,25 @@ new Vue({
      // bidding
 
      bid(){
-       axios.post('/auctions/bid',{
-         auction_id: this.auction.id,
-         bid_amount: this.user.bid.amount,
-         item_id: this.auction.item.id
-       }).then(function(response){
-         console.log(response);
-         this.updatePool(response.data.auction);
-         this.resetTimer(30);
-       }.bind(this)).catch(e => {
-         console.log(e);
-       });
+       this.user.bid.amount = this.bid_amount;
+       if(this.bid_amount >= this.user.bid.minimum){
+         axios.post('/auctions/bid',{
+           auction_id: this.auction.id,
+           bid_amount: this.user.bid.amount,
+           item_id: this.auction.item.id
+         }).then(function(response){
+           console.log(response);
+           this.updatePool(response.data.auction);
+           this.resetTimer(30);
+         }.bind(this)).catch(e => {
+           console.log(e);
+         });
+       } else {
+         this.showMinimumBidWarning = true;
+         this.user.bid.amount = this.user.bid.minimum;
+         this.bid_amount = this.user.bid.minimum;
+       }
+
      },
      bidMinimum(){
        this.user.bid.amount = this.getMinimumBid();
@@ -101,7 +113,8 @@ new Vue({
        if(new_bid > this.user.bid.minimum){
          this.user.bid.amount = new_bid;
        }
-
+       // this.user.bid.amount--;
+       this.bid_amount = this.user.bid.amount;
      },
      raiseBid(){
        var minimum_bid = this.user.bid.minimum;
@@ -109,6 +122,8 @@ new Vue({
        if(new_bid >= minimum_bid){
          this.user.bid.amount = new_bid;
        }
+       // this.user.bid.amount++;
+       this.bid_amount = this.user.bid.amount;
      },
      getMinimumBid(){
        var lowest_bid = 0;
@@ -353,7 +368,7 @@ new Vue({
        };
        this.user.bid.amount = this.getMinimumBid();
        this.user.bid.minimum = this.getMinimumBid();
-
+       this.bid_amount = this.user.bid.minimum;
        console.log(this.auction);
      },
 
