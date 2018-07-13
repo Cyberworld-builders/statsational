@@ -37646,7 +37646,7 @@ new Vue({
   }), _defineProperty(_methods, 'startNextItem', function startNextItem() {
     var _this7 = this;
 
-    console.log(this.auction.item);
+    // console.log(this.auction.item);
     __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auctions/items/next', {
       auction_id: this.auction.id,
       item_id: this.auction.item.id,
@@ -37667,7 +37667,7 @@ new Vue({
       if (_this8.user.id == _this8.auction.user.id) {
         _this8.showOwnerControls = true;
       }
-      // console.log(response.data.items);
+      console.log(response.data);
     }).catch(function (e) {
       console.log(e);
     });

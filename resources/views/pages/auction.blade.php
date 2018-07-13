@@ -140,12 +140,14 @@
                       <div v-if="auction.queue" class="widget-body scrollable col-md-12">
                         <table class="table">
                           <tr>
-                            <th>Item</th><th v-if="showCompletedItems">Winning Bid</th>
+                            <th>Item</th><th v-if="showCompletedItems">Winning Bid</th><th v-if="showCompletedItems">Bidder</th>
                           </tr>
                           <tr v-for="(item,index) in auction.items">
                               <td v-if="isActive(item.id)">@{{ auction.items[index].name }}</td>
                               <td v-if="!isActive(item.id) && showCompletedItems" class="disabled">@{{ auction.items[index].name }}</td>
-                              <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems" class="">$ @{{ auction.items[index].bids[0].amount }} </td>
+                              <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems" >$ @{{ auction.items[index].bids[0].amount }} </td>
+                              <td v-if="( isActive(item.id) || ( !(item.bids.length > 0) ) ) && showCompletedItems "> - </td>
+                              <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems" > @{{ bidders[auction.items[index].bids[0].user_id].name }} </td>
                               <td v-if="( isActive(item.id) || ( !(item.bids.length > 0) ) ) && showCompletedItems "> - </td>
                           </tr>
                         </table>

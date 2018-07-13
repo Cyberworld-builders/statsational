@@ -282,7 +282,7 @@ new Vue({
      },
 
      startNextItem(){
-       console.log(this.auction.item);
+       // console.log(this.auction.item);
        axios.post('/auctions/items/next',{
          auction_id: this.auction.id,
          item_id: this.auction.item.id,
@@ -304,7 +304,7 @@ new Vue({
          if(this.user.id == this.auction.user.id){
            this.showOwnerControls = true;
          }
-         // console.log(response.data.items);
+         console.log(response.data);
        }).catch(e => {
          console.log(e);
        });
