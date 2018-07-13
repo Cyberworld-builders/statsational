@@ -27,6 +27,8 @@ class AuctionController extends Controller
        $auction->start_time = date('Y-m-d h:i:s',strtotime(request('start_time')));
        $auction->private = request('private');
        $auction->manual_next = request('manual_next');
+       $auction->bid_timer = request('bid_timer');
+       $auction->snipe_time = request('snipe_time');
        $auction->bid_increment = request('bid_increment');
        $auction->queue = array();
        $user = Auth::User();

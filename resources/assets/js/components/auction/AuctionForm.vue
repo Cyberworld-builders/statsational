@@ -43,6 +43,18 @@
           </div>
 
           <div class="number">
+            <label for="bid_timer">Bid Timer (seconds): </label>
+            <input id="bid_timer" v-model="bid_timer" type="number" />
+          </div>
+
+          <div class="number">
+            <label for="snipe_time">Snipe Time (seconds): </label>
+            <input id="snipe_time" v-model="snipe_time" type="number" />
+          </div>
+
+
+
+          <div class="number">
             <label for="bid_increment">Bidding Increment: </label>
             $ <input id="bid_increment" v-model="bid_increment" type="number" />
           </div>
@@ -95,6 +107,8 @@
               start_time: this.start_time,
               private: this.private,
               manual_next: this.manual_next,
+              bid_timer: this.bid_timer,
+              snipe_time: this.snipe_time,
               bid_increment: this.bid_increment
             }).then(function(response){
               console.log(response.data);
@@ -112,6 +126,8 @@
             start_time: "",
             private: false,
             manual_next: false,
+            bid_timer: 30,
+            snipe_time: 15,
             bid_increment: 1
           }
         },
