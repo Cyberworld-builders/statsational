@@ -10,11 +10,10 @@
     </div>
 
     <div class="form-group">
-      <label for="name">
+      <label for="poolRules">
         Rules
       </label>
-      <input v-model="rules" type="text" class="form-control" id="poolRules" />
-      <editor api-key="xecwpxd2so72hu32w8wv7l3aoa2q3c66qkr2f5hufeuisljj" :init="{plugins: 'wordcount'}"></editor>
+      <editor id="poolRules" v-model="rules" api-key="xecwpxd2so72hu32w8wv7l3aoa2q3c66qkr2f5hufeuisljj" :init="{plugins: 'wordcount'}"></editor>
     </div>
 
 

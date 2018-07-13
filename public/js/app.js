@@ -78046,7 +78046,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -85452,36 +85451,22 @@ var render = function() {
         "div",
         { staticClass: "form-group" },
         [
-          _c("label", { attrs: { for: "name" } }, [
+          _c("label", { attrs: { for: "poolRules" } }, [
             _vm._v("\n      Rules\n    ")
           ]),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.rules,
-                expression: "rules"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", id: "poolRules" },
-            domProps: { value: _vm.rules },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.rules = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
           _c("editor", {
             attrs: {
+              id: "poolRules",
               "api-key": "xecwpxd2so72hu32w8wv7l3aoa2q3c66qkr2f5hufeuisljj",
               init: { plugins: "wordcount" }
+            },
+            model: {
+              value: _vm.rules,
+              callback: function($$v) {
+                _vm.rules = $$v
+              },
+              expression: "rules"
             }
           })
         ],
