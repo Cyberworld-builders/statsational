@@ -83,20 +83,15 @@
         <div class="bidding-controls controls col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-5">
           <div v-if="auction.queue && auction.queue.length">
 
-
-
-
             		<button @click="lowerBid" class="btn bid-button"><i class="fa fa-minus"></i></button>
 
-
                 <input  @focus="$event.target.select()" id="manualBid" type="number" value="bid_amount" v-model="bid_amount">
-                <b-alert class="minimum-bid-warning" variant="danger"
-                         dismissible
-                         :show="showMinimumBidWarning"
-                         @dismissed="showMinimumBidWarning=false">
-                Your bid cannot be lower than the minimum bid!
-                </b-alert>
-
+                  <b-alert class="minimum-bid-warning" variant="danger"
+                           dismissible
+                           :show="showMinimumBidWarning"
+                           @dismissed="showMinimumBidWarning=false">
+                  Your bid cannot be lower than the minimum bid!
+                  </b-alert>
 
             		<button @click="raiseBid" class="btn bid-button"><i class="fa fa-plus"></i></button>
                 <button id="bidButton" @click="bid" class="btn bid-button">Bid</button>
@@ -128,8 +123,7 @@
                       <h3>Items</h3>
                       <input id="showCompletedItems" type="checkbox" v-model="showCompletedItems" name="" value="">
                       <label for="showCompletedItems">
-                        <span v-if="showCompletedItems">Hide Completed Items</span>
-                        <span v-else>Show Completed Items</span>
+                        <span>Show Completed Items</span>
                       </label>
                       <div v-if="auction.queue" class="widget-body scrollable col-md-12">
                         <table class="table">
