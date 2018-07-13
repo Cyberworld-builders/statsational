@@ -37583,7 +37583,7 @@ new Vue({
     modalShow: false,
     imActive: true,
     time_remaining: "30",
-    timer: "0:30",
+    timer: "",
 
     selectedBidder: false,
     showCompletedItems: false,
@@ -37610,7 +37610,7 @@ new Vue({
         }).then(function (response) {
           // console.log(response);
           this.updatePool(response.data.auction);
-          this.resetTimer(30);
+          this.resetTimer();
         }.bind(this)).catch(function (e) {
           console.log(e);
         });
@@ -37733,7 +37733,7 @@ new Vue({
     },
     countDown: function countDown() {
       var timer = document.getElementById('timer');
-      if (this.time_remaining <= 10) {
+      if (this.time_remaining <= this.auction.snipe_time) {
         timer.classList.add('blinking');
       } else {
         timer.classList.remove('blinking');
@@ -37749,13 +37749,13 @@ new Vue({
         }
       }
     },
-    resetTimer: function resetTimer(seconds) {
+    resetTimer: function resetTimer() {
       var _this5 = this;
 
       __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auctions/timer', {
-        seconds: seconds
+        seconds: this.auction.bid_timer
       }).then(function (response) {
-        _this5.time_remaining = seconds;
+        _this5.time_remaining = _this5.auction.bid_timer;
         _this5.updateClock();
       }).catch(function (e) {
         console.log(e);
@@ -37800,7 +37800,7 @@ new Vue({
     }).then(function (response) {
       console.log(response.data);
       _this7.getAuctionData(_this7.auction.id);
-      _this7.time_remaining = 30;
+      _this7.time_remaining = _this7.auction.bid_timer;
       _this7.updateClock();
     }).catch(function (e) {
       console.log(e);
@@ -37880,7 +37880,23 @@ new Vue({
     this.user.bid.amount = this.getMinimumBid();
     this.user.bid.minimum = this.getMinimumBid();
     this.bid_amount = this.user.bid.minimum;
-    // console.log(this.auction);
+
+    if (auction.bid_timer > 0) {
+      this.auction.bid_timer = auction.bid_timer;
+    } else {
+      this.auction.bid_timer = 45;
+    }
+
+    if (auction.snipe_time > 0) {
+      this.auction.snipe_time = auction.snipe_time;
+    } else {
+      this.auction.snipe_time = 15;
+    }
+
+    this.time_remaining = this.auction.bid_timer;
+    this.timer = "0:" + this.auction.bid_timer;
+
+    console.log(auction);
   }), _defineProperty(_methods, 'formatMoney', function formatMoney(number) {
     return number;
   }), _defineProperty(_methods, 'isActive', function isActive(item_id) {
@@ -37929,7 +37945,7 @@ new Vue({
         _this10.time_remaining = Number(e.message);
         _this10.updateClock();
       } else if (e.type == "next") {
-        _this10.time_remaining = 30;
+        _this10.time_remaining = _this10.auction.bid_timer;
         _this10.updateClock();
         _this10.auction.queue = e.message.queue;
       } else if (e.type == "update") {
@@ -37938,7 +37954,7 @@ new Vue({
       } else if (e.type == "switchItem") {
         console.log(e.message);
         _this10.updateCurrentItem(e.message);
-        _this10.time_remaining = 30;
+        _this10.time_remaining = _this10.auction.bid_timer;
         _this10.updateClock();
       }
     });
