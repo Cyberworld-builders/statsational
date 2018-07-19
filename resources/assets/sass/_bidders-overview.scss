@@ -28,4 +28,15 @@
     margin: 0px;
   }
   .players-needed { color: #ff5722; }
+
+
 }
+
+
+.bidders-overview-details.widget-card {
+    width: 100%;
+    position: absolute;
+    right: 100%;
+    top: 0%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  }

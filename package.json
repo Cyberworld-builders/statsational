@@ -28,6 +28,7 @@
         "moment": "^2.22.2",
         "pusher-js": "^4.2.2",
         "vue-datetime": "^1.0.0-beta.3",
+        "vue-grid-layout": "^2.1.13",
         "vuejs-countdown": "^0.2.1",
         "weekstart": "^1.0.0"
     }

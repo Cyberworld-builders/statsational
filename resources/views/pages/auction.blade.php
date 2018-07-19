@@ -106,211 +106,234 @@
     </nav> <!-- end bidding controls bar -->
     <div class="row justify-content-center"> <!-- the main content area     -->
       <div class="col-md-12 auction-room"> <!-- full width container for the auction room    -->
-          <div class="row money-spent">
-          	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-12">
-          		<span>Money Spent ($)</span> &nbsp
-              <span v-if="bidders[user.id]" class="spent">@{{ bidders[user.id].spend }}</span>
-              <span v-else>0</span>
-          	</div>
-          </div>
-          <div class="row ">
-          	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-9"> <!-- main widget area     -->
-              <div class="row">
-              	<div class=" col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-8">
 
-                  <div class="row items">
-                    <div class="widget-card">
-                      <h3>Items</h3>
-                      <input id="showCompletedItems" type="checkbox" v-model="showCompletedItems" name="" value="">
-                      <label for="showCompletedItems">
-                        <span>Show Completed Items</span>
-                      </label>
-                      <div v-if="auction.queue" class="widget-body scrollable col-md-12">
-                        <table class="table">
+
+
+
+
+
+
+          <grid-layout
+                  :layout="layout"
+                  :col-num="12"
+                  :row-height="30"
+                  :is-draggable="true"
+                  :is-resizable="true"
+                  :is-mirrored="false"
+                  :vertical-compact="true"
+                  :margin="[10, 10]"
+                  :use-css-transforms="true"
+
+          >
+
+
+
+            <grid-item class="items"
+               :x="layout[0].x"
+               :y="layout[0].y"
+               :w="layout[0].w"
+               :h="layout[0].h"
+               :i="layout[0].i"
+               :drag-allow-from="'h3'"
+               >
+                 <div class="widget-card">
+                   <h3>Items</h3>
+                   <input id="showCompletedItems" type="checkbox" v-model="showCompletedItems" name="" value="">
+                   <label for="showCompletedItems">
+                     <span>Show Completed Items</span>
+                   </label>
+                   <div v-if="auction.queue" class="widget-body scrollable col-md-12">
+                     <table class="table">
+                       <tr>
+                         <th>Item</th><th v-if="showCompletedItems">Winning Bid</th><th v-if="showCompletedItems">Bidder</th>
+                       </tr>
+                       <tr v-for="(item,index) in auction.items">
+                           <td v-if="isActive(item.id)">@{{ auction.items[index].name }}</td>
+                           <td v-if="!isActive(item.id) && showCompletedItems" class="disabled">@{{ auction.items[index].name }}</td>
+                           <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems" >$ @{{ auction.items[index].bids[0].amount }} </td>
+                           <td v-if="( isActive(item.id) || ( !(item.bids.length > 0) ) ) && showCompletedItems "> - </td>
+                           <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems" > @{{ bidders[auction.items[index].bids[0].user_id].name }} </td>
+                           <td v-if="( isActive(item.id) || ( !(item.bids.length > 0) ) ) && showCompletedItems "> - </td>
+                       </tr>
+                     </table>
+                     </ul>
+                   </div>
+                 </div>
+                 <div class="col-xs-3 col-md-2">
+                   <b-modal ref="myModalRef" hide-footer title="Add Item">
+                     <form id="addItem" @submit.prevent="addItem" role="form">
+                       <div class="form-group">
+                         <label for="name">
+                           Item Name
+                         </label>
+                         <input v-model="name" type="text" class="form-control" id="itemName" />
+                       </div>
+                       <b-btn class="mt-3" block @click="addItem">Add</b-btn>
+                     </form>
+                   </b-modal>
+                 </div>
+            </grid-item> <!-- end items widget -->
+
+            <grid-item
+               :x="layout[1].x"
+               :y="layout[1].y"
+               :w="layout[1].w"
+               :h="layout[1].h"
+               :i="layout[1].i"
+               :drag-allow-from="'h3'"
+               >
+
+
+               <b-alert fade class="bidders-overview-details widget-card" variant="light"
+                  dismissible
+                  :show="showBiddersOverviewDetail"
+                  @dismissed="showBiddersOverviewDetail=false">
+                  <div class=" ">
+                    <div class="row">
+                      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                        <h3>Owned</h3>
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <input class="form-control" v-model="selectedBidder.name" disabled />
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                      </div>
+
+                    </div>
+                    <div class="clearfix">
+                      <br />
+                    </div>
+                    <div v-if="selectedBidder.id && selectedBidder.owned_items" class="widget-body scrollable col-md-12">
+                      <table class="table">
+                        <thead>
                           <tr>
-                            <th>Item</th><th v-if="showCompletedItems">Winning Bid</th><th v-if="showCompletedItems">Bidder</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Item</th>
+                            <th scope="col" class="text-right">Cost</th>
                           </tr>
-                          <tr v-for="(item,index) in auction.items">
-                              <td v-if="isActive(item.id)">@{{ auction.items[index].name }}</td>
-                              <td v-if="!isActive(item.id) && showCompletedItems" class="disabled">@{{ auction.items[index].name }}</td>
-                              <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems" >$ @{{ auction.items[index].bids[0].amount }} </td>
-                              <td v-if="( isActive(item.id) || ( !(item.bids.length > 0) ) ) && showCompletedItems "> - </td>
-                              <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems" > @{{ bidders[auction.items[index].bids[0].user_id].name }} </td>
-                              <td v-if="( isActive(item.id) || ( !(item.bids.length > 0) ) ) && showCompletedItems "> - </td>
-                          </tr>
-                        </table>
-
-                        </ul>
-
-                      </div>
-                    </div>
-
-                    <div class="col-xs-3 col-md-2">
-                      <b-modal ref="myModalRef" hide-footer title="Add Item">
-                        <form id="addItem" @submit.prevent="addItem" role="form">
-                          <div class="form-group">
-                            <label for="name">
-                              Item Name
-                            </label>
-                            <input v-model="name" type="text" class="form-control" id="itemName" />
-                          </div>
-                          <b-btn class="mt-3" block @click="addItem">Add</b-btn>
-                        </form>
-                      </b-modal>
-                    </div>
-
-                  </div>
-
-              	</div>
-
-              	<div class=" col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
-                  <div class="row">
-
-                    <div class="widget-card ">
-                      <div class="row">
-                      	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                      		<h3>Owned</h3>
-                      	</div>
-                      	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                      		<input class="form-control" v-model="selectedBidder.name" disabled />
-                      	</div>
-                      </div>
-
-                      <div class="clearfix">
-                        <br />
-                      </div>
-
-                      <div v-if="selectedBidder.id && selectedBidder.owned_items" class="widget-body scrollable col-md-12">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">Item</th>
-                              <th scope="col" class="text-right">Cost</th>
+                          <tbody>
+                            <tr v-for="(owned,index) in bidders[selectedBidder.id].owned_items">
+                              <th scope="row">@{{ index + 1 }}</th>
+                              <td>@{{ owned.item.name }}</td>
+                              <td class="text-right">$ @{{ Math.round(owned.winning_bid.amount) }}</td>
                             </tr>
-                            <tbody>
-                              <tr v-for="(owned,index) in bidders[selectedBidder.id].owned_items">
-                                <th scope="row">@{{ index + 1 }}</th>
-                                <td>@{{ owned.item.name }}</td>
-                                <td class="text-right">$ @{{ Math.round(owned.winning_bid.amount) }}</td>
-                              </tr>
-                            </tbody>
-                          </thead>
-                        </table>
-
-                      </div>
-
+                          </tbody>
+                        </thead>
+                      </table>
                     </div>
-
                   </div>
-              	</div>
+               </b-alert>
 
-              </div>
 
-              <div class="row ">
 
-                <div class=" col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
-                  <div class="row">
 
-                    <div class="widget-card ">
-                      <h3>Queue</h3>
-                      <div class="widget-body scrollable col-md-12">
+               <div class="bidders-overview container">
+                 <div class="row">
+                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                     <h3>Bidders Overview</h3>
+                   </div>
+                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 text-right money-spent">
+                     <span>Money Spent ($)</span> &nbsp
+                     <span v-if="bidders[user.id]" class="spent">@{{ bidders[user.id].spend }}</span>
+                     <span v-else>0</span>
+                   </div>
+                 </div>
+                   <table class="table">
+                     <thead>
+                       <tr class="bidder-card ">
+                         <th scope="col">Name</th>
+                         <th scope="col" class="text-right">Bal</th>
+                         <th scope="col" class="text-right">Avg. Spend</th>
+                         <th scope="col" class="text-right">Owned</th>
+                       </tr>
+                       <tbody>
+                         <tr v-for="(bidder,index) in sorted_bidders"  @click="updateSelectedBidder(bidder.id)" class="bidder-card ">
+                           <td><strong>@{{ bidder.name }} </strong></td>
+                           <td class="text-right"><span>$@{{ bidder.spend }}</span></td>
+                           <td class="text-right"><span>$@{{ bidder.average_spend }}</span></td>
+                           <td class="text-right"><span class="players-needed" v-if="bidder.item_count > 0"> @{{ bidder.item_count }}</span></td>
+                         </tr>
+                       </tbody>
+                     </thead>
+                   </table>
+                 </div>
+            </grid-item> <!-- end bidders widget -->
 
+            <grid-item
+               :x="layout[3].x"
+               :y="layout[3].y"
+               :w="layout[3].w"
+               :h="layout[3].h"
+               :i="layout[3].i"
+               :drag-allow-from="'h3'"
+               >
+               <div class="widget-card ">
+                 <h3>Queue</h3>
+                 <div class="widget-body scrollable col-md-12">
+
+                 </div>
+               </div>
+            </grid-item> <!-- end queue widget -->
+
+            <grid-item
+               :x="layout[2].x"
+               :y="layout[2].y"
+               :w="layout[2].w"
+               :h="layout[2].h"
+               :i="layout[2].i"
+              :drag-allow-from="'h3'"
+               >
+                <div class="widget-card chat-widget">
+                   <h3>Chat</h3>
+                   <div class="widget-body">
+                      <div class="col-md-12">
+                        <div class="row">
+                           <div class="col-sm-12 col-md-12">
+                             <div class="panel-body">
+                               <ul class="chat">
+                                   <li class="left clearfix" v-for="message in messages">
+                                       <div class="chat-body clearfix">
+                                           <div class="header">
+                                               <strong class="primary-font">
+                                                   @{{ message.user.name }}
+                                               </strong>
+                                               <span>@{{ message.created_at }}</span>
+                                           </div>
+                                           <p>
+                                               @{{ message.message }}
+                                           </p>
+                                       </div>
+                                   </li>
+                               </ul>
+                                 <div id="scrollToNewMessage"></div>
+                             </div>
+                             <br />
+                             <div class="row">
+                               <div  class="input-group">
+                                   <input id="btn-input" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." v-model="newMessage" @keyup.enter="sendMessage">
+                                   <span class="input-group-btn">
+                                       <button class="btn btn-primary btn-sm" id="btn-chat" @click="sendMessage">Send</button>
+                                   </span>
+                               </div>
+                             </div>
+                             {{-- <div class="row">
+                               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
+                                 <div class="input-group">
+                                   <label for="messageTo"><span>To (private)</span></label>
+                                   <select id="messageTo" class="form-control input-sm" v-model="messageTo">
+                                     <option v-for="bidder in messagers" >@{{ bidder.name }}</option>
+                                   </select>
+                                 </div>
+                               </div>
+                             </div> --}}
+                           </div>
+                         </div>
                       </div>
-                    </div>
-
-                  </div>
-              	</div>
-
-                <div class="col-sm-12 col-md-12 col-lg-7 col-xl-8">
-                  <div class="widget-card chat-widget">
-                      <h3>Chat</h3>
-                      <div class="widget-body">
-                          <div class="col-md-12">
-
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12">
-                                      <div class="panel-body">
-                                        <ul class="chat">
-                                            <li class="left clearfix" v-for="message in messages">
-                                                <div class="chat-body clearfix">
-                                                    <div class="header">
-                                                        <strong class="primary-font">
-                                                            @{{ message.user.name }}
-                                                        </strong>
-                                                        <span>@{{ message.created_at }}</span>
-                                                    </div>
-                                                    <p>
-                                                        @{{ message.message }}
-                                                    </p>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                          <div id="scrollToNewMessage"></div>
-                                      </div>
-                                      <br />
-                                      <div class="row">
-                                        <div  class="input-group">
-                                            <input id="btn-input" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." v-model="newMessage" @keyup.enter="sendMessage">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-primary btn-sm" id="btn-chat" @click="sendMessage">Send</button>
-                                            </span>
-
-                                        </div>
-
-                                      </div>
-                                      {{-- <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
-                                          <div class="input-group">
-                                            <label for="messageTo"><span>To (private)</span></label>
-                                            <select id="messageTo" class="form-control input-sm" v-model="messageTo">
-                                              <option v-for="bidder in messagers" >@{{ bidder.name }}</option>
-                                            </select>
-                                          </div>
-                                        </div>
-
-
-                                      </div> --}}
-                                    </div>
-
-                                  </div>
-                          </div>
-                      </div>
-                  </div>
+                   </div>
                 </div>
-              </div>
+            </grid-item> <!-- end chat widget -->
 
-
-          	</div> <!-- end main widget area -->
-          	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3"> <!-- right sidebar -->
-              <div class="bidders-overview">
-                <div class="row">
-                	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
-                		<h3>Bidders Overview</h3>
-                	</div>
-                </div>
-                  <table class="table">
-                    <thead>
-                      <tr class="bidder-card ">
-                        <th scope="col">Name</th>
-                        <th scope="col" class="text-right">Bal</th>
-                        <th scope="col" class="text-right">Avg. Spend</th>
-                        <th scope="col" class="text-right">Owned</th>
-                      </tr>
-                      <tbody>
-                        <tr v-for="(bidder,index) in sorted_bidders"  @click="updateSelectedBidder(bidder.id)" class="bidder-card ">
-                          <td><strong>@{{ bidder.name }} </strong></td>
-                          <td class="text-right"><span>$@{{ bidder.spend }}</span></td>
-                          <td class="text-right"><span>$@{{ bidder.average_spend }}</span></td>
-                          <td class="text-right"><span class="players-needed" v-if="bidder.item_count > 0"> @{{ bidder.item_count }}</span></td>
-                        </tr>
-                      </tbody>
-                    </thead>
-                  </table>
-                </div>
-              </div>
-          	</div> <!-- end right sidebar -->
-          </div>
+          </grid-layout>
 
         </div> <!-- end full width container -->
     </div> <!-- end main content area     -->

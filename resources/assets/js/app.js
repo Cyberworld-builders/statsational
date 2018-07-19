@@ -10,6 +10,7 @@ Vue.component('auction-control', require('./components/auction/AuctionControl.vu
 Vue.component('auction-form', require('./components/auction/AuctionForm.vue'));
 Vue.component('join-form', require('./components/auction/AuctionJoinForm.vue'));
 Vue.component('auction-items', require('./components/auction/AuctionItems.vue'));
+Vue.component('grid-test',require('./components/GridTest.vue'));
 
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue);
@@ -22,13 +23,32 @@ import 'vue-datetime/dist/vue-datetime.css'
 import axios from 'axios'
 import moment from 'moment'
 
+var testLayout = [
 
+
+];
+
+import VueGridLayout from 'vue-grid-layout'
+
+var GridLayout = VueGridLayout.GridLayout;
+var GridItem = VueGridLayout.GridItem;
 
 Vue.use(Datetime)
 
 new Vue({
  el: '#app',
+ components: {
+   GridLayout,
+   GridItem
+ },
+
  data: {
+   layout: [
+        {id: "Items","x":0,"y":0,"w":9,"h":9,"i":"0"},
+        {id: "Bidders","x":9,"y":0,"w":3,"h":18,"i":"2"},
+        {id: "Chat","x":2,"y":10,"w":7,"h":9,"i":"3"},
+        {id: "Queue","x":0,"y":10,"w":2,"h":9,"i":"4"}
+     ],
    auction: {
      item: {
        name: "",
@@ -77,6 +97,7 @@ new Vue({
    showBidEditor: false,
    showMinimumBidWarning: false,
    showOwnerControls: false,
+   showBiddersOverviewDetail: false,
 
    bid_increment: 5,
 
@@ -326,6 +347,7 @@ new Vue({
      },
 
      updateSelectedBidder(bidder_id){
+       this.showBiddersOverviewDetail = true;
        axios.post('/auction/bidder/data' ,{
          bidder_id: bidder_id,
          auction_id: this.auction.id

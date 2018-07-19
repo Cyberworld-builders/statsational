@@ -27,12 +27,12 @@
 
   }
 
-  .widget-card {
+  .vue-grid-item {
     width: 100%;
     border: .5px solid #e7e8ec;
     border-radius: 4px;
     background-color: #fff;
-    padding: 20px;
+    padding: 0px;
     color: #133854;
     // margin-left: 10px;
     // margin-right: 10px;
@@ -42,12 +42,16 @@
       font-weight: 600;
     }
     .widget-body {
-      max-height: 225px;
-
+      // max-height: 225px;
+      overflow: auto;
     }
     .scrollable {
       overflow-y: scroll;
     }
+  }
+
+  .widget-card {
+    padding: 20px;
   }
 
 
@@ -93,21 +97,22 @@
   }
 
   .auction-room {
-    padding-left: 75px;
-    padding-right: 75px;
+    // padding-left: 75px;
+    // padding-right: 75px;
 
     // margin-right: 75px;
 
     .money-spent {
       text-align: right;
-      margin: 15px;
+      // margin: 15px;
       span {
-        color: #143753;
+        color: #fff;
 
       }
       span.spent{ color: #ff5722; font-weight: 550; }
     }
 
   }
+
 
 }

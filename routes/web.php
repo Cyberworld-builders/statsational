@@ -49,6 +49,12 @@ Route::group(['middleware' => 'auth'],function(){
 
   Route::get('auction/users/{id}', 'AuctionController@getUsers');
 
+  Route::get('grid-test', function(){
+    return View::make('pages.grid');
+  });
+
+
+
 });
 
 

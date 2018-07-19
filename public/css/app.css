@@ -13520,27 +13520,31 @@ a.text-dark:focus {
   /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-.auction .widget-card {
+.auction .vue-grid-item {
   width: 100%;
   border: .5px solid #e7e8ec;
   border-radius: 4px;
   background-color: #fff;
-  padding: 20px;
+  padding: 0px;
   color: #133854;
   margin: 10px;
 }
 
-.auction .widget-card h3 {
+.auction .vue-grid-item h3 {
   font-size: 16px;
   font-weight: 600;
 }
 
-.auction .widget-card .widget-body {
-  max-height: 225px;
+.auction .vue-grid-item .widget-body {
+  overflow: auto;
 }
 
-.auction .widget-card .scrollable {
+.auction .vue-grid-item .scrollable {
   overflow-y: scroll;
+}
+
+.auction .widget-card {
+  padding: 20px;
 }
 
 .auction .info-block {
@@ -13590,18 +13594,12 @@ a.text-dark:focus {
   min-height: 200px;
 }
 
-.auction .auction-room {
-  padding-left: 75px;
-  padding-right: 75px;
-}
-
 .auction .auction-room .money-spent {
   text-align: right;
-  margin: 15px;
 }
 
 .auction .auction-room .money-spent span {
-  color: #143753;
+  color: #fff;
 }
 
 .auction .auction-room .money-spent span.spent {
@@ -13785,6 +13783,15 @@ a.text-dark:focus {
   color: #ff5722;
 }
 
+.bidders-overview-details.widget-card {
+  width: 100%;
+  position: absolute;
+  right: 100%;
+  top: 0%;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
 .items .disabled {
   text-decoration: line-through;
   font-style: italic;
@@ -13795,13 +13802,6 @@ a.text-dark:focus {
   background-color: #fff;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
-
-.card {
-  -webkit-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .blinking {
