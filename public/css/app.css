@@ -13536,7 +13536,7 @@ a.text-dark:focus {
 }
 
 .auction .vue-grid-item .widget-body {
-  overflow: auto;
+  max-height: 225px;
 }
 
 .auction .vue-grid-item .scrollable {
