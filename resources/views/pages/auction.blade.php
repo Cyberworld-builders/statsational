@@ -174,6 +174,84 @@
                  </div>
             </grid-item> <!-- end items widget -->
 
+
+
+            <grid-item
+               :x="layout[3].x"
+               :y="layout[3].y"
+               :w="layout[3].w"
+               :h="layout[3].h"
+               :i="layout[3].i"
+               :drag-allow-from="'h3'"
+               >
+               <div class="widget-card ">
+                 <h3>Queue</h3>
+                 <div class="widget-body scrollable col-md-12">
+
+                 </div>
+               </div>
+            </grid-item> <!-- end queue widget -->
+
+            <grid-item
+               :x="layout[2].x"
+               :y="layout[2].y"
+               :w="layout[2].w"
+               :h="layout[2].h"
+               :i="layout[2].i"
+              :drag-allow-from="'h3'"
+               >
+                <div class="widget-card chat-widget">
+                   <h3>Chat</h3>
+                   <div class="widget-body">
+                      <div class="col-md-12">
+                        <div class="row">
+                           <div class="col-sm-12 col-md-12">
+                             <div class="panel-body">
+                               <ul class="chat">
+                                   <li class="left clearfix" v-for="message in messages">
+                                       <div class="chat-body clearfix">
+                                           <div class="header">
+                                               <strong class="primary-font">
+                                                   @{{ message.user.name }}
+                                               </strong>
+                                               <span>@{{ message.created_at }}</span>
+                                           </div>
+                                           <p>
+                                               @{{ message.message }}
+                                           </p>
+                                       </div>
+                                   </li>
+                               </ul>
+                                 <div id="scrollToNewMessage"></div>
+                             </div>
+                             <br />
+                             <div class="row">
+                               <div  class="input-group">
+                                   <input id="btn-input" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." v-model="newMessage" @keyup.enter="sendMessage">
+                                   <span class="input-group-btn">
+                                       <button class="btn btn-primary btn-sm" id="btn-chat" @click="sendMessage">Send</button>
+                                   </span>
+                               </div>
+                             </div>
+                             {{-- <div class="row">
+                               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
+                                 <div class="input-group">
+                                   <label for="messageTo"><span>To (private)</span></label>
+                                   <select id="messageTo" class="form-control input-sm" v-model="messageTo">
+                                     <option v-for="bidder in messagers" >@{{ bidder.name }}</option>
+                                   </select>
+                                 </div>
+                               </div>
+                             </div> --}}
+                           </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+            </grid-item> <!-- end chat widget -->
+
+
+
             <grid-item
                :x="layout[1].x"
                :y="layout[1].y"
@@ -181,6 +259,7 @@
                :h="layout[1].h"
                :i="layout[1].i"
                :drag-allow-from="'h3'"
+               :auto-size="true"
                >
 
 
@@ -259,79 +338,6 @@
                  </div>
             </grid-item> <!-- end bidders widget -->
 
-            <grid-item
-               :x="layout[3].x"
-               :y="layout[3].y"
-               :w="layout[3].w"
-               :h="layout[3].h"
-               :i="layout[3].i"
-               :drag-allow-from="'h3'"
-               >
-               <div class="widget-card ">
-                 <h3>Queue</h3>
-                 <div class="widget-body scrollable col-md-12">
-
-                 </div>
-               </div>
-            </grid-item> <!-- end queue widget -->
-
-            <grid-item
-               :x="layout[2].x"
-               :y="layout[2].y"
-               :w="layout[2].w"
-               :h="layout[2].h"
-               :i="layout[2].i"
-              :drag-allow-from="'h3'"
-               >
-                <div class="widget-card chat-widget">
-                   <h3>Chat</h3>
-                   <div class="widget-body">
-                      <div class="col-md-12">
-                        <div class="row">
-                           <div class="col-sm-12 col-md-12">
-                             <div class="panel-body">
-                               <ul class="chat">
-                                   <li class="left clearfix" v-for="message in messages">
-                                       <div class="chat-body clearfix">
-                                           <div class="header">
-                                               <strong class="primary-font">
-                                                   @{{ message.user.name }}
-                                               </strong>
-                                               <span>@{{ message.created_at }}</span>
-                                           </div>
-                                           <p>
-                                               @{{ message.message }}
-                                           </p>
-                                       </div>
-                                   </li>
-                               </ul>
-                                 <div id="scrollToNewMessage"></div>
-                             </div>
-                             <br />
-                             <div class="row">
-                               <div  class="input-group">
-                                   <input id="btn-input" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." v-model="newMessage" @keyup.enter="sendMessage">
-                                   <span class="input-group-btn">
-                                       <button class="btn btn-primary btn-sm" id="btn-chat" @click="sendMessage">Send</button>
-                                   </span>
-                               </div>
-                             </div>
-                             {{-- <div class="row">
-                               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
-                                 <div class="input-group">
-                                   <label for="messageTo"><span>To (private)</span></label>
-                                   <select id="messageTo" class="form-control input-sm" v-model="messageTo">
-                                     <option v-for="bidder in messagers" >@{{ bidder.name }}</option>
-                                   </select>
-                                 </div>
-                               </div>
-                             </div> --}}
-                           </div>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-            </grid-item> <!-- end chat widget -->
 
           </grid-layout>
 
