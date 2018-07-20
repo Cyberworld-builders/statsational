@@ -1,4 +1,55 @@
 .bidding {
+  .logo-container {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    img.logo-large {
+      max-width: 170px;
+    }
+    a {
+      background-color: #fff;
+      padding: 0px;
+      text-align: center;
+      width: 100%;
+    }
+    img.logo-small {
+      height: 60%;
+      width: auto;
+      margin-left: auto;
+      margin-right: auto;
+      // max-width: 47px;
+      // max-width: 30px;
+      // height: auto;
+      padding: 0px;
+
+    }
+
+    img.logo-small {
+      // height: 60px;
+      // background-color: #fff;
+      // margin: 0px;
+      // padding: 0px;
+    }
+
+
+  }
+  h1,h2 {
+    color: #fff;
+    margin: 15px 0px 15px 0px;
+  }
+  h2 {
+    font-size: 2.0rem;
+  }
+  @media only screen and (max-width: 1244px ){
+    h1 {
+      font-size: 2.0rem;
+      margin: 18px 0px 18px 0px;
+    }
+    h2 {
+      font-size: 1.0rem;
+      margin: 18px 0px 18px 0px;
+    }
+  }
 
   background-color: #fe5722;
 
@@ -22,44 +73,50 @@
       color: #fff;
       margin: 2px;
     }
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 25px;
-    padding-right: 25px;
+    // padding-top: 15px;
+    // padding-bottom: 15px;
+    // padding-left: 5px;
+    // padding-right: 5px;
 
     button.bid-button {
-      border-radius: 16px;
-      width: 78px;
-      height: 22px;
       padding: 0px;
       font-size: 14px;
       color: #143753;
       font-weight: bold;
       background-color: #fff;
-      margin-left: 15px;
-      margin-right: 15px;
+      margin-left: 5px;
+      margin-right: 5px;
     }
 
-    input[type=number]{
-      width: 78px;
+    input[type=number],button.bid-button {
+      width: 68px;
+      height: 22px;
       text-align: center;
+      border-radius: 16px;
+    }
+
+    @media only screen and (max-width: 990px ){
+      // button.bid-button {
+      //   font-size: 14px;
+      //   margin-left: 5px;
+      //   margin-right: 5px;
+      // }
+      //
+      // input[type=number],button.bid-button {
+      //   width: 58px;
+      //   height: 42px;
+      // }
+
     }
 
   }
 
   .controls {
-    padding: 25px;
-    text-align: right;
+    padding: 25px 0px 25px 0px;
+    // text-align: right;
   }
 
-  a { background-color: #fff; padding: 10px;}
-  img.logo-small {
-    height: 60px;
-    background-color: #fff;
-    margin: 0px;
-    padding: 0px;
-    // display: none;
-  }
+
 
 
   .navbar-dash {

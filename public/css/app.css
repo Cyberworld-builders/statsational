@@ -13448,23 +13448,20 @@ a.text-dark:focus {
 }
 
 .top-bar {
+  height: 23px;
+  font-size: 12px;
   color: #f4f6f5;
-  font: Roboto;
   background-color: #143753;
-  padding: 15px;
+  padding: 2px 20px 2px 20px;
 }
 
 .top-bar .owner-tools {
   text-align: right;
 }
 
-.top-bar .owner-tools .icons {
-  margin-top: 5px;
-  margin-right: 10px;
-}
-
 .top-bar .owner-tools a {
   color: #fff;
+  padding: 0px;
 }
 
 .top-bar .owner-tools span {
@@ -13473,13 +13470,16 @@ a.text-dark:focus {
 
 .top-bar .owner-tools .dropdown-menu a {
   color: #143753;
+  padding-left: 10px;
+}
+
+.top-bar .owner-tools .dropdown-menu a:hover {
+  background-color: #fe5722;
 }
 
 .top-bar button {
   border-radius: 16px;
-  height: 22px;
-  padding: 0px 15px 0px 15px;
-  font-size: 14px;
+  font-size: 12px;
   color: #fff;
   font-weight: medium;
   background-color: #3ac9d1;
@@ -13536,7 +13536,7 @@ a.text-dark:focus {
 }
 
 .auction .vue-grid-item .widget-body {
-  max-height: 225px;
+  max-height: 325px;
 }
 
 .auction .vue-grid-item .scrollable {
@@ -13658,18 +13658,58 @@ a.text-dark:focus {
   background-color: #fe5722;
 }
 
+.bidding .logo-container {
+  text-align: center;
+  background-color: #fff;
+  padding: 20px;
+}
+
+.bidding .logo-container img.logo-large {
+  max-width: 170px;
+}
+
+.bidding .logo-container a {
+  background-color: #fff;
+  padding: 0px;
+  text-align: center;
+  width: 100%;
+}
+
+.bidding .logo-container img.logo-small {
+  height: 60%;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0px;
+}
+
+.bidding h1,
+.bidding h2 {
+  color: #fff;
+  margin: 15px 0px 15px 0px;
+}
+
+.bidding h2 {
+  font-size: 2.0rem;
+}
+
+@media only screen and (max-width: 1244px) {
+  .bidding h1 {
+    font-size: 2.0rem;
+    margin: 18px 0px 18px 0px;
+  }
+
+  .bidding h2 {
+    font-size: 1.0rem;
+    margin: 18px 0px 18px 0px;
+  }
+}
+
 .bidding .minimum-bid-warning {
   position: fixed;
   top: 55px;
   right: 55px;
   z-index: 1000;
-}
-
-.bidding .bidding-controls {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-left: 25px;
-  padding-right: 25px;
 }
 
 .bidding .bidding-controls label {
@@ -13690,38 +13730,25 @@ a.text-dark:focus {
 }
 
 .bidding .bidding-controls button.bid-button {
-  border-radius: 16px;
-  width: 78px;
-  height: 22px;
   padding: 0px;
   font-size: 14px;
   color: #143753;
   font-weight: bold;
   background-color: #fff;
-  margin-left: 15px;
-  margin-right: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
-.bidding .bidding-controls input[type=number] {
-  width: 78px;
+.bidding .bidding-controls input[type=number],
+.bidding .bidding-controls button.bid-button {
+  width: 68px;
+  height: 22px;
   text-align: center;
+  border-radius: 16px;
 }
 
 .bidding .controls {
-  padding: 25px;
-  text-align: right;
-}
-
-.bidding a {
-  background-color: #fff;
-  padding: 10px;
-}
-
-.bidding img.logo-small {
-  height: 60px;
-  background-color: #fff;
-  margin: 0px;
-  padding: 0px;
+  padding: 25px 0px 25px 0px;
 }
 
 .bidding .navbar-dash {
@@ -13767,6 +13794,10 @@ a.text-dark:focus {
   border-bottom: 10px solid #143753;
 }
 
+.bidders-overview .isUser {
+  background-color: #fe5722;
+}
+
 .bidders-overview td {
   cursor: pointer;
 }
@@ -13788,8 +13819,8 @@ a.text-dark:focus {
   position: absolute;
   right: 100%;
   top: 0%;
-  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  -webkit-box-shadow: 2px 0px 2px 4px rgba(0, 0, 0, 0.44);
+          box-shadow: 2px 0px 2px 4px rgba(0, 0, 0, 0.44);
 }
 
 .items .disabled {

@@ -1,4 +1,5 @@
 .bidders-overview {
+
   a:hover{ text-decoration: none;}
   background-color: #143753;
   width: 100%;
@@ -19,6 +20,10 @@
   tr.bidder-card {
     border-top: 10px solid #143753;
     border-bottom: 10px solid #143753;
+
+  }
+  .isUser {
+    background-color: #fe5722;
   }
   td {
     cursor: pointer;
@@ -38,5 +43,5 @@
     position: absolute;
     right: 100%;
     top: 0%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    box-shadow: 2px 0px 2px 4px rgba(0, 0, 0, 0.44);
   }
