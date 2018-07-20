@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\Auth;
 class Auction extends Model
 {
   protected $casts = [
-    'queue' =>  'array'
+    'queue' =>  'array',
+    'status' =>  'array',
+    'settings' =>  'array'
+
   ];
 
   public function user(){

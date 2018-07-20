@@ -42,6 +42,8 @@ Route::group(['middleware' => 'auth'],function(){
   Route::post('auctions/bid','AuctionController@bid');
 
   Route::post('auctions/timer','AuctionController@resetTimer');
+  Route::post('auctions/status','AuctionController@setStatus');
+
 
 
   Route::get('auction/messages/{id}', 'ChatsController@fetchMessages');

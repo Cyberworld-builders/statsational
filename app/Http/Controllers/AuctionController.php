@@ -191,6 +191,32 @@ class AuctionController extends Controller
       return $request->seconds;
     }
 
+    public function setStatus(Request $request){
+      $user = Auth::User();
+      $auction = Auction::find($request->auction);
+      $status = $auction->status;
+      if(isset($status->status)){
+        $status->status = array(
+          'in_progress' =>  $request->in_progress,
+          'label' =>  $request->label
+        );
+      } else {
+        $status = array(
+          'status'  =>  array(
+            'in_progress' =>  $request->in_progress,
+            'label' =>  $request->label
+          )
+        );
+      }
+      $auction->status = $status;
+      $auction->save();
+      // $auction->status->status = $status;
+      broadcast(new MessageSent($user, $auction->status, "status"))->toOthers();
+      return $auction->status;
+    }
+
+
+
     public function startNextItem(Request $request){
       $item = Item::find($request->item_id);
       $auction = Auction::find($request->auction_id);

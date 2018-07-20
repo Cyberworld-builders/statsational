@@ -173,6 +173,7 @@ new Vue({
     imActive: true,
     time_remaining: "",
     timer: "",
+    status: "Paused",
 
     selectedBidder: false,
     showCompletedItems: false,
@@ -192,22 +193,24 @@ new Vue({
 
     bid: function bid() {
       this.user.bid.amount = this.bid_amount;
-      if (this.bid_amount >= this.user.bid.minimum) {
-        __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auctions/bid', {
-          auction_id: this.auction.id,
-          bid_amount: this.user.bid.amount,
-          item_id: this.auction.item.id
-        }).then(function (response) {
-          // console.log(response);
-          this.updatePool(response.data.auction);
-          this.resetTimer();
-        }.bind(this)).catch(function (e) {
-          console.log(e);
-        });
-      } else {
-        this.showMinimumBidWarning = true;
-        this.user.bid.amount = this.user.bid.minimum;
-        this.bid_amount = this.user.bid.minimum;
+      if (this.status == "In Progress") {
+        if (this.bid_amount >= this.user.bid.minimum) {
+          __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auctions/bid', {
+            auction_id: this.auction.id,
+            bid_amount: this.user.bid.amount,
+            item_id: this.auction.item.id
+          }).then(function (response) {
+            // console.log(response);
+            this.updatePool(response.data.auction);
+            this.resetTimer();
+          }.bind(this)).catch(function (e) {
+            console.log(e);
+          });
+        } else {
+          this.showMinimumBidWarning = true;
+          this.user.bid.amount = this.user.bid.minimum;
+          this.bid_amount = this.user.bid.minimum;
+        }
       }
     },
     bidMinimum: function bidMinimum() {
@@ -328,7 +331,7 @@ new Vue({
       } else {
         timer.classList.remove('blinking');
       }
-      if (this.auction.queue.length > 0) {
+      if (this.auction.queue.length > 0 && this.auction.status.status.in_progress == true) {
         if (this.time_remaining > 0) {
           this.time_remaining--;
           this.timer = __WEBPACK_IMPORTED_MODULE_6_moment___default()().startOf('day').seconds(this.time_remaining).format('m:ss');
@@ -338,6 +341,28 @@ new Vue({
           }
         }
       }
+    },
+    toggleStatus: function toggleStatus() {
+      if (this.auction.status.status.in_progress) {
+        this.auction.status.status.label = "Paused";
+        this.auction.status.status.in_progress = false;
+      } else {
+        this.auction.status.status.label = "In Progress";
+        this.auction.status.status.in_progress = true;
+      }
+      this.setStatus(this.auction.status.status);
+    },
+    setStatus: function setStatus(status) {
+      __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auctions/status', {
+        auction: this.auction.id,
+        in_progress: status.in_progress,
+        label: status.label
+      }).then(function (response) {
+        console.log(response.data);
+        // this.updatePool();
+      }).catch(function (e) {
+        console.log(e);
+      });
     },
     resetTimer: function resetTimer(seconds) {
       var _this5 = this;
@@ -501,6 +526,22 @@ new Vue({
       this.timer = "0:" + this.auction.bid_timer;
     }
 
+    if (!this.auction.status) {
+      this.auction.status = {
+        status: {
+          in_progress: false,
+          label: "Not Started"
+        }
+      };
+    }
+
+    if (!this.auction.status.status) {
+      this.auction.status.status = {
+        in_progress: false,
+        label: "Not Started"
+      };
+    }
+
     console.log(auction);
   }), _defineProperty(_methods, 'formatMoney', function formatMoney(number) {
     return number;
@@ -555,6 +596,9 @@ new Vue({
           _this10.time_remaining = _this10.auction.bid_timer;
         }
         _this10.updateClock();
+      } else if (e.type == "status") {
+        _this10.auction.status = e.message;
+        console.log(e.message);
       } else if (e.type == "next") {
         _this10.time_remaining = _this10.auction.bid_timer;
         _this10.updateClock();

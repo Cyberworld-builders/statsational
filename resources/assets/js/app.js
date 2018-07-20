@@ -91,6 +91,7 @@ new Vue({
    imActive: true,
    time_remaining: "",
    timer: "",
+   status: "Paused",
 
    selectedBidder: false,
    showCompletedItems: false,
@@ -110,23 +111,26 @@ new Vue({
 
      bid(){
        this.user.bid.amount = this.bid_amount;
-       if(this.bid_amount >= this.user.bid.minimum){
-         axios.post('/auctions/bid',{
-           auction_id: this.auction.id,
-           bid_amount: this.user.bid.amount,
-           item_id: this.auction.item.id
-         }).then(function(response){
-           // console.log(response);
-           this.updatePool(response.data.auction);
-           this.resetTimer();
-         }.bind(this)).catch(e => {
-           console.log(e);
-         });
-       } else {
-         this.showMinimumBidWarning = true;
-         this.user.bid.amount = this.user.bid.minimum;
-         this.bid_amount = this.user.bid.minimum;
+       if(this.status == "In Progress"){
+         if(this.bid_amount >= this.user.bid.minimum){
+           axios.post('/auctions/bid',{
+             auction_id: this.auction.id,
+             bid_amount: this.user.bid.amount,
+             item_id: this.auction.item.id
+           }).then(function(response){
+             // console.log(response);
+             this.updatePool(response.data.auction);
+             this.resetTimer();
+           }.bind(this)).catch(e => {
+             console.log(e);
+           });
+         } else {
+           this.showMinimumBidWarning = true;
+           this.user.bid.amount = this.user.bid.minimum;
+           this.bid_amount = this.user.bid.minimum;
+         }
        }
+
 
      },
      bidMinimum(){
@@ -233,6 +237,8 @@ new Vue({
          });
      },
 
+
+
      countDown(){
        var timer = document.getElementById('timer');
        if(this.time_remaining <= this.auction.snipe_time){
@@ -240,7 +246,7 @@ new Vue({
        } else {
          timer.classList.remove('blinking');
        }
-       if(this.auction.queue.length > 0){
+       if(this.auction.queue.length > 0 && this.auction.status.status.in_progress == true){
          if(this.time_remaining > 0){
            this.time_remaining--;
            this.timer = moment().startOf('day')
@@ -253,6 +259,30 @@ new Vue({
          }
        }
 
+     },
+
+     toggleStatus(){
+       if(this.auction.status.status.in_progress){
+         this.auction.status.status.label = "Paused";
+         this.auction.status.status.in_progress = false;
+       } else {
+         this.auction.status.status.label = "In Progress";
+         this.auction.status.status.in_progress = true;
+       }
+       this.setStatus(this.auction.status.status);
+     },
+
+     setStatus(status){
+       axios.post('/auctions/status',{
+         auction: this.auction.id,
+         in_progress: status.in_progress,
+         label: status.label
+       }).then(response => {
+         console.log(response.data);
+         // this.updatePool();
+       }).catch(e => {
+         console.log(e);
+       });
      },
 
      resetTimer(seconds){
@@ -432,6 +462,22 @@ new Vue({
          this.timer = "0:" + this.auction.bid_timer;
        }
 
+       if(!this.auction.status){
+         this.auction.status = {
+           status: {
+             in_progress: false,
+             label: "Not Started"
+           }
+         };
+       }
+
+       if(!this.auction.status.status){
+         this.auction.status.status = {
+           in_progress: false,
+           label: "Not Started"
+         };
+       }
+
        console.log(auction);
      },
 
@@ -494,6 +540,9 @@ new Vue({
            this.time_remaining = this.auction.bid_timer;
          }
          this.updateClock();
+       } else if (e.type == "status"){
+         this.auction.status = e.message;
+         console.log(e.message);
        } else if (e.type == "next") {
          this.time_remaining = this.auction.bid_timer;
          this.updateClock();

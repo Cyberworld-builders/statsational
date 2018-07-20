@@ -20,9 +20,12 @@
             </div>
 
             <div class="col-4 col-sm-2 col-md-2 col-lg-3 d-xl-block col-xl-2">
-              Status:
-              <span v-if="auction.options"> @{{ auction.options.status }}</span>
-              <span v-else>In Progress</span>
+              <div v-if="auction.status">
+                Status:
+                <span v-if="auction.status.status.in_progress == true">@{{ auction.status.status.label }}</span>
+                <span v-else class="blinking">@{{ auction.status.status.label }}</span>
+              </div>
+
             </div>
 
             <div class="d-none d-sm-none d-md-none d-lg-none d-xl-block col-xl-2">
@@ -67,7 +70,7 @@
                   <a href="#"><span><i class="fa fa-bell"></i></span></a>
                 </div>
                 <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                  <a href="#"><span><i class="fa fa-power-off"></i></span></a>
+                  <a @click="toggleStatus" href="#"><span><i class="fa fa-power-off"></i></span></a>
                 </div>
               </div>
             </div>
