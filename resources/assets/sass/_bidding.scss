@@ -98,13 +98,20 @@
     }
 
     @media only screen and (max-width: 990px ){
-
-    }
-
-    @media only screen and (max-width: 757px ){
       input[type=number],button.bid-button {
         font-size: 24px;
-        width: 128px;
+        width: 75px;
+        height: 58px;
+        margin-left: 5px;
+        margin-right: 5px;
+        display: inline-block;
+      }
+    }
+
+    @media only screen and (max-width: 574px ){
+      input[type=number],button.bid-button {
+        font-size: 24px;
+        width: 75px;
         height: 58px;
         margin-left: 5px;
         margin-right: 5px;

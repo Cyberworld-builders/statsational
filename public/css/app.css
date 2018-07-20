@@ -13738,11 +13738,23 @@ a.text-dark:focus {
   border: 1px;
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 990px) {
   .bidding .bidding-controls input[type=number],
   .bidding .bidding-controls button.bid-button {
     font-size: 24px;
-    width: 128px;
+    width: 75px;
+    height: 58px;
+    margin-left: 5px;
+    margin-right: 5px;
+    display: inline-block;
+  }
+}
+
+@media only screen and (max-width: 574px) {
+  .bidding .bidding-controls input[type=number],
+  .bidding .bidding-controls button.bid-button {
+    font-size: 24px;
+    width: 75px;
     height: 58px;
     margin-left: 5px;
     margin-right: 5px;

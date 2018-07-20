@@ -12,20 +12,24 @@
 
     <nav class="top-bar"> <!-- top bar nav -->
       <div class="row">
-      	<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      	<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
           <div class="row">
-            <div class="col-sm-4 col-md-3 col-lg-3 col-xl-2">
+
+            <div class="col-4 col-sm-4 col-md-3 col-lg-3 col-xl-2">
               Pool: @{{ auction.name }} ($ @{{ Math.round(auction.item.bids[0].amount) }})
             </div>
-            <div class="d-none d-xl-block col-xl-2">
+
+            <div class="col-4 col-sm-2 col-md-2 col-lg-3 d-xl-block col-xl-2">
               Status:
               <span v-if="auction.options"> @{{ auction.options.status }}</span>
               <span v-else>In Progress</span>
             </div>
-            <div class="d-sm-none d-md-none d-lg-none d-xl-block col-xl-2">
+
+            <div class="d-none d-sm-none d-md-none d-lg-none d-xl-block col-xl-2">
               On the Block: @{{ auction.item.name }}
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-3 col-xl-2">
+
+            <div class="d-none d-sm-block col-sm-5 col-md-5 col-lg-3 col-xl-2">
               <p v-if="auction.item.bids.length > 0 && bidders[auction.item.bids[0].user_id]" id="hightest_bidder">
                 Highest Bidder:
                 @{{ bidders[auction.item.bids[0].user_id].name }} ($ @{{  Math.round(auction.item.bids[0].amount) }})
@@ -33,13 +37,13 @@
             </div>
 
 
-            <div class="d-sm-none d-md-none col-lg-3  d-xl-block col-xl-2">
+            <div class=" d-none d-sm-none d-md-none  d-xl-block col-xl-2">
                 <span v-if="bidders[user.id]">Logged In: @{{ bidders[user.id].name }} ($ @{{ bidders[user.id].spend }})</span>
             </div>
 
-            <div class="owner-tools col-sm-3 col-md-4 col-lg-3 col-xl-2">
+            <div class="owner-tools col-4 col-sm-3 col-md-4 col-lg-3 col-xl-2">
               <div class="row icons">
-                <div v-if="showOwnerControls" class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                <div v-if="showOwnerControls" class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                   <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a id="owner-tools" class="nav-link dropdown-toggle text-right pull-right" href="/auctions" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -56,13 +60,13 @@
                     </li>
                   </ul>
                 </div>
-                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                   <a href="#"><span><i class="fa fa-flag"></i></span></a>
                 </div>
-                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                   <a href="#"><span><i class="fa fa-bell"></i></span></a>
                 </div>
-                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                   <a href="#"><span><i class="fa fa-power-off"></i></span></a>
                 </div>
               </div>
@@ -83,18 +87,18 @@
           </a>
       	</div>
 
-        <div class="logo-container d-sm-none d-md-none col-lg-1 col-lg-block d-xl-none">
+        <div class="logo-container d-none d-sm-none d-md-none col-lg-1 d-lg-block d-xl-none">
           <a class="" href="/home">
               <img class="logo-small" src="/images/footer_logo.png" />
           </a>
       	</div>
 
-        <div class="col-sm-2 col-md-2 col-lg-1 col-xl-1 ">
+        <div class="col-3 col-sm-3 col-md-2 col-lg-1 col-xl-1 ">
           <h1 id="timer">@{{ timer }}</h1>
         </div>
 
 
-        <div class="bidding-controls controls col-sm-10 col-md-5 col-lg-4 col-xl-3">
+        <div class="bidding-controls controls col-9 col-sm-9 col-md-5 col-lg-4 col-xl-3">
           <div v-if="auction.queue && auction.queue.length">
         		<button @click="lowerBid" class="btn bid-button"><i class="fa fa-minus"></i></button>
             <input  @focus="$event.target.select()" id="manualBid" type="number" value="bid_amount" v-model="bid_amount">
