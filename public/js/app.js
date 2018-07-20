@@ -597,7 +597,7 @@ new Vue({
         }
         _this10.updateClock();
       } else if (e.type == "status") {
-        _this10.auction.status = e.message;
+        _this10.getAuctionData(_this10.auction.id);
         console.log(e.message);
       } else if (e.type == "next") {
         _this10.time_remaining = _this10.auction.bid_timer;
