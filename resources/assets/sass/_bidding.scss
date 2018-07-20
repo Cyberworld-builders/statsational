@@ -2,26 +2,29 @@
   .logo-container {
     text-align: center;
     background-color: #fff;
-    padding: 20px;
+    padding: 10px;
     img.logo-large {
       max-width: 170px;
     }
     a {
-      background-color: #fff;
-      padding: 0px;
-      text-align: center;
-      width: 100%;
+      // background-color: #fff;
+      // padding: 0px;
+      // text-align: center;
+      // width: 100%;
     }
     img.logo-small {
-      height: 60%;
+
+      height: 56px;
       width: auto;
-      margin-left: auto;
-      margin-right: auto;
+      // height: 60%;
+      // width: auto;
+      // margin-left: auto;
+      margin-left: 10px;
       // max-width: 47px;
       // max-width: 30px;
       // height: auto;
-      padding: 0px;
-
+      // padding: 0px;
+      text-align: center;
     }
 
     img.logo-small {
@@ -78,36 +81,38 @@
     // padding-left: 5px;
     // padding-right: 5px;
 
-    button.bid-button {
-      padding: 0px;
+    input[type=number],button.bid-button {
       font-size: 14px;
       color: #143753;
       font-weight: bold;
       background-color: #fff;
       margin-left: 5px;
       margin-right: 5px;
-    }
-
-    input[type=number],button.bid-button {
+      padding: 0px;
       width: 68px;
       height: 22px;
       text-align: center;
       border-radius: 16px;
+      margin-bottom: 0px;
+      border: 1px;
     }
 
     @media only screen and (max-width: 990px ){
-      // button.bid-button {
-      //   font-size: 14px;
-      //   margin-left: 5px;
-      //   margin-right: 5px;
-      // }
-      //
-      // input[type=number],button.bid-button {
-      //   width: 58px;
-      //   height: 42px;
-      // }
 
     }
+
+    @media only screen and (max-width: 767px ){
+      input[type=number],button.bid-button {
+        font-size: 24px;
+        width: 128px;
+        height: 58px;
+        margin-left: 5px;
+        margin-right: 5px;
+        display: inline-block;
+      }
+    }
+
+
 
   }
 

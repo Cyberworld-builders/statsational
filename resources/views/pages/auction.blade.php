@@ -14,23 +14,26 @@
       <div class="row">
       	<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
           <div class="row">
-            <div class="col-sm-2 col-md-3 col-lg-3 col-xl-2">
+            <div class="col-sm-4 col-md-3 col-lg-3 col-xl-2">
               Pool: @{{ auction.name }} ($ @{{ Math.round(auction.item.bids[0].amount) }})
             </div>
-            <div class="d-md-none d-lg-none d-xl-block col-xl-2">
+            <div class="d-none d-xl-block col-xl-2">
+              Status:
+              <span v-if="auction.options"> @{{ auction.options.status }}</span>
+              <span v-else>In Progress</span>
+            </div>
+            <div class="d-sm-none d-md-none d-lg-none d-xl-block col-xl-2">
               On the Block: @{{ auction.item.name }}
             </div>
-            <div class="col-md-5 col-lg-3 col-xl-2">
+            <div class="col-sm-5 col-md-5 col-lg-3 col-xl-2">
               <p v-if="auction.item.bids.length > 0 && bidders[auction.item.bids[0].user_id]" id="hightest_bidder">
                 Highest Bidder:
                 @{{ bidders[auction.item.bids[0].user_id].name }} ($ @{{  Math.round(auction.item.bids[0].amount) }})
               </p>
             </div>
-            <div class="d-none d-xl-block col-xl-2">
-              Time Remaining: @{{ timer }}
-            </div>
 
-            <div class="d-md-none col-lg-3  d-xl-block col-xl-2">
+
+            <div class="d-sm-none d-md-none col-lg-3  d-xl-block col-xl-2">
                 <span v-if="bidders[user.id]">Logged In: @{{ bidders[user.id].name }} ($ @{{ bidders[user.id].spend }})</span>
             </div>
 
@@ -74,24 +77,24 @@
     <nav class="bidding navbar-dash navbar-expand-md navbar-light text-center"> <!-- bidding controls bar     -->
       <div class="row">
 
-        <div class="logo-container d-none d-xl-block col-xl-2 ">
+        <div class="logo-container col-sm-12 col-md-12 d-md-block d-lg-none d-xl-block col-xl-2 ">
           <a class="navbar-brand" href="/home">
               <img class="logo-large" src="/images/logo.png" />
           </a>
       	</div>
 
-        <div class="logo-container col-md-1 col-lg-1 col-lg-block d-xl-none">
+        <div class="logo-container d-sm-none d-md-none col-lg-1 col-lg-block d-xl-none">
           <a class="" href="/home">
               <img class="logo-small" src="/images/footer_logo.png" />
           </a>
       	</div>
 
-        <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 ">
+        <div class="col-sm-2 col-md-2 col-lg-1 col-xl-1 ">
           <h1 id="timer">@{{ timer }}</h1>
         </div>
 
 
-        <div class="bidding-controls controls col-sm-12 col-md-4 col-lg-4 col-xl-3">
+        <div class="bidding-controls controls col-sm-10 col-md-5 col-lg-4 col-xl-3">
           <div v-if="auction.queue && auction.queue.length">
         		<button @click="lowerBid" class="btn bid-button"><i class="fa fa-minus"></i></button>
             <input  @focus="$event.target.select()" id="manualBid" type="number" value="bid_amount" v-model="bid_amount">
@@ -108,7 +111,7 @@
         </div>
 
 
-        <div class="bidding-controls d-md-block col-md-3 col-lg-3 col-xl-3">
+        <div class="bidding-controls d-md-block col-md-5 col-lg-3 col-xl-3">
 
             <h1 v-if="auction.item.bids.length > 0 && bidders[auction.item.bids[0].user_id]">
               @{{ auction.item.name }}

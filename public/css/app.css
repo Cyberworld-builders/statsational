@@ -13661,26 +13661,18 @@ a.text-dark:focus {
 .bidding .logo-container {
   text-align: center;
   background-color: #fff;
-  padding: 20px;
+  padding: 10px;
 }
 
 .bidding .logo-container img.logo-large {
   max-width: 170px;
 }
 
-.bidding .logo-container a {
-  background-color: #fff;
-  padding: 0px;
-  text-align: center;
-  width: 100%;
-}
-
 .bidding .logo-container img.logo-small {
-  height: 60%;
+  height: 56px;
   width: auto;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0px;
+  margin-left: 10px;
+  text-align: center;
 }
 
 .bidding h1,
@@ -13729,22 +13721,33 @@ a.text-dark:focus {
   margin: 2px;
 }
 
+.bidding .bidding-controls input[type=number],
 .bidding .bidding-controls button.bid-button {
-  padding: 0px;
   font-size: 14px;
   color: #143753;
   font-weight: bold;
   background-color: #fff;
   margin-left: 5px;
   margin-right: 5px;
-}
-
-.bidding .bidding-controls input[type=number],
-.bidding .bidding-controls button.bid-button {
+  padding: 0px;
   width: 68px;
   height: 22px;
   text-align: center;
   border-radius: 16px;
+  margin-bottom: 0px;
+  border: 1px;
+}
+
+@media only screen and (max-width: 767px) {
+  .bidding .bidding-controls input[type=number],
+  .bidding .bidding-controls button.bid-button {
+    font-size: 24px;
+    width: 128px;
+    height: 58px;
+    margin-left: 5px;
+    margin-right: 5px;
+    display: inline-block;
+  }
 }
 
 .bidding .controls {
