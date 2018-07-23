@@ -247,7 +247,7 @@
                       <div class="col-md-12">
                         <div class="row">
                            <div class="col-sm-12 col-md-12">
-                             <div class="panel-body">
+                             <div id="chat-widget-body" class="panel-body">
                                <ul class="chat">
                                    <li class="left clearfix" v-for="message in messages">
                                        <div class="chat-body clearfix">

@@ -234,7 +234,11 @@ new Vue({
      fetchMessages() {
          axios.get('messages/' + this.auction.id).then(response => {
              this.messages = response.data;
+         }).then(response => {
+           var widget = document.getElementById('chat-widget-body');
+           widget.scrollTop = widget.scrollHeight;
          });
+
      },
 
      getTimeRemaining(){

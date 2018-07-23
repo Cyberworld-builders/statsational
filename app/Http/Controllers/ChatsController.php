@@ -42,7 +42,7 @@ class ChatsController extends Controller
           $response[] = $message;
       }
     }
-    rsort($response);
+    // rsort($response);
     return $response;
 
     // return Message::with('user')->get();

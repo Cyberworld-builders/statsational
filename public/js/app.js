@@ -37828,6 +37828,9 @@ new Vue({
 
       __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('messages/' + this.auction.id).then(function (response) {
         _this4.messages = response.data;
+      }).then(function (response) {
+        var widget = document.getElementById('chat-widget-body');
+        widget.scrollTop = widget.scrollHeight;
       });
     },
     getTimeRemaining: function getTimeRemaining() {
