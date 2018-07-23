@@ -38,7 +38,7 @@
           </div>
 
           <div class="checkbox">
-            <label for="manual_next">Require admin to manualy start the next item:</label>
+            <label for="manual_next">Require admin to manually start the next item:</label>
             <input id="manual_next" v-model="manual_next" type="checkbox" />
           </div>
 

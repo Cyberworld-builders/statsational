@@ -37837,23 +37837,24 @@ new Vue({
         var status = response.data;
         _this5.time_remaining = status.time_remaining;
         _this5.auction.status.status = status.status;
+        // console.log(status);
         _this5.updateClock();
       });
     },
     countDown: function countDown() {
       var current_time_remaining = this.time_remaining;
       this.getTimeRemaining();
-      if (this.auction.user.id == document.getElementById('user_id').value) {
-        if (this.auction.queue.length > 0) {
-          if (this.auction.status.status.in_progress == true && this.time_remaining > 0 && current_time_remaining == this.time_remaining) {
-            this.resetTimer(this.time_remaining - 1);
-          } else {
-            if (this.auction.manual_next == 0) {
-              this.startNextItem();
-            }
-          }
-        }
-      }
+      // if(this.auction.user.id == document.getElementById('user_id').value){
+      //   if(this.auction.queue.length > 0 ){
+      //     if(this.auction.status.status.in_progress == true && this.time_remaining > 0 && current_time_remaining == this.time_remaining){
+      //        this.resetTimer(this.time_remaining - 1);
+      //     } else {
+      //       if(this.auction.manual_next == 0){
+      //         this.startNextItem();
+      //       }
+      //     }
+      //   }
+      // }
     },
     toggleStatus: function toggleStatus() {
       if (this.auction.status.status.in_progress) {
@@ -38010,7 +38011,9 @@ new Vue({
     },
     updatePool: function updatePool(auction) {
       this.auction = auction;
-      this.auction.items = [];
+      if (!(auction.items.length > 0)) {
+        this.auction.items = [];
+      }
       this.bidders = auction.bidders;
       this.calculateBidderStats();
 
@@ -85997,7 +86000,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "checkbox" }, [
           _c("label", { attrs: { for: "manual_next" } }, [
-            _vm._v("Require admin to manualy start the next item:")
+            _vm._v("Require admin to manually start the next item:")
           ]),
           _vm._v(" "),
           _c("input", {

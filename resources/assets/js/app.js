@@ -242,6 +242,7 @@ new Vue({
          var status = response.data;
          this.time_remaining = status.time_remaining;
          this.auction.status.status = status.status;
+         // console.log(status);
          this.updateClock();
        });
      },
@@ -249,17 +250,17 @@ new Vue({
      countDown(){
         var current_time_remaining = this.time_remaining;
         this.getTimeRemaining();
-         if(this.auction.user.id == document.getElementById('user_id').value){
-           if(this.auction.queue.length > 0 ){
-             if(this.auction.status.status.in_progress == true && this.time_remaining > 0 && current_time_remaining == this.time_remaining){
-                this.resetTimer(this.time_remaining - 1);
-             } else {
-               if(this.auction.manual_next == 0){
-                 this.startNextItem();
-               }
-             }
-           }
-         }
+         // if(this.auction.user.id == document.getElementById('user_id').value){
+         //   if(this.auction.queue.length > 0 ){
+         //     if(this.auction.status.status.in_progress == true && this.time_remaining > 0 && current_time_remaining == this.time_remaining){
+         //        this.resetTimer(this.time_remaining - 1);
+         //     } else {
+         //       if(this.auction.manual_next == 0){
+         //         this.startNextItem();
+         //       }
+         //     }
+         //   }
+         // }
      },
 
      toggleStatus(){
@@ -426,7 +427,9 @@ new Vue({
 
      updatePool(auction){
        this.auction = auction;
-       this.auction.items = [];
+       if( !( auction.items.length > 0 ) ){
+         this.auction.items = [];
+       }
        this.bidders = auction.bidders;
        this.calculateBidderStats();
 
