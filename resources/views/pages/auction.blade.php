@@ -202,12 +202,21 @@
                  </div>
                  <div class="col-md-2">
                    <b-modal ref="myModalRef" hide-footer title="Add Item">
-                     <form id="addItem" @submit.prevent="addItem" role="form">
-                       <div class="form-group">
+                     <form id="addItem" @submit.prevent="addItem" role="form" enctype="multipart/form-data>
+                       <div class="form-group{{ $errors->has('itemsCsv') ? ' has-error' : '' }}">
                          <label for="name">
                            Item Name
                          </label>
                          <input v-model="name" type="text" class="form-control" id="itemName" />
+                         <hr>
+                         <label for="exampleFormControlFile1">Import from CSV</label>
+                         <input type="file" class="form-control-file" id="itemsCsv">
+
+                         @if ($errors->has('itemsCsv'))
+                             <span class="help-block">
+                             <strong>{{ $errors->first('csv_file') }}</strong>
+                         </span>
+                         @endif
                        </div>
                        <b-btn class="mt-3" block @click="addItem">Add</b-btn>
                      </form>

@@ -45,10 +45,18 @@ class AuctionController extends Controller
      }
 
      public function addItem(Request $request){
-       $item = new Item;
-       $item->name = request('name');
-       $auction = Auction::find(request('auction_id'));
-       $auction->items()->save($item);
+
+
+       if(isset($request->itemsCsv)){
+         $path = $request->file('itemsCsv')->getRealPath();
+       } else {
+         $item = new Item;
+         $item->name = request('name');
+         $auction = Auction::find(request('auction_id'));
+         $auction->items()->save($item);
+       }
+
+
        $queue = array();
        if(isset($auction->queue) && count($auction->queue) > 0){
          $queue = $auction->queue;
