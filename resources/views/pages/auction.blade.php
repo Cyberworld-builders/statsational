@@ -120,7 +120,7 @@
 
         <div class="bidding-controls d-md-block col-md-5 col-lg-3 col-xl-3">
 
-            <h1 v-if="auction.item.bids.length > 0 && bidders[auction.item.bids[0].user_id]">
+            <h1 v-if="auction.item.name">
               @{{ auction.item.name }}
             </h1>
             <h1 v-else class="blinking">Waiting... </h1>
