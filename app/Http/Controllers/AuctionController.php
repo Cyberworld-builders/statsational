@@ -31,6 +31,14 @@ class AuctionController extends Controller
        $auction->snipe_time = request('snipe_time');
        $auction->bid_increment = request('bid_increment');
        $auction->queue = array();
+       $auction->status = array(
+         'status' =>  array(
+           'label'  =>  "Not Started",
+           'in_progress'  =>  false
+         ),
+         'time_remaining' =>  request('bid_timer')
+       );
+       $auction->settings = array();
        $user = Auth::User();
        $user->auctions()->save($auction);
        return $auction->id;
@@ -187,16 +195,52 @@ class AuctionController extends Controller
 
     public function resetTimer(Request $request){
       $user = Auth::User();
-      broadcast(new MessageSent($user, $request->seconds, "timer"))->toOthers();
-      return $request->seconds;
+      $auction = Auction::find($request->auction);
+      $status = $auction->status;
+      if(!isset($status)){
+        $status = array(
+          'time_remaining'  =>  $request->seconds,
+          'status'  =>  array(
+            'label' =>  "Not Started",
+            'in_progress' =>  false
+          )
+        );
+      } else {
+        $status['time_remaining'] = $request->seconds;
+      }
+      $auction->status = $status;
+      $auction->save();
+      // broadcast(new MessageSent($user, $auction->status, "timer"))->toOthers();
+      return $auction->status;
+    }
+
+    public function getTimeRemaining($auction_id){
+      $auction = Auction::find($auction_id);
+      $status = $auction->status;
+      if(!isset($status)){
+        $status = array(
+          'time_remaining'  =>  $auction->bid_timer,
+          'status'  =>  array(
+            'label' =>  "Not Started",
+            'in_progress' =>  false
+          )
+        );
+        $auction->status = $status;
+        $auction->save();
+      } elseif(!isset($status['time_remaining'])) {
+        $status['time_remaining'] = $auction->bid_timer;
+        $auction->status = $status;
+        $auction->save();
+      }
+      return $auction->status;
     }
 
     public function setStatus(Request $request){
       $user = Auth::User();
       $auction = Auction::find($request->auction);
       $status = $auction->status;
-      if(isset($status->status)){
-        $status->status = array(
+      if(isset($status['status'])){
+        $status['status'] = array(
           'in_progress' =>  $request->in_progress,
           'label' =>  $request->label
         );

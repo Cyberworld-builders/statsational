@@ -35,6 +35,7 @@ var GridItem = VueGridLayout.GridItem;
 
 Vue.use(Datetime)
 
+
 new Vue({
  el: '#app',
  components: {
@@ -102,7 +103,7 @@ new Vue({
 
    bid_increment: 5,
 
-   bid_amount: 0
+   bid_amount: 1
 
  },
  methods: {
@@ -110,17 +111,16 @@ new Vue({
      // bidding
 
      bid(){
+       this.resetTimer();
        this.user.bid.amount = this.bid_amount;
-       if(this.status == "In Progress"){
+       if(this.auction.status.status.in_progress == true){
          if(this.bid_amount >= this.user.bid.minimum){
            axios.post('/auctions/bid',{
              auction_id: this.auction.id,
              bid_amount: this.user.bid.amount,
              item_id: this.auction.item.id
            }).then(function(response){
-             // console.log(response);
              this.updatePool(response.data.auction);
-             this.resetTimer();
            }.bind(this)).catch(e => {
              console.log(e);
            });
@@ -237,28 +237,29 @@ new Vue({
          });
      },
 
-
+     getTimeRemaining(){
+       axios.get('/auctions/timer/' + this.auction.id).then(response => {
+         var status = response.data;
+         this.time_remaining = status.time_remaining;
+         this.auction.status.status = status.status;
+         this.updateClock();
+       });
+     },
 
      countDown(){
-       var timer = document.getElementById('timer');
-       if(this.time_remaining <= this.auction.snipe_time){
-         timer.classList.add('blinking');
-       } else {
-         timer.classList.remove('blinking');
-       }
-       if(this.auction.queue.length > 0 && this.auction.status.status.in_progress == true){
-         if(this.time_remaining > 0){
-           this.time_remaining--;
-           this.timer = moment().startOf('day')
-             .seconds(this.time_remaining)
-             .format('m:ss');
-         } else {
-           if(this.auction.manual_next == 0){
-             this.startNextItem();
+        var current_time_remaining = this.time_remaining;
+        this.getTimeRemaining();
+         if(this.auction.user.id == document.getElementById('user_id').value){
+           if(this.auction.queue.length > 0 ){
+             if(this.auction.status.status.in_progress == true && this.time_remaining > 0 && current_time_remaining == this.time_remaining){
+                this.resetTimer(this.time_remaining - 1);
+             } else {
+               if(this.auction.manual_next == 0){
+                 this.startNextItem();
+               }
+             }
            }
          }
-       }
-
      },
 
      toggleStatus(){
@@ -278,7 +279,7 @@ new Vue({
          in_progress: status.in_progress,
          label: status.label
        }).then(response => {
-         console.log(response.data);
+         // console.log(response.data);
          // this.updatePool();
        }).catch(e => {
          console.log(e);
@@ -286,19 +287,20 @@ new Vue({
      },
 
      resetTimer(seconds){
-        if(!seconds){
+        if(typeof(seconds) == "undefined"){
+          if(this.time_remaining <= this.auction.snipe_time){
+            this.time_remaining = this.auction.snipe_time;
+          } else {
+            this.time_remaining = this.auction.bid_timer;
+          }
           seconds = this.time_remaining;
-        } else {
-          this.time_remaining = seconds;
         }
          axios.post('/auctions/timer',{
-           seconds: this.time_remaining
+           auction: this.auction.id,
+           seconds: seconds
          }).then(response => {
-           if(this.time_remaining <= this.auction.snipe_time){
-             this.time_remaining = this.auction.snipe_time;
-           } else {
-             this.time_remaining = this.auction.bid_timer;
-           }
+           var status = response.data;
+           this.time_remaining = status.time_remaining;
            this.updateClock();
          }).catch(e => {
            console.log(e);
@@ -309,11 +311,6 @@ new Vue({
 
      },
 
-     updateClock(){
-       this.timer = moment().startOf('day')
-         .seconds(this.time_remaining)
-         .format('m:ss');
-     },
 
      switchToItem(item){
        // axios.get('/auctions/item/switch/' + item.id,{
@@ -331,7 +328,6 @@ new Vue({
      updateCurrentItem(item){
        axios.get('/auction/data/' + Number(this.auction.id),{
        }).then(response => {
-         console.log(response.data.item);
          this.item = response.data.item;
        }).catch(e => {
          console.log(e);
@@ -339,19 +335,23 @@ new Vue({
      },
 
      updateClock(){
-       this.timer = moment().startOf('day')
-         .seconds(this.time_remaining)
-         .format('m:ss');
+       var timer = document.getElementById('timer');
+         if(this.time_remaining <= this.auction.snipe_time){
+           timer.classList.add('blinking');
+         } else {
+           timer.classList.remove('blinking');
+         }
+         this.timer = moment().startOf('day')
+           .seconds(this.time_remaining)
+           .format('m:ss');
      },
 
      startNextItem(){
-       // console.log(this.auction.item);
        axios.post('/auctions/items/next',{
          auction_id: this.auction.id,
          item_id: this.auction.item.id,
          bid_id: this.getCurrentBid()
        }).then(response => {
-         console.log(response.data);
          this.getAuctionData(this.auction.id);
          this.time_remaining = this.auction.bid_timer;
          this.updateClock();
@@ -367,10 +367,7 @@ new Vue({
          if(this.user.id == this.auction.user.id){
            this.showOwnerControls = true;
          }
-
         this.fetchMessages();
-
-         console.log(response.data);
        }).catch(e => {
          console.log(e);
        });
@@ -382,7 +379,6 @@ new Vue({
          bidder_id: bidder_id,
          auction_id: this.auction.id
        }).then(response => {
-         // console.log(response.data);
          if(response.data.id){
            this.selectedBidder = response.data;
            this.bidders[this.selectedBidder.id] = this.selectedBidder;
@@ -430,9 +426,10 @@ new Vue({
 
      updatePool(auction){
        this.auction = auction;
-       // this.auction.items = [];
+       this.auction.items = [];
        this.bidders = auction.bidders;
        this.calculateBidderStats();
+
        this.user = this.bidders[this.user.id];
        this.user.bid = {
          minimum: 0,
@@ -440,6 +437,7 @@ new Vue({
        };
        this.user.bid.amount = this.getMinimumBid();
        this.user.bid.minimum = this.getMinimumBid();
+
        this.bid_amount = this.user.bid.minimum;
 
        if(auction.bid_timer > 0){
@@ -499,66 +497,41 @@ new Vue({
  },
 
  mounted() {
+   if(document.getElementById('user_id')){
+     this.user.id = document.getElementById('user_id').value;
+   }
    if(document.getElementById('auction_id')){
      this.getAuctionData(document.getElementById('auction_id').value);
-     if(document.getElementById('user_id')){
-       this.user.id = document.getElementById('user_id').value;
-     }
      setInterval(function(){ this.countDown() }.bind(this),1000);
    }
-
-
  },
 
  created() {
-
-
-
-
    // let the same message event handle all real-time updates
    Echo.private('chat')
      .listen('MessageSent', (e) => {
        if(e.type == "chat"){
-         console.log(e);
-         // removed this code to get around cross talk. now the broadcast just triggers everybody to pull fetchMessages()
-         // this.messages.unshift({
-         //   message: e.message.message,
-         //   user: e.user,
-         //   created_at: e.message.created_at
-         // });
          this.fetchMessages();
        } else if (e.type == "bid"){
-         console.log(e);
          this.getAuctionData(document.getElementById('auction_id').value);
          var current_bid = document.getElementById('current_bid');
          current_bid.classList.add('blinking');
          setTimeout(function(){ current_bid.classList.remove('blinking') },2000);
        } else if (e.type == "timer"){
-         if(Number(e.message) <= this.auction.snipe_time){
-           this.time_remaining = this.auction.snipe_time;
-         } else {
-           this.time_remaining = this.auction.bid_timer;
-         }
-         this.updateClock();
+         this.getTimeRemaining();
        } else if (e.type == "status"){
          this.getAuctionData(this.auction.id);
-         console.log(e.message);
        } else if (e.type == "next") {
-         this.time_remaining = this.auction.bid_timer;
-         this.updateClock();
+         this.getTimeRemaining();
          this.auction.queue = e.message.queue;
        } else if (e.type == "update"){
          this.auction = e.message;
          this.getAuctionData(document.getElementById('auction_id').value);
        } else if (e.type == "switchItem"){
-         console.log(e.message);
          this.updateCurrentItem(e.message);
-         this.time_remaining = this.auction.bid_timer;
-         this.updateClock();
+         this.getTimeRemaining();
        }
      });
-
  }
-
 
 });

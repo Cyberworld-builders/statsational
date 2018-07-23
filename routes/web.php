@@ -44,7 +44,7 @@ Route::group(['middleware' => 'auth'],function(){
   Route::post('auctions/timer','AuctionController@resetTimer');
   Route::post('auctions/status','AuctionController@setStatus');
 
-
+  Route::get('auctions/timer/{id}','AuctionController@getTimeRemaining');
 
   Route::get('auction/messages/{id}', 'ChatsController@fetchMessages');
   Route::post('messages', 'ChatsController@sendMessage');

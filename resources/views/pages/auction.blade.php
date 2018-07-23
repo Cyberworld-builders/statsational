@@ -16,7 +16,7 @@
           <div class="row">
 
             <div class="col-4 col-sm-4 col-md-3 col-lg-3 col-xl-2">
-              Pool: @{{ auction.name }} ($ @{{ Math.round(auction.item.bids[0].amount) }})
+              Pool: @{{ auction.name }} <span v-if="auction.item && auction.item.bids.length > 0">($ @{{ Math.round(auction.item.bids[0].amount) }})</span>
             </div>
 
             <div class="col-4 col-sm-2 col-md-2 col-lg-3 d-xl-block col-xl-2">
@@ -29,7 +29,7 @@
             </div>
 
             <div class="d-none d-sm-none d-md-none d-lg-none d-xl-block col-xl-2">
-              On the Block: @{{ auction.item.name }}
+              <span v-if="auction.item">On the Block: @{{ auction.item.name }}</span>
             </div>
 
             <div class="d-none d-sm-block col-sm-5 col-md-5 col-lg-3 col-xl-2">
@@ -104,7 +104,7 @@
         <div class="bidding-controls controls col-9 col-sm-9 col-md-5 col-lg-4 col-xl-3">
           <div v-if="auction.queue && auction.queue.length">
         		<button @click="lowerBid" class="btn bid-button"><i class="fa fa-minus"></i></button>
-            <input  @focus="$event.target.select()" id="manualBid" type="number" value="bid_amount" v-model="bid_amount">
+            <input @focus="$event.target.select()" id="manualBid" type="number" v-model="bid_amount">
               <b-alert class="minimum-bid-warning" variant="danger"
                        dismissible
                        :show="showMinimumBidWarning"
@@ -128,7 +128,7 @@
         </div>
 
         <div class="bidding-controls d-md-none d-lg-none d-xl-block col-xl-3">
-          <h2 v-if="auction.item.bids.length > 0 && bidders[auction.item.bids[0].user_id]">
+          <h2 id="current_bid" v-if="auction.item.bids.length > 0 && bidders[auction.item.bids[0].user_id]">
             @{{ bidders[auction.item.bids[0].user_id].name }}
             ($@{{ Math.round(auction.item.bids[0].amount) }})
           </h2>
@@ -332,7 +332,7 @@
                             <tr v-for="(owned,index) in bidders[selectedBidder.id].owned_items">
                               <th scope="row">@{{ index + 1 }}</th>
                               <td>@{{ owned.item.name }}</td>
-                              <td class="text-right">$ @{{ Math.round(owned.winning_bid.amount) }}</td>
+                              <td class="text-right" >$ @{{ Math.round(owned.winning_bid.amount) }}</td>
                             </tr>
                           </tbody>
                         </thead>
