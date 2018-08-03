@@ -37643,7 +37643,7 @@ new Vue({
   },
 
   data: {
-    layout: [{ id: "Items", "x": 9, "y": 4, "w": 9, "h": 9, "i": "0" }, { id: "Bidders", "x": 9, "y": 0, "w": 3, "h": 27, "i": "2" }, { id: "Chat", "x": 2, "y": 10, "w": 7, "h": 9, "i": "3" }, { id: "Queue", "x": 0, "y": 10, "w": 2, "h": 9, "i": "4" }, { id: "Controls", "x": 0, "y": 0, "w": 12, "h": 2, "i": "5" }],
+    layout: [{ id: "Items", "x": 0, "y": 0, "w": 9, "h": 9, "i": "0" }, { id: "Bidders", "x": 9, "y": 0, "w": 3, "h": 18, "i": "2" }, { id: "Chat", "x": 2, "y": 10, "w": 7, "h": 9, "i": "3" }, { id: "Queue", "x": 0, "y": 10, "w": 2, "h": 9, "i": "4" }],
     auction: {
       item: {
         name: "",
@@ -37701,7 +37701,7 @@ new Vue({
     bid: function bid() {
       this.resetTimer();
       this.user.bid.amount = this.bid_amount;
-      if (this.auction.status.status.in_progress == true && this.time_remaining > 0) {
+      if (this.auction.status.status.in_progress == true) {
         if (this.bid_amount >= this.user.bid.minimum) {
           __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auctions/bid', {
             auction_id: this.auction.id,
@@ -37927,7 +37927,7 @@ new Vue({
     },
     updateClock: function updateClock() {
       var timer = document.getElementById('timer');
-      if (this.time_remaining <= 5 && this.time_remaining != 0) {
+      if (this.time_remaining <= this.auction.snipe_time) {
         timer.classList.add('blinking');
       } else {
         timer.classList.remove('blinking');
