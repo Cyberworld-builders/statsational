@@ -2,6 +2,7 @@
 
   // background-color: #2095f2;
 
+
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 35px;
@@ -43,19 +44,29 @@
     h3 {
       font-size: 16px;
       font-weight: 600;
+
+      color: #fff;
+    }
+    .widget-head {
+      padding: 10px 10px 5px 10px;
+      background-color: #143753;
     }
     .widget-body {
-      max-height: 325px;
+      // max-height: 325px;
       // max-height: 20%;
       // overflow: auto;
+      padding: 20px;
     }
     .scrollable {
       overflow-y: scroll;
     }
   }
 
+
+
   .widget-card {
-    padding: 20px;
+    // padding: 20px;
+
   }
 
 
@@ -101,6 +112,11 @@
   }
 
   .auction-room {
+    .vue-grid-item {
+      margin:0px;
+    }
+    padding: 0px;
+    // width: 90%;
     // padding-left: 75px;
     // padding-right: 75px;
 

@@ -13533,18 +13533,20 @@ a.text-dark:focus {
 .auction .vue-grid-item h3 {
   font-size: 16px;
   font-weight: 600;
+  color: #fff;
+}
+
+.auction .vue-grid-item .widget-head {
+  padding: 10px 10px 5px 10px;
+  background-color: #143753;
 }
 
 .auction .vue-grid-item .widget-body {
-  max-height: 325px;
+  padding: 20px;
 }
 
 .auction .vue-grid-item .scrollable {
   overflow-y: scroll;
-}
-
-.auction .widget-card {
-  padding: 20px;
 }
 
 .auction .info-block {
@@ -13592,6 +13594,14 @@ a.text-dark:focus {
 
 .auction .messaging textarea {
   min-height: 200px;
+}
+
+.auction .auction-room {
+  padding: 0px;
+}
+
+.auction .auction-room .vue-grid-item {
+  margin: 0px;
 }
 
 .auction .auction-room .money-spent {
@@ -13838,10 +13848,28 @@ a.text-dark:focus {
           box-shadow: 2px 0px 2px 4px rgba(0, 0, 0, 0.44);
 }
 
+.items {
+  border-radius: 4px;
+}
+
 .items .disabled {
   text-decoration: line-through;
   font-style: italic;
   opacity: .55;
+}
+
+.bidding-grid {
+  width: 100%;
+  height: 100%;
+  -webkit-box-shadow: 1px 0px 1px 2px rgba(0, 0, 0, 0.44);
+          box-shadow: 1px 0px 1px 2px rgba(0, 0, 0, 0.44);
+  background-color: #fe5722;
+}
+
+.bidding-grid .logo-container {
+  background-color: #fff;
+  padding: 0px;
+  overflow: hidden;
 }
 
 .navbar-laravel {

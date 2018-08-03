@@ -82,7 +82,7 @@
 
 
     <nav class="bidding navbar-dash navbar-expand-md navbar-light text-center"> <!-- bidding controls bar     -->
-      <div class="row">
+      <div class="row"  style="margin: 0px;">
 
         <div class="logo-container col-sm-12 col-md-12 d-md-block d-lg-none d-xl-block col-xl-2 ">
           <a class="navbar-brand" href="/home">
@@ -143,11 +143,8 @@
     </nav> <!-- end bidding controls bar -->
 
 
-
-
-    <div class="row justify-content-center"> <!-- the main content area     -->
+    <div class="row justify-content-center" style="margin:0px;"> <!-- the main content area     -->
       <div class="col-md-12 auction-room"> <!-- full width container for the auction room    -->
-
 
 
 
@@ -157,17 +154,35 @@
           <grid-layout
                   :layout="layout"
                   :col-num="12"
-                  :row-height="30"
+                  :row-height="40"
                   :is-draggable="true"
                   :is-resizable="true"
                   :is-mirrored="false"
                   :vertical-compact="true"
-                  :margin="[10, 10]"
-                  :use-css-transforms="true"
+                  :margin="[0, 0]"
 
           >
 
+          <grid-item
+             :x="layout[4].x"
+             :y="layout[4].y"
+             :w="layout[4].w"
+             :h="layout[4].h"
+             :i="layout[4].i"
+             >
+             <div class="bidding-grid">
 
+               	 <div class="logo-container text-center" >
+
+                     <a class="navbar-brand" href="/home">
+                         <img class="logo-large" src="/images/logo.png" />
+                     </a>
+
+               	 </div>
+
+
+             </div>
+          </grid-item> <!-- end queue widget -->
 
             <grid-item class="items"
                :x="layout[0].x"
@@ -178,12 +193,16 @@
                :drag-allow-from="'h3'"
                >
                  <div class="widget-card">
-                   <h3>Items</h3>
-                   <input id="showCompletedItems" type="checkbox" v-model="showCompletedItems" name="" value="">
-                   <label for="showCompletedItems">
-                     <span>Show Completed Items</span>
-                   </label>
+                   <div class="widget-head">
+                      <h3>Items</h3>
+                   </div>
                    <div v-if="auction.queue" class="widget-body scrollable col-md-12">
+
+                     <input id="showCompletedItems" type="checkbox" v-model="showCompletedItems" name="" value="">
+                     <label for="showCompletedItems">
+                       <span>Show Completed Items</span>
+                     </label>
+
                      <table class="table">
                        <tr>
                          <th>Item</th><th v-if="showCompletedItems">Winning Bid</th><th v-if="showCompletedItems">Bidder</th>
@@ -199,6 +218,7 @@
                      </table>
                      </ul>
                    </div>
+
                  </div>
                  <div class="col-md-2">
                    <b-modal ref="myModalRef" hide-footer title="Add Item">
@@ -376,7 +396,7 @@
 
 
           </grid-layout>
-
+<pre>@{{ layout }}</pre>
         </div> <!-- end full width container -->
     </div> <!-- end main content area     -->
   </div> <!-- end auction room -->
