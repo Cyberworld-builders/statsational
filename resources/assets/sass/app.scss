@@ -2,9 +2,6 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
-// jquery ui
-@import '~jquery-ui/themes/base/all.css';
-
 // Variables
 @import "variables";
 
@@ -14,5 +11,35 @@
 // Font Awesome
 @import "~font-awesome/scss/font-awesome.scss";
 
-@import 'top-bar';
-@import 'control-bar';
+@import 'navbar';
+@import 'dashboard';
+@import 'auction';
+@import 'chat';
+@import 'bidding';
+@import 'bidders-overview';
+@import 'items';
+
+
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.card {
+
+}
+
+.card-header {
+  // color: #fff;
+  // background-color: $light;
+}
+
+.blinking {
+  animation: blinker 0.35s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
