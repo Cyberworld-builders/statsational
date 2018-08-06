@@ -17,13 +17,13 @@
 // gridstack
 @import '~gridstack/dist/gridstack.css';
 
-@import 'navbar';
-@import 'dashboard';
-@import 'auction';
+// @import 'navbar';
+// @import 'dashboard';
+// @import 'auction';
 @import 'chat';
-@import 'bidding';
-@import 'bidders-overview';
-@import 'items';
+// @import 'bidding';
+// @import 'bidders-overview';
+// @import 'items';
 
 
 
@@ -92,6 +92,9 @@
         width: 105px;
         height: auto;
       }
+      a {
+        color: $darkblue;
+      }
     }
 
     .info-container {
@@ -99,7 +102,25 @@
       padding-left: 15px;
       a {
         color: #fff;
+        padding: 0px;
+
       }
+
+      .dropdown-menu {
+        .dropdown-item {
+          line-height: 1.5;
+        }
+        a {
+          color: $darkblue;
+          padding-left: 10px;
+        }
+        a:hover {
+          background-color: $orange;
+        }
+      }
+
+
+
     }
 
   }
@@ -107,15 +128,16 @@
   .controlbar {
 
     overflow: hidden;
-
-    color: #fff;
     background-color: $orange;
+    color: #fff;
+
     width: 100%;
 
     .control-container-wrapper {
       margin-left: auto;
       margin-right: auto;
       padding: 15px;
+
     }
 
     .control-container {
@@ -125,14 +147,14 @@
       .control-item {
 
         padding: 5px;
-        line-height:25px;
+        line-height:12px;
         color: white;
-        font-size: 1.75em;
+        font-size: 1.25em;
         font-weight: bold;
 
         .control-wrapper {
-          margin-left: auto;
-          margin-right: auto;
+          // margin-left: auto;
+          // margin-right: auto;
         }
         .control {
 
@@ -141,7 +163,7 @@
 
               input[type=number]{
                 position: relative;
-                bottom: 4.0px;
+                bottom: 1.0px;
               }
 
               input[type=number],button.bid-button {
@@ -151,8 +173,7 @@
                 color: #143753;
                 font-weight: bold;
                 background-color: #fff;
-                margin-left: 5px;
-                margin-right: 5px;
+
                 padding: 0px;
                 width: 68px;
                 height: 22px;
@@ -162,39 +183,23 @@
                 border: 1px;
               }
 
-              @media only screen and (max-width: 990px ){
+              @media only screen and (max-width: 767px ){
 
                 input[type=number]{
                   position: relative;
-                  bottom: 0px;
+                  bottom: -2px;
                 }
 
                 input[type=number],button.bid-button {
                   font-size: 24px;
                   width: 75px;
                   height: 58px;
-                  margin-left: 5px;
-                  margin-right: 5px;
+
                   display: inline-block;
                 }
               }
 
-              @media only screen and (max-width: 574px ){
 
-                input[type=number]{
-                  position: relative;
-                  bottom: 0px;
-                }
-
-                input[type=number],button.bid-button {
-                  font-size: 24px;
-                  width: 75px;
-                  height: 58px;
-                  margin-left: 5px;
-                  margin-right: 5px;
-                  display: inline-block;
-                }
-              }
 
 
 
@@ -205,13 +210,147 @@
       }
     }
 
+    .previous-bids {
+
+      .bid-list {
+        max-height: 125px;
+        overflow: scroll;
+
+      }
+      td {
+        line-height: 8px;
+        font-size: 1.0em;
+        padding: 8px;
+        border-top: 0px;
+      }
+    }
+
 
 
 
   }
 
+
+  ::-webkit-scrollbar {
+  display: none;
+  }
+
   .widgets {
+    .main-content, .sidebar {
+      padding: 0px;
+    }
     .widget {
+      .widget-container {
+        border-radius: 4px;
+        overflow: scroll;
+        .widget-header {
+          h3{
+            font-size: 1.0em;
+            line-height: 15px;
+            font-weight: bold;
+          }
+
+          border-radius: 4px 4px 0px 0px;
+          width: 100%;
+          background-color: $darkblue;
+          color: #fff;
+          cursor: grab;
+        }
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+          background-color: #fff;
+      }
+
+
+
+
+
+      .chat-widget {
+        padding: 25px;
+        button {
+          border-radius: 16px;
+          width: 78px;
+          height: 22px;
+          padding: 0px;
+          font-size: 14px;
+          color: #143753;
+          font-weight: bold;
+          background-color: #fff;
+          margin-left: 15px;
+          margin-right: 15px;
+        }
+        .chat {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+        }
+        .chat li {
+          margin-bottom: 10px;
+          padding-bottom: 5px;
+          border-bottom: 1px dotted #B3A9A9;
+        }
+        .chat li .chat-body p {
+          margin: 0;
+          color: #777777;
+        }
+        .panel-body {
+          overflow-y: scroll;
+          height: 225px;
+        }
+        .input-group {
+          margin: 5px;
+          label { padding: 10px;}
+        }
+      }
+
+      .bidders-overview {
+
+        a:hover{ text-decoration: none;}
+        background-color: #143753;
+        width: 100%;
+        height: 100%;
+        border-radius: 4px;
+        padding: 10px;
+        // border: 1px solid #707070;
+        h3 {color: #fff; font-size: 16px; font-weight: bold;}
+        .bidder-card {
+          background-color: #fff;
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #707070;
+          margin-top: 10px;
+          margin-bottom: 10px;
+
+        }
+        tr.bidder-card {
+          border-top: 10px solid #143753;
+          border-bottom: 10px solid #143753;
+
+        }
+        .isUser {
+          background-color: #fe5722;
+        }
+        td {
+          cursor: pointer;
+        }
+        p,span,strong,th {
+          color: #143753;
+          margin: 0px;
+        }
+        .players-needed { color: #ff5722; }
+
+
+      }
+
+
+      .bidders-overview-details.widget-card {
+          width: 100%;
+          position: absolute;
+          right: 100%;
+          top: 0%;
+          box-shadow: 2px 0px 2px 4px rgba(0, 0, 0, 0.44);
+        }
+
+
 
     }
   }

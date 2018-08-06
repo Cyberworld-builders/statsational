@@ -15349,170 +15349,6 @@ a.text-dark:focus {
   clip: auto;
 }
 
-.navbar img.logo-small {
-  height: 60px;
-}
-
-.top-bar {
-  height: 23px;
-  font-size: 12px;
-  color: #f4f6f5;
-  background-color: #143753;
-  padding: 2px 20px 2px 20px;
-}
-
-.top-bar .owner-tools {
-  text-align: right;
-}
-
-.top-bar .owner-tools a {
-  color: #fff;
-  padding: 0px;
-}
-
-.top-bar .owner-tools span {
-  width: 175px;
-}
-
-.top-bar .owner-tools .dropdown-menu a {
-  color: #143753;
-  padding-left: 10px;
-}
-
-.top-bar .owner-tools .dropdown-menu a:hover {
-  background-color: #fe5722;
-}
-
-.top-bar button {
-  border-radius: 16px;
-  font-size: 12px;
-  color: #fff;
-  font-weight: medium;
-  background-color: #3ac9d1;
-  margin-left: 15px;
-  margin-right: 15px;
-}
-
-.dashboard {
-  background-color: #f5f6fa;
-}
-
-.auction {
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 35px;
-}
-
-.auction ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #F5F5F5;
-}
-
-.auction ::-webkit-scrollbar {
-  width: 12px;
-  background-color: #F5F5F5;
-}
-
-.auction ::-webkit-scrollbar-thumb {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #555;
-}
-
-.auction input::-webkit-outer-spin-button,
-.auction input::-webkit-inner-spin-button {
-  /* display: none; <- Crashes Chrome on hover */
-  -webkit-appearance: none;
-  margin: 0;
-  /* <-- Apparently some margin are still there even though it's hidden */
-}
-
-.auction .vue-grid-item {
-  width: 100%;
-  border: .5px solid #e7e8ec;
-  border-radius: 4px;
-  background-color: #fff;
-  padding: 0px;
-  color: #133854;
-  margin: 10px;
-}
-
-.auction .vue-grid-item h3 {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.auction .vue-grid-item .widget-body {
-  max-height: 325px;
-}
-
-.auction .vue-grid-item .scrollable {
-  overflow-y: scroll;
-}
-
-.auction .widget-card {
-  padding: 20px;
-}
-
-.auction .info-block {
-  margin-left: auto;
-  margin-right: auto;
-  margin: 25px;
-}
-
-.auction .info-block .bid-button {
-  max-width: 60px;
-  max-height: 60px;
-}
-
-.auction .info-block button.small,
-.auction .info-block input[type=number] {
-  width: 55px;
-  height: 55px;
-  margin: 3px;
-}
-
-.auction ul {
-  list-style-type: none;
-}
-
-.auction ul li {
-  text-align: left;
-}
-
-.auction .top-line {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-  margin-bottom: 15px;
-}
-
-.auction .top-line h2 {
-  line-height: normal;
-}
-
-.auction .top-line span {
-  line-height: 3;
-}
-
-.auction .administration .auction-controls button {
-  margin: 5px;
-}
-
-.auction .messaging textarea {
-  min-height: 200px;
-}
-
-.auction .auction-room .money-spent {
-  text-align: right;
-}
-
-.auction .auction-room .money-spent span {
-  color: #fff;
-}
-
-.auction .auction-room .money-spent span.spent {
-  color: #ff5722;
-  font-weight: 550;
-}
-
 .chat-widget {
   padding: 25px;
 }
@@ -15558,196 +15394,6 @@ a.text-dark:focus {
 
 .chat-widget .input-group label {
   padding: 10px;
-}
-
-.bidding {
-  background-color: #fe5722;
-}
-
-.bidding .logo-container {
-  text-align: center;
-  background-color: #fff;
-  padding: 10px;
-}
-
-.bidding .logo-container img.logo-large {
-  max-width: 170px;
-}
-
-.bidding .logo-container img.logo-small {
-  height: 56px;
-  width: auto;
-  margin-left: 10px;
-  text-align: center;
-}
-
-.bidding h1,
-.bidding h2 {
-  color: #fff;
-  margin: 15px 0px 15px 0px;
-}
-
-.bidding h2 {
-  font-size: 2.0rem;
-}
-
-@media only screen and (max-width: 1244px) {
-  .bidding h1 {
-    font-size: 2.0rem;
-    margin: 18px 0px 18px 0px;
-  }
-
-  .bidding h2 {
-    font-size: 1.0rem;
-    margin: 18px 0px 18px 0px;
-  }
-}
-
-.bidding .minimum-bid-warning {
-  position: fixed;
-  top: 55px;
-  right: 55px;
-  z-index: 1000;
-}
-
-.bidding .bidding-controls label {
-  color: #fff;
-}
-
-.bidding .bidding-controls span {
-  font-size: 24px;
-}
-
-.bidding .bidding-controls p,
-.bidding .bidding-controls small,
-.bidding .bidding-controls label {
-  font-size: 14px;
-  font-weight: 550;
-  color: #fff;
-  margin: 2px;
-}
-
-.bidding .bidding-controls input[type=number],
-.bidding .bidding-controls button.bid-button {
-  font-size: 14px;
-  color: #143753;
-  font-weight: bold;
-  background-color: #fff;
-  margin-left: 5px;
-  margin-right: 5px;
-  padding: 0px;
-  width: 68px;
-  height: 22px;
-  text-align: center;
-  border-radius: 16px;
-  margin-bottom: 0px;
-  border: 1px;
-}
-
-@media only screen and (max-width: 990px) {
-  .bidding .bidding-controls input[type=number],
-  .bidding .bidding-controls button.bid-button {
-    font-size: 24px;
-    width: 75px;
-    height: 58px;
-    margin-left: 5px;
-    margin-right: 5px;
-    display: inline-block;
-  }
-}
-
-@media only screen and (max-width: 574px) {
-  .bidding .bidding-controls input[type=number],
-  .bidding .bidding-controls button.bid-button {
-    font-size: 24px;
-    width: 75px;
-    height: 58px;
-    margin-left: 5px;
-    margin-right: 5px;
-    display: inline-block;
-  }
-}
-
-.bidding .controls {
-  padding: 25px 0px 25px 0px;
-}
-
-.bidding .navbar-dash {
-  padding: 0px;
-}
-
-.bidding .navbar-home {
-  background-color: #fff;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-
-.bidders-overview {
-  background-color: #143753;
-  width: 100%;
-  height: 100%;
-  border-radius: 4px;
-  padding: 10px;
-}
-
-.bidders-overview a:hover {
-  text-decoration: none;
-}
-
-.bidders-overview h3 {
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.bidders-overview .bidder-card {
-  background-color: #fff;
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #707070;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.bidders-overview tr.bidder-card {
-  border-top: 10px solid #143753;
-  border-bottom: 10px solid #143753;
-}
-
-.bidders-overview .isUser {
-  background-color: #fe5722;
-}
-
-.bidders-overview td {
-  cursor: pointer;
-}
-
-.bidders-overview p,
-.bidders-overview span,
-.bidders-overview strong,
-.bidders-overview th {
-  color: #143753;
-  margin: 0px;
-}
-
-.bidders-overview .players-needed {
-  color: #ff5722;
-}
-
-.bidders-overview-details.widget-card {
-  width: 100%;
-  position: absolute;
-  right: 100%;
-  top: 0%;
-  -webkit-box-shadow: 2px 0px 2px 4px rgba(0, 0, 0, 0.44);
-          box-shadow: 2px 0px 2px 4px rgba(0, 0, 0, 0.44);
-}
-
-.items .disabled {
-  text-decoration: line-through;
-  font-style: italic;
-  opacity: .55;
 }
 
 .navbar-laravel {
@@ -15816,6 +15462,10 @@ a.text-dark:focus {
   height: auto;
 }
 
+.auction-new .topbar .logo-container a {
+  color: #143753;
+}
+
 .auction-new .topbar .info-container {
   text-align: left;
   padding-left: 15px;
@@ -15823,12 +15473,26 @@ a.text-dark:focus {
 
 .auction-new .topbar .info-container a {
   color: #fff;
+  padding: 0px;
+}
+
+.auction-new .topbar .info-container .dropdown-menu .dropdown-item {
+  line-height: 1.5;
+}
+
+.auction-new .topbar .info-container .dropdown-menu a {
+  color: #143753;
+  padding-left: 10px;
+}
+
+.auction-new .topbar .info-container .dropdown-menu a:hover {
+  background-color: #fe5722;
 }
 
 .auction-new .controlbar {
   overflow: hidden;
-  color: #fff;
   background-color: #fe5722;
+  color: #fff;
   width: 100%;
 }
 
@@ -15840,15 +15504,10 @@ a.text-dark:focus {
 
 .auction-new .controlbar .control-container .control-item {
   padding: 5px;
-  line-height: 25px;
+  line-height: 12px;
   color: white;
-  font-size: 1.75em;
+  font-size: 1.25em;
   font-weight: bold;
-}
-
-.auction-new .controlbar .control-container .control-item .control-wrapper {
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .auction-new .controlbar .control-container .control-item .control {
@@ -15857,7 +15516,7 @@ a.text-dark:focus {
 
 .auction-new .controlbar .control-container .control-item .control .bidding-controls input[type=number] {
   position: relative;
-  bottom: 4.0px;
+  bottom: 1.0px;
 }
 
 .auction-new .controlbar .control-container .control-item .control .bidding-controls input[type=number],
@@ -15866,8 +15525,6 @@ a.text-dark:focus {
   color: #143753;
   font-weight: bold;
   background-color: #fff;
-  margin-left: 5px;
-  margin-right: 5px;
   padding: 0px;
   width: 68px;
   height: 22px;
@@ -15877,10 +15534,10 @@ a.text-dark:focus {
   border: 1px;
 }
 
-@media only screen and (max-width: 990px) {
+@media only screen and (max-width: 767px) {
   .auction-new .controlbar .control-container .control-item .control .bidding-controls input[type=number] {
     position: relative;
-    bottom: 0px;
+    bottom: -2px;
   }
 
   .auction-new .controlbar .control-container .control-item .control .bidding-controls input[type=number],
@@ -15888,26 +15545,159 @@ a.text-dark:focus {
     font-size: 24px;
     width: 75px;
     height: 58px;
-    margin-left: 5px;
-    margin-right: 5px;
     display: inline-block;
   }
 }
 
-@media only screen and (max-width: 574px) {
-  .auction-new .controlbar .control-container .control-item .control .bidding-controls input[type=number] {
-    position: relative;
-    bottom: 0px;
-  }
+.auction-new .controlbar .previous-bids .bid-list {
+  max-height: 125px;
+  overflow: scroll;
+}
 
-  .auction-new .controlbar .control-container .control-item .control .bidding-controls input[type=number],
-  .auction-new .controlbar .control-container .control-item .control .bidding-controls button.bid-button {
-    font-size: 24px;
-    width: 75px;
-    height: 58px;
-    margin-left: 5px;
-    margin-right: 5px;
-    display: inline-block;
-  }
+.auction-new .controlbar .previous-bids td {
+  line-height: 8px;
+  font-size: 1.0em;
+  padding: 8px;
+  border-top: 0px;
+}
+
+.auction-new ::-webkit-scrollbar {
+  display: none;
+}
+
+.auction-new .widgets .main-content,
+.auction-new .widgets .sidebar {
+  padding: 0px;
+}
+
+.auction-new .widgets .widget .widget-container {
+  border-radius: 4px;
+  overflow: scroll;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  background-color: #fff;
+}
+
+.auction-new .widgets .widget .widget-container .widget-header {
+  border-radius: 4px 4px 0px 0px;
+  width: 100%;
+  background-color: #143753;
+  color: #fff;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.auction-new .widgets .widget .widget-container .widget-header h3 {
+  font-size: 1.0em;
+  line-height: 15px;
+  font-weight: bold;
+}
+
+.auction-new .widgets .widget .chat-widget {
+  padding: 25px;
+}
+
+.auction-new .widgets .widget .chat-widget button {
+  border-radius: 16px;
+  width: 78px;
+  height: 22px;
+  padding: 0px;
+  font-size: 14px;
+  color: #143753;
+  font-weight: bold;
+  background-color: #fff;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.auction-new .widgets .widget .chat-widget .chat {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.auction-new .widgets .widget .chat-widget .chat li {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px dotted #B3A9A9;
+}
+
+.auction-new .widgets .widget .chat-widget .chat li .chat-body p {
+  margin: 0;
+  color: #777777;
+}
+
+.auction-new .widgets .widget .chat-widget .panel-body {
+  overflow-y: scroll;
+  height: 225px;
+}
+
+.auction-new .widgets .widget .chat-widget .input-group {
+  margin: 5px;
+}
+
+.auction-new .widgets .widget .chat-widget .input-group label {
+  padding: 10px;
+}
+
+.auction-new .widgets .widget .bidders-overview {
+  background-color: #143753;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.auction-new .widgets .widget .bidders-overview a:hover {
+  text-decoration: none;
+}
+
+.auction-new .widgets .widget .bidders-overview h3 {
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.auction-new .widgets .widget .bidders-overview .bidder-card {
+  background-color: #fff;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #707070;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.auction-new .widgets .widget .bidders-overview tr.bidder-card {
+  border-top: 10px solid #143753;
+  border-bottom: 10px solid #143753;
+}
+
+.auction-new .widgets .widget .bidders-overview .isUser {
+  background-color: #fe5722;
+}
+
+.auction-new .widgets .widget .bidders-overview td {
+  cursor: pointer;
+}
+
+.auction-new .widgets .widget .bidders-overview p,
+.auction-new .widgets .widget .bidders-overview span,
+.auction-new .widgets .widget .bidders-overview strong,
+.auction-new .widgets .widget .bidders-overview th {
+  color: #143753;
+  margin: 0px;
+}
+
+.auction-new .widgets .widget .bidders-overview .players-needed {
+  color: #ff5722;
+}
+
+.auction-new .widgets .widget .bidders-overview-details.widget-card {
+  width: 100%;
+  position: absolute;
+  right: 100%;
+  top: 0%;
+  -webkit-box-shadow: 2px 0px 2px 4px rgba(0, 0, 0, 0.44);
+          box-shadow: 2px 0px 2px 4px rgba(0, 0, 0, 0.44);
 }
 

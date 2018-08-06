@@ -506,19 +506,15 @@ new Vue({
    $('.draggable').draggable();
    $('.resizable').resizable();
 
-   $('.controlbar').resizable(
-     {
+   // $('.controlbar').resizable();
 
-     }
-   );
-
-   $('.controlbar').draggable(
-      {
-        snap:".topbar",
-        cancel: ".control-item"
-      }
-   );
-
+   // $('.controlbar').draggable(
+   //    {
+   //      snap:".topbar",
+   //      cancel: ".control-item"
+   //    }
+   // );
+   //
          $('.control-container').draggable(
            {
              containment:".controlbar",
@@ -528,19 +524,29 @@ new Vue({
            }
          );
 
-               $('.control').draggable(
-                 {
-                   containment:".controlbar",
-                   stack: ".control",
-                   cancel: ".control-ui",
-                   cursor: "move"
-                 }
-               );
+   //             $('.control').draggable(
+   //               {
+   //                 containment:".controlbar",
+   //                 stack: ".control",
+   //                 cancel: ".control-ui",
+   //                 cursor: "move"
+   //               }
+   //             );
+   //
+   //
+   //
+   //
+   $('.widget-container').draggable(
+     {
+       grid: [80,80],
+       handle: ".widget-header",
+       containment: ".widgets",
+       cursor: "grab",
+       stack: ".widget-container"
+     }
+   );
+   $('.widget-container').resizable();
 
-
-
-
-   $('.widget').draggable({ grid: [80,80] });
 
 
 
