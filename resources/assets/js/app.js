@@ -23,33 +23,31 @@ import 'vue-datetime/dist/vue-datetime.css'
 import axios from 'axios'
 import moment from 'moment'
 
-var testLayout = [
 
-
-];
+import 'lodash/lodash.js'
 
 window.$ = window.jQuery = require('jquery');
-import 'jquery-ui/ui/widgets/datepicker.js';
+import 'jquery-ui/ui/core.js';
+import 'jquery-ui/ui/widget.js';
+import 'jquery-ui/ui/data.js';
 import 'jquery-ui/ui/widgets/resizable.js';
 import 'jquery-ui/ui/widgets/draggable.js';
+import 'jquery-ui/ui/widgets/mouse.js';
+
+
+
+
+import 'gridstack/dist/gridstack.js';
+// import 'gridstack/src/gridstack.jQueryUI.js';
+
 
 Vue.use(Datetime)
 
 
 new Vue({
  el: '#app',
- components: {
-   GridLayout,
-   GridItem
- },
 
  data: {
-   layout: [
-        {id: "Items","x":0,"y":0,"w":9,"h":9,"i":"0"},
-        {id: "Bidders","x":9,"y":0,"w":3,"h":18,"i":"2"},
-        {id: "Chat","x":2,"y":10,"w":7,"h":9,"i":"3"},
-        {id: "Queue","x":0,"y":10,"w":2,"h":9,"i":"4"}
-     ],
    auction: {
      item: {
        name: "",
@@ -504,6 +502,49 @@ new Vue({
  },
 
  mounted() {
+
+   $('.draggable').draggable();
+   $('.resizable').resizable();
+
+   $('.controlbar').resizable(
+     {
+
+     }
+   );
+
+   $('.controlbar').draggable(
+      {
+        snap:".topbar",
+        cancel: ".control-item"
+      }
+   );
+
+         $('.control-container').draggable(
+           {
+             containment:".controlbar",
+             stack: ".control-container",
+             cancel: ".control",
+             cursor: "move"
+           }
+         );
+
+               $('.control').draggable(
+                 {
+                   containment:".controlbar",
+                   stack: ".control",
+                   cancel: ".control-ui",
+                   cursor: "move"
+                 }
+               );
+
+
+
+
+   $('.widget').draggable({ grid: [80,80] });
+
+
+
+
    if(document.getElementById('user_id')){
      this.user.id = document.getElementById('user_id').value;
    }
@@ -511,6 +552,7 @@ new Vue({
      this.getAuctionData(document.getElementById('auction_id').value);
      setInterval(function(){ this.countDown() }.bind(this),1000);
    }
+
  },
 
  created() {

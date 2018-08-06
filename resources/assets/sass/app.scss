@@ -11,6 +11,12 @@
 // Font Awesome
 @import "~font-awesome/scss/font-awesome.scss";
 
+// jquery ui
+@import '~jquery-ui/themes/base/all.css';
+
+// gridstack
+@import '~gridstack/dist/gridstack.css';
+
 @import 'navbar';
 @import 'dashboard';
 @import 'auction';
@@ -18,6 +24,8 @@
 @import 'bidding';
 @import 'bidders-overview';
 @import 'items';
+
+
 
 
 
@@ -42,4 +50,170 @@
   50% {
     opacity: 0;
   }
+}
+
+
+.auction-new {
+
+  background-color: $background;
+
+  .topbar {
+
+    width: 100%;
+    background-color: $darkblue;
+
+    .topbar-container {
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      flex-flow: row wrap;
+      -webkit-flex-flow: row wrap;
+      justify-content: space-around;
+    }
+
+    .topbar-item {
+      padding: 0px;
+      text-align: center;
+      line-height: 55px;
+      color: white;
+      font-size: 1.0em;
+    }
+
+    .logo-container {
+      width: 100%;
+      background-color: #fff;
+      img.logo {
+        width: 105px;
+        height: auto;
+      }
+    }
+
+    .info-container {
+      text-align: left;
+      padding-left: 15px;
+      a {
+        color: #fff;
+      }
+    }
+
+  }
+
+  .controlbar {
+
+    overflow: hidden;
+
+    color: #fff;
+    background-color: $orange;
+    width: 100%;
+
+    .control-container-wrapper {
+      margin-left: auto;
+      margin-right: auto;
+      padding: 15px;
+    }
+
+    .control-container {
+
+
+
+      .control-item {
+
+        padding: 5px;
+        line-height:25px;
+        color: white;
+        font-size: 1.75em;
+        font-weight: bold;
+
+        .control-wrapper {
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .control {
+
+            background-color: $orange;
+            .bidding-controls {
+
+              input[type=number]{
+                position: relative;
+                bottom: 4.0px;
+              }
+
+              input[type=number],button.bid-button {
+
+
+                font-size: 14px;
+                color: #143753;
+                font-weight: bold;
+                background-color: #fff;
+                margin-left: 5px;
+                margin-right: 5px;
+                padding: 0px;
+                width: 68px;
+                height: 22px;
+                text-align: center;
+                border-radius: 16px;
+                margin-bottom: 0px;
+                border: 1px;
+              }
+
+              @media only screen and (max-width: 990px ){
+
+                input[type=number]{
+                  position: relative;
+                  bottom: 0px;
+                }
+
+                input[type=number],button.bid-button {
+                  font-size: 24px;
+                  width: 75px;
+                  height: 58px;
+                  margin-left: 5px;
+                  margin-right: 5px;
+                  display: inline-block;
+                }
+              }
+
+              @media only screen and (max-width: 574px ){
+
+                input[type=number]{
+                  position: relative;
+                  bottom: 0px;
+                }
+
+                input[type=number],button.bid-button {
+                  font-size: 24px;
+                  width: 75px;
+                  height: 58px;
+                  margin-left: 5px;
+                  margin-right: 5px;
+                  display: inline-block;
+                }
+              }
+
+
+
+            }
+
+
+        }
+      }
+    }
+
+
+
+
+  }
+
+  .widgets {
+    .widget {
+
+    }
+  }
+
 }
