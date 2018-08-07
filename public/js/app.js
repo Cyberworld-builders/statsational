@@ -56305,45 +56305,51 @@ new Vue({
 
   mounted: function mounted() {
 
-    $('.draggable').draggable();
-    $('.resizable').resizable();
+    // $('.draggable').draggable();
+    // $('.resizable').resizable();
 
-    // $('.controlbar').resizable();
+    $('.controlbar').resizable();
 
-    // $('.controlbar').draggable(
-    //    {
-    //      snap:".topbar",
-    //      cancel: ".control-item"
-    //    }
-    // );
-    //
+    $('.controlbar').draggable({
+      snap: ".topbar",
+      cancel: ".control-item"
+    });
+
     $('.control-container').draggable({
-      containment: ".controlbar",
+      grid: [20, 20],
       stack: ".control-container",
       cancel: ".control",
       cursor: "move"
     });
 
-    //             $('.control').draggable(
-    //               {
-    //                 containment:".controlbar",
-    //                 stack: ".control",
-    //                 cancel: ".control-ui",
-    //                 cursor: "move"
-    //               }
-    //             );
-    //
-    //
-    //
-    //
+    $('.previous-bids').draggable({
+      grid: [20, 20],
+      stack: ".control-container",
+      cancel: ".control",
+      cursor: "move"
+    });
+
+    $('.control').draggable({
+      containment: ".controlbar",
+      stack: ".control",
+      cancel: ".control-ui",
+      cursor: "move"
+    });
+
     $('.widget-container').draggable({
-      grid: [80, 80],
+      grid: [20, 20],
       handle: ".widget-header",
-      containment: ".widgets",
       cursor: "grab",
       stack: ".widget-container"
     });
     $('.widget-container').resizable();
+
+    $('.sidebar').draggable({
+      grid: [20, 20],
+      stack: ".widget-container",
+      handle: "h3"
+    });
+    $('.bidders-overview').resizable();
 
     if (document.getElementById('user_id')) {
       this.user.id = document.getElementById('user_id').value;
