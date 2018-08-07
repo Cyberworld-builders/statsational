@@ -251,8 +251,8 @@ html, body, .dashboard, main {
       padding: 0px;
     }
     .widget {
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
-      background-color: #fff;
+
+
       .add-item-button {
         background-color: $darkblue;
       }
@@ -260,6 +260,8 @@ html, body, .dashboard, main {
         border-radius: 8px;
         max-height: 365px;
         overflow: scroll;
+        background-color: #fff;
+        box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.12);
         .widget-header {
           h3{
             font-size: 1.0em;
@@ -274,7 +276,7 @@ html, body, .dashboard, main {
           cursor: grab;
         }
         .widget-body {
-      
+
         }
 
       }

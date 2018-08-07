@@ -15208,12 +15208,6 @@ a.text-dark:focus {
   padding: 0px;
 }
 
-.auction-new .widgets .widget {
-  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
-  background-color: #fff;
-}
-
 .auction-new .widgets .widget .add-item-button {
   background-color: #143753;
 }
@@ -15222,6 +15216,9 @@ a.text-dark:focus {
   border-radius: 8px;
   max-height: 365px;
   overflow: scroll;
+  background-color: #fff;
+  -webkit-box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.12);
+          box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.12);
 }
 
 .auction-new .widgets .widget .widget-container .widget-header {

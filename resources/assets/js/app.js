@@ -537,7 +537,7 @@ new Vue({
 
        $('.control-container').draggable(
          {
-           grid: [20,20],
+           grid: [5,5],
            stack: ".control-container",
            cancel: ".control",
            cursor: "move"
@@ -546,7 +546,7 @@ new Vue({
 
        $('.previous-bids').draggable(
          {
-           grid: [20,20],
+           grid: [5,5],
            stack: ".control-container",
            cancel: ".control",
            cursor: "move"
@@ -567,7 +567,7 @@ new Vue({
 
    $('.widget-container').draggable(
      {
-       grid: [20,20],
+       grid: [5,5],
        handle: ".widget-header",
        cursor: "grab",
        stack: ".widget-container"
@@ -577,7 +577,7 @@ new Vue({
 
    $('.sidebar').draggable(
      {
-       grid: [20,20],
+       grid: [5,5],
        stack: ".widget-container",
        handle: "h3"
      }
