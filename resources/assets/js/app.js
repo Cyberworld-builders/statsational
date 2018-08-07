@@ -236,7 +236,9 @@ new Vue({
              message: this.newMessage,
              auction: this.auction.id
          }).then(response => {
-           this.messages.unshift(response.data);
+           // this.messages.unshift(response.data);
+           // this.getAuctionData();
+           this.fetchMessages();
          });
          this.newMessage = ''
      },

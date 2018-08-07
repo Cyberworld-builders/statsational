@@ -56048,7 +56048,9 @@ new Vue({
         message: this.newMessage,
         auction: this.auction.id
       }).then(function (response) {
-        _this3.messages.unshift(response.data);
+        // this.messages.unshift(response.data);
+        // this.getAuctionData();
+        _this3.fetchMessages();
       });
       this.newMessage = '';
     },
