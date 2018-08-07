@@ -60,50 +60,27 @@
 
     <div class="controlbar resizable">
       <div class="row ">
-        <div class="col-12 col-md-6"> <!-- bidding controls -->
+        <div class="col-12 col-md-6 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4"> <!-- bidding controls -->
           <div class="row text-center">
             <div class="control-container-wrapper">
               <div class="control-container container-fluid">
-                <div class="row">
-                  <div class="col-12 control-item">
-                    <div class="row">
-                      <div class="control-wrapper">
-                        <div id="timer" class="control">
-                          @{{ timer }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 control-item">
-                    <div class="row">
-                      <div class="control-wrapper">
-                        <div class="control">
-                          Current Item on the Block: @{{ auction.item.name }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 control-item">
-                    <div class="row">
-                      <div class="control-wrapper">
-                        <div class="control">
-                          Current Bid Winner:
-                          <span  v-if="auction.item.bids.length > 0 && bidders[auction.item.bids[0].user_id]" id="highest_bidder">
-                            @{{ bidders[auction.item.bids[0].user_id].name }} ($ @{{  Math.round(auction.item.bids[0].amount) }})
-                          </span>
-                          <span v-else>No bids yet</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 control-item">
-                    <div class="row">
+                <table class="table">
+                  <tr class="control-wrapper">
+                    <td colspan="2" id="timer" class="control ">@{{ timer }}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-right">Current Item on the Block:</td>
+                    <th class="text-left">@{{ auction.item.name }}</th>
+                  </tr>
+                  <tr>
+                    <td class="text-right">Current Bid Winner:</td>
+                    <th class="text-left" v-if="auction.item.bids.length > 0 && bidders[auction.item.bids[0].user_id]" id="highest_bidder">
+                      @{{ bidders[auction.item.bids[0].user_id].name }} ($ @{{  Math.round(auction.item.bids[0].amount) }})
+                    </th>
+                    <td class="text-left" v-else>No bids yet.</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="control-item">
                       <div class="control-wrapper">
                         <div class="control">
                           <div class=" bidding-controls" v-if="auction.queue && auction.queue.length">
@@ -114,22 +91,21 @@
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
+                    </td>
+                  </tr>
+                </table>
               </div>
             </div>
           </div>
         </div> <!-- end bidding controls -->
 
-        <div class="previous-bids offset-1 col-11  offset-md-0 col-md-6"> <!-- previous-bids -->
-          <div class="row">
-            <div class="col-3 mt-4">
-              <strong>Previous Bids:</strong>
-            </div>
-            <div class="col-9">
-              <div class="bid-list my-2" v-if="auction.item.bids.length > 0 && bidders[auction.item.bids[0].user_id]" id="highest_bidder">
-                <table class="table">
+        <div class="previous-bids offset-1 col-11  offset-md-0 col-md-6 col-lg-5 col-xl-4"> <!-- previous-bids -->
+
+              <div class="bid-list m-2" v-if="auction.item.bids.length > 0 && bidders[auction.item.bids[0].user_id]" id="highest_bidder">
+                <table class="table text-center ">
+                  <tr>
+                    <th colspan="2">Previous Bids</th>
+                  </tr>
                   <tr v-for="(bid,index) in auction.item.bids">
                     <th >
                      $ @{{  Math.round(auction.item.bids[index].amount) }}
@@ -142,8 +118,7 @@
 
               </div>
               <div v-else>No bids yet</div>
-            </div>
-          </div>
+
         </div> <!-- end previous-bids -->
 
       </div>
@@ -164,7 +139,7 @@
           <div class="row">
 
             <div class="items widget col-12"> <!-- items widget -->
-              <div class="widget-container m-1"> <!-- widget-container -->
+              <div id="items-widget-body" class="widget-container m-1"> <!-- widget-container -->
                 <div class="widget-header p-3">
                   <h3>Items</h3>
                 </div>
@@ -174,18 +149,23 @@
                     <span>Show Completed Items</span>
                   </label>
                   <div v-if="auction.queue" class="widget-body scrollable col-md-12">
+
                     <table class="table">
-                      <tr>
-                        <th>Item</th><th v-if="showCompletedItems">Winning Bid</th><th v-if="showCompletedItems">Bidder</th>
-                      </tr>
-                      <tr v-for="(item,index) in auction.items">
-                          <td v-if="isActive(item.id)">@{{ auction.items[index].name }}</td>
-                          <td v-if="!isActive(item.id) && showCompletedItems" class="disabled">@{{ auction.items[index].name }}</td>
-                          <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems" >$ @{{ auction.items[index].bids[0].amount }} </td>
-                          <td v-if="( isActive(item.id) || ( !(item.bids.length > 0) ) ) && showCompletedItems "> - </td>
-                          <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems" > @{{ bidders[auction.items[index].bids[0].user_id].name }} </td>
-                          <td v-if="( isActive(item.id) || ( !(item.bids.length > 0) ) ) && showCompletedItems "> - </td>
-                      </tr>
+                      <thead>
+                        <th>&nbsp</th><th>Item</th><th v-if="showCompletedItems">Winning Bid</th><th v-if="showCompletedItems">Bidder</th>
+                      </thead>
+
+                        <tr v-for="(item,index) in auction.reversedItems">
+                            <td v-if="isActive(item.id) || showCompletedItems">@{{ index + 1 }}</td>
+                            <td v-if="isActive(item.id)">@{{ auction.reversedItems[index].name }}</td>
+                            <td v-if="!isActive(item.id) && showCompletedItems" class="disabled">@{{ auction.reversedItems[index].name }}</td>
+                            <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems && (typeof auction.reversedItems[index].bids[0] != 'undefined'  )" >$ @{{ auction.reversedItems[index].bids[0].amount }} </td>
+                            <td v-if="( isActive(item.id) || ( !(item.bids.length > 0) ) ) && showCompletedItems "> - </td>
+                            <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems" > @{{ bidders[auction.reversedItems[index].bids[0].user_id].name }} </td>
+                            <td v-if="( isActive(item.id) || ( !(item.bids.length > 0) ) ) && showCompletedItems "> - </td>
+                        </tr>
+
+
                     </table>
                     </ul>
                   </div>

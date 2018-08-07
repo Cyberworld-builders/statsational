@@ -55918,6 +55918,18 @@ new Vue({
 
     // bidding
 
+    reverseItems: function reverseItems() {
+      var items = this.auction.items;
+      var reversedItems = [];
+      var order = 1;
+      for (var i = items.length - 1; i >= 0; i--) {
+        var item = items[i];
+        item.order = order;
+        order++;
+        reversedItems.push(item);
+      }
+      return reversedItems;
+    },
     bid: function bid() {
       this.resetTimer();
       this.user.bid.amount = this.bid_amount;
@@ -56022,7 +56034,7 @@ new Vue({
         console.log(e);
       });
       // this.auction.items = items;
-      this.hideModal();
+      // this.hideModal();
     },
 
     // messaging
@@ -56050,6 +56062,7 @@ new Vue({
         _this4.messages = response.data;
       }).then(function (response) {
         var widget = document.getElementById('chat-widget-body');
+        console.log(widget.scrollHeight);
         widget.scrollTop = widget.scrollHeight;
       });
     },
@@ -56169,7 +56182,7 @@ new Vue({
         console.log(e);
       });
     },
-    getAuctionData: function getAuctionData(auction_id) {
+    getAuctionData: function getAuctionData(auction_id, callback) {
       var _this9 = this;
 
       __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('/auction/data/' + auction_id, {}).then(function (response) {
@@ -56178,6 +56191,9 @@ new Vue({
           _this9.showOwnerControls = true;
         }
         _this9.fetchMessages();
+        if (callback) {
+          callback();
+        }
       }).catch(function (e) {
         console.log(e);
       });
@@ -56286,6 +56302,7 @@ new Vue({
         };
       }
 
+      this.auction.reversedItems = this.reverseItems();
       console.log(auction);
     },
     formatMoney: function formatMoney(number) {
@@ -56355,7 +56372,9 @@ new Vue({
       this.user.id = document.getElementById('user_id').value;
     }
     if (document.getElementById('auction_id')) {
-      this.getAuctionData(document.getElementById('auction_id').value);
+      this.getAuctionData(document.getElementById('auction_id').value, function () {
+        // $('#items-widget-body').animate({scrollTop: $('#items-widget-body').height() + 100},500);
+      });
       setInterval(function () {
         this.countDown();
       }.bind(this), 1000);

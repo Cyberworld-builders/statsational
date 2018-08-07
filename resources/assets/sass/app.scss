@@ -27,9 +27,7 @@
 
 
 html, body, .dashboard, main {
-  margin: 0;
-  background-color: $lightblue;
-  height: 100%;
+
 }
 
 
@@ -59,7 +57,10 @@ html, body, .dashboard, main {
 
 .auction-new {
 
-
+  margin: 0;
+  padding-bottom: 25px;
+  background-color: $lightblue;
+  // height: 95%;
 
   .topbar {
 
@@ -130,6 +131,12 @@ html, body, .dashboard, main {
   }
 
   .controlbar {
+
+    th,td {
+      border-top: 0;
+      padding: 5px;
+      line-height: normal;
+    }
 
     overflow: hidden;
     background-color: $orange;
@@ -244,12 +251,14 @@ html, body, .dashboard, main {
       padding: 0px;
     }
     .widget {
-      
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+      background-color: #fff;
       .add-item-button {
         background-color: $darkblue;
       }
       .widget-container {
         border-radius: 8px;
+        max-height: 365px;
         overflow: scroll;
         .widget-header {
           h3{
@@ -264,8 +273,10 @@ html, body, .dashboard, main {
           color: #fff;
           cursor: grab;
         }
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
-          background-color: #fff;
+        .widget-body {
+      
+        }
+
       }
 
       .chat-widget {

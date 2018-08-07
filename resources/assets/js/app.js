@@ -108,6 +108,19 @@ new Vue({
 
      // bidding
 
+     reverseItems(){
+       var items = this.auction.items;
+       var reversedItems = [];
+       var order = 1;
+       for (var i=items.length - 1;i>=0;i--){
+          var item = items[i];
+          item.order = order;
+          order++;
+          reversedItems.push(item);
+       }
+       return reversedItems;
+     },
+
      bid(){
        this.resetTimer();
        this.user.bid.amount = this.bid_amount;
@@ -211,7 +224,7 @@ new Vue({
          console.log(e);
        });
        // this.auction.items = items;
-       this.hideModal();
+       // this.hideModal();
      },
 
      // messaging
@@ -234,6 +247,7 @@ new Vue({
              this.messages = response.data;
          }).then(response => {
            var widget = document.getElementById('chat-widget-body');
+           console.log(widget.scrollHeight);
            widget.scrollTop = widget.scrollHeight;
          });
 
@@ -363,7 +377,7 @@ new Vue({
        });
      },
 
-     getAuctionData(auction_id){
+     getAuctionData(auction_id,callback){
        axios.get('/auction/data/' + auction_id,{
        }).then(response => {
          this.updatePool(response.data);
@@ -371,6 +385,11 @@ new Vue({
            this.showOwnerControls = true;
          }
         this.fetchMessages();
+        if(callback){
+          callback();
+        }
+
+
        }).catch(e => {
          console.log(e);
        });
@@ -481,6 +500,7 @@ new Vue({
          };
        }
 
+       this.auction.reversedItems = this.reverseItems();
        console.log(auction);
      },
 
@@ -570,7 +590,9 @@ new Vue({
      this.user.id = document.getElementById('user_id').value;
    }
    if(document.getElementById('auction_id')){
-     this.getAuctionData(document.getElementById('auction_id').value);
+     this.getAuctionData(document.getElementById('auction_id').value,function(){
+       // $('#items-widget-body').animate({scrollTop: $('#items-widget-body').height() + 100},500);
+     });
      setInterval(function(){ this.countDown() }.bind(this),1000);
    }
 

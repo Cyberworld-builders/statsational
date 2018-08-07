@@ -15015,15 +15015,6 @@ a.text-dark:focus {
   padding: 10px;
 }
 
-html,
-body,
-.dashboard,
-main {
-  margin: 0;
-  background-color: #2196f3;
-  height: 100%;
-}
-
 .navbar-laravel {
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -15044,6 +15035,12 @@ main {
   50% {
     opacity: 0;
   }
+}
+
+.auction-new {
+  margin: 0;
+  padding-bottom: 25px;
+  background-color: #2196f3;
 }
 
 .auction-new .topbar {
@@ -15117,6 +15114,13 @@ main {
   background-color: #fe5722;
   color: #fff;
   width: 100%;
+}
+
+.auction-new .controlbar th,
+.auction-new .controlbar td {
+  border-top: 0;
+  padding: 5px;
+  line-height: normal;
 }
 
 .auction-new .controlbar .control-container-wrapper {
@@ -15204,16 +15208,20 @@ main {
   padding: 0px;
 }
 
+.auction-new .widgets .widget {
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  background-color: #fff;
+}
+
 .auction-new .widgets .widget .add-item-button {
   background-color: #143753;
 }
 
 .auction-new .widgets .widget .widget-container {
   border-radius: 8px;
+  max-height: 365px;
   overflow: scroll;
-  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
-  background-color: #fff;
 }
 
 .auction-new .widgets .widget .widget-container .widget-header {
