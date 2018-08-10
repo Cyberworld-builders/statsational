@@ -38,7 +38,10 @@ class AuctionController extends Controller
          ),
          'time_remaining' =>  request('bid_timer')
        );
-       $auction->settings = array();
+       $auction->settings = array(
+         'password' =>  request('password')
+       );
+       // $auction->settings->password = request('password');
        $user = Auth::User();
        $user->auctions()->save($auction);
        return $auction->id;

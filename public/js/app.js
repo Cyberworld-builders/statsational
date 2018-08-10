@@ -79382,6 +79382,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -79413,7 +79416,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         manual_next: this.manual_next,
         bid_timer: this.bid_timer,
         snipe_time: this.snipe_time,
-        bid_increment: this.bid_increment
+        bid_increment: this.bid_increment,
+        password: this.password
       }).then(function (response) {
         console.log(response.data);
         window.location.href = '/auction/' + response.data;
@@ -79429,6 +79433,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       rules: "",
       start_time: "",
       private: false,
+      password: "",
       manual_next: false,
       bid_timer: 30,
       snipe_time: 15,
@@ -87173,7 +87178,36 @@ var render = function() {
                 }
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.private
+            ? _c("label", { attrs: { for: "password" } }, [
+                _vm._v("Auction Password:")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.private
+            ? _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.password,
+                    expression: "password"
+                  }
+                ],
+                attrs: { type: "text", name: "password", value: "" },
+                domProps: { value: _vm.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.password = $event.target.value
+                  }
+                }
+              })
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "checkbox" }, [
@@ -87401,6 +87435,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -87409,27 +87455,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       name: "",
-      rules: ""
+      rules: "",
+      private: true,
+      password: "",
+      showWrongPasswordWarning: false
     };
   },
 
   methods: {
     joinAuction: function joinAuction() {
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/auctions/join', {
-        auction_id: this.auction_id
-      }).then(function (response) {
-        console.log(response.data);
-        window.location.href = '/auction/' + response.data;
-      }).catch(function (e) {
-        console.log(e);
-      });
+      var auction = JSON.parse(this.auction);
+      console.log(auction.settings.password + ":::" + this.password);
+
+      if (this.private === false || this.password == auction.settings.password) {
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/auctions/join', {
+          auction_id: this.auction_id,
+          password: this.password
+        }).then(function (response) {
+          window.location.href = '/auction/' + response.data;
+        }).catch(function (e) {
+          console.log(e);
+        });
+      } else {
+        this.showWrongPasswordWarning = true;
+      }
     }
   },
   mounted: function mounted() {
     var auction = JSON.parse(this.auction);
     this.name = auction.name;
     this.rules = auction.rules;
-    console.log(auction.name);
+    this.private = auction.private;
+    console.log(auction);
   }
 });
 
@@ -87453,10 +87510,61 @@ var render = function() {
       }
     },
     [
-      _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "form-group " }, [
         _c("h2", [_vm._v("Do you want to join " + _vm._s(this.name) + "?")]),
         _vm._v(" "),
-        _c("p", { domProps: { innerHTML: _vm._s(this.rules) } })
+        _c("p", { domProps: { innerHTML: _vm._s(this.rules) } }),
+        _vm._v(" "),
+        this.private
+          ? _c(
+              "p",
+              [
+                _c("label", { attrs: { for: "password" } }, [
+                  _vm._v("Enter password:")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.password,
+                      expression: "password"
+                    }
+                  ],
+                  attrs: { type: "text", name: "password", value: "" },
+                  domProps: { value: _vm.password },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.password = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "b-alert",
+                  {
+                    staticClass: "minimum-bid-warning",
+                    attrs: {
+                      variant: "danger",
+                      dismissible: "",
+                      show: _vm.showWrongPasswordWarning
+                    },
+                    on: {
+                      dismissed: function($event) {
+                        _vm.showWrongPasswordWarning = false
+                      }
+                    }
+                  },
+                  [_vm._v("\n      Incorrect password!\n      ")]
+                )
+              ],
+              1
+            )
+          : _vm._e()
       ]),
       _vm._v(" "),
       _vm._m(0)
