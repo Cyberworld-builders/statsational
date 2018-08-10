@@ -66,16 +66,18 @@
               <div class="control-container container-fluid">
                 <table class="table">
                   <tr class="control-wrapper">
-                    <td colspan="2" id="timer" class="control ">@{{ timer }}</td>
+                    <td colspan="2" ><span id="timer" class="control ">@{{ timer }}</span></td>
                   </tr>
                   <tr>
                     <td class="text-right">Current Item on the Block:</td>
-                    <th class="text-left">@{{ auction.item.name }}</th>
+                    <th class="text-left"><span>@{{ auction.item.name }}</span></th>
                   </tr>
                   <tr>
                     <td class="text-right">Current Bid Winner:</td>
                     <th class="text-left" v-if="auction.item.bids.length > 0 && bidders[auction.item.bids[0].user_id]" id="highest_bidder">
-                      @{{ bidders[auction.item.bids[0].user_id].name }} ($ @{{  Math.round(auction.item.bids[0].amount) }})
+                      <span id="current_bid" >
+                        @{{ bidders[auction.item.bids[0].user_id].name }} ($ @{{  Math.round(auction.item.bids[0].amount) }})
+                      </span>                      
                     </th>
                     <td class="text-left" v-else>No bids yet.</td>
                   </tr>

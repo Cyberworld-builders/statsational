@@ -354,7 +354,7 @@ new Vue({
      },
 
      updateClock(){
-       var timer = document.getElementById('timer');
+       var timer = document.getElementById('timer');       
          if(this.time_remaining <= this.auction.snipe_time){
            timer.classList.add('blinking');
          } else {
