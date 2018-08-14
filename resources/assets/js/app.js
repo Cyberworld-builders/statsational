@@ -4,13 +4,15 @@ require('./bootstrap');
 
 var Vue = require('vue');
 
-Vue.component('Auction', require('./components/Auction.vue'));
+Vue.component('auction', require('./components/auction/Auction.vue'));
 Vue.component('Tabs', require('./components/Tabs.vue'));
 Vue.component('auction-control', require('./components/auction/AuctionControl.vue'));
 Vue.component('auction-form', require('./components/auction/AuctionForm.vue'));
 Vue.component('join-form', require('./components/auction/AuctionJoinForm.vue'));
 Vue.component('auction-items', require('./components/auction/AuctionItems.vue'));
 Vue.component('grid-test',require('./components/GridTest.vue'));
+Vue.component('auction-summary',require('./components/auction/AuctionSummary.vue'));
+
 
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue);
@@ -62,6 +64,9 @@ new Vue({
      }
    },
 
+   csv_items: [],
+   itemsCsv: '',
+
    user: {
      bid: {
        amount: 0,
@@ -99,6 +104,10 @@ new Vue({
    showOwnerControls: false,
    showBiddersOverviewDetail: false,
 
+   importItemsWarning: "",
+   showImportItemsWarning: false,
+
+
    bid_increment: 5,
 
    bid_amount: 1
@@ -106,18 +115,73 @@ new Vue({
  },
  methods: {
 
+
+   axiosGet(path,id,callback){
+     axios.get( path + '/' + id,{
+     }).then(response => {
+       if(callback){
+         callback(response.data);
+       } else {
+         return response.data;
+       }
+     }).catch(e => {
+       console.log(e);
+     });
+   },
+
+   axiosPost(path,data,callback){
+     axios.post( path, data ).then(response => {
+       if(callback){
+         callback(response.data);
+       } else {
+         return response.data;
+       }
+     }).catch(e => {
+       console.log(e);
+     });
+   },
+
+
      // bidding
 
      reverseItems(){
+
        var items = this.auction.items;
+       var queue = this.auction.queue;
+
+       console.log(queue);
+
+       var completed = [];
+
+       var queue_ids = [];
+
+       for(var i=0;i<queue.length;i++){
+         queue_ids.push(queue[i].id);
+       }
+
+       for(var i=0;i<items.length;i++){
+         if( ! this.inArray( items[i].id, queue_ids ) ){
+           completed.push(items[i]);
+         }
+       }
+
        var reversedItems = [];
        var order = 1;
-       for (var i=items.length - 1;i>=0;i--){
-          var item = items[i];
+
+       for (var i=completed.length - 1;i>=0;i--){
+          var item = completed[i];
           item.order = order;
           order++;
           reversedItems.push(item);
        }
+
+       for (var i=0; i<queue.length;i++){
+          var item = queue[i];
+          item.order = order;
+          order++;
+          reversedItems.push(item);
+       }
+
        return reversedItems;
      },
 
@@ -223,8 +287,6 @@ new Vue({
        }).catch(e => {
          console.log(e);
        });
-       // this.auction.items = items;
-       // this.hideModal();
      },
 
      // messaging
@@ -268,17 +330,6 @@ new Vue({
      countDown(){
         var current_time_remaining = this.time_remaining;
         this.getTimeRemaining();
-         // if(this.auction.user.id == document.getElementById('user_id').value){
-         //   if(this.auction.queue.length > 0 ){
-         //     if(this.auction.status.status.in_progress == true && this.time_remaining > 0 && current_time_remaining == this.time_remaining){
-         //        this.resetTimer(this.time_remaining - 1);
-         //     } else {
-         //       if(this.auction.manual_next == 0){
-         //         this.startNextItem();
-         //       }
-         //     }
-         //   }
-         // }
      },
 
      toggleStatus(){
@@ -298,7 +349,6 @@ new Vue({
          in_progress: status.in_progress,
          label: status.label
        }).then(response => {
-         // console.log(response.data);
          // this.updatePool();
        }).catch(e => {
          console.log(e);
@@ -331,17 +381,18 @@ new Vue({
      },
 
 
-     switchToItem(item){
-       // axios.get('/auctions/item/switch/' + item.id,{
-       //
-       // }).then(response => {
-       //   console.log(response.data);
-       //   this.updateCurrentItem(response.data);
-       //   this.time_remaining = 30;
-       //   this.updateClock();
-       // }).catch(e => {
-       //   console.log(e);
-       // });
+     switchToItem(item_id){
+       axios.post('/auctions/item/switch',{
+         item_id: item_id,
+         auction_id: this.auction.id
+       }).then(response => {
+         // console.log(response.data);
+         this.getAuctionData(this.auction.id);
+         this.time_remaining = this.auction.bid_timer;
+         this.updateClock();
+       }).catch(e => {
+         console.log(e);
+       });
      },
 
      updateCurrentItem(item){
@@ -354,7 +405,7 @@ new Vue({
      },
 
      updateClock(){
-       var timer = document.getElementById('timer');       
+       var timer = document.getElementById('timer');
          if(this.time_remaining <= this.auction.snipe_time){
            timer.classList.add('blinking');
          } else {
@@ -377,6 +428,10 @@ new Vue({
        }).catch(e => {
          console.log(e);
        });
+     },
+
+     endAuction(){
+
      },
 
      getAuctionData(auction_id,callback){
@@ -503,7 +558,7 @@ new Vue({
        }
 
        this.auction.reversedItems = this.reverseItems();
-       console.log(auction);
+       // console.log(auction);
      },
 
      formatMoney(number){
@@ -519,6 +574,49 @@ new Vue({
          }
        // }
        return false;
+     },
+
+     uploadItemsCsv(){
+       this.showImportItemsWarning = false;
+       this.csv_items = [];
+      this.itemsCsv = this.$refs.itemsCsv.files[0];
+      let formData = new FormData();
+      formData.append('itemsCsv', this.itemsCsv);
+      if(this.itemsCsv.type == "text/csv"){
+        axios.post('/auctions/import-items' ,formData ).then(response => {
+          if(response.data == 0){
+            this.importItemsWarning = "No data was found in the file. Check the format of your data."
+            this.showImportItemsWarning = true;
+          } else {
+            this.csv_items = response.data;
+          }
+        }).catch(e => {
+          console.log(e);
+        });
+      } else {
+        this.importItemsWarning = "File must be csv."
+        this.showImportItemsWarning = true;
+      }
+     },
+
+
+
+     importItems(){
+       this.showImportItemsWarning = false;
+       if(this.csv_items.length > 0 ){
+         axios.post('/auctions/addItem',{
+           auction_id: this.auction.id,
+           items: this.csv_items
+         }).then(response => {
+           console.log(response.data);
+           this.getAuctionData(this.auction.id);
+         }).catch(e => {
+           console.log(e);
+         });
+       } else {
+         this.importItemsWarning = "No items to import.";
+         this.showImportItemsWarning = true;
+       }
      }
 
  },

@@ -42,9 +42,7 @@
     methods: {
       joinAuction: function(){
         var auction = JSON.parse(this.auction);
-        console.log(auction.settings.password + ":::" + this.password);
-
-        if(this.private === false || this.password == auction.settings.password){
+        if(!this.private || this.password == auction.settings.password){
           axios.post('/auctions/join',{
             auction_id: this.auction_id,
             password: this.password

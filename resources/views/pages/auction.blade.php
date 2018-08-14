@@ -45,9 +45,8 @@
                       <div class="dropdown-menu " aria-labelledby="owner-tools">
                         <a class="dropdown-item" href="#" @click="startNextItem">Start Next Item</a>
                         <a class="dropdown-item" href="#" @click="resetTimer(auction.bid_timer)">Restart Clock</a>
-                        <a class="dropdown-item" href="#" @click="undoLastBid">Undo Last Bid</a>
-                        <a class="dropdown-item" href="#" >End Auction</a>
-                        <a class="dropdown-item" href="#" >Reload App</a>
+                        <a class="dropdown-item" href="#" @click="endAuction">End Auction</a>
+                        <a class="dropdown-item" href="/auction/summary/{{ $auction->id }}" >Summary</a>
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-item"><i class="fa fa-plus"></i> Add Item</a>
                       </div>
                     </div>
@@ -77,7 +76,7 @@
                     <th class="text-left" v-if="auction.item.bids.length > 0 && bidders[auction.item.bids[0].user_id]" id="highest_bidder">
                       <span id="current_bid" >
                         @{{ bidders[auction.item.bids[0].user_id].name }} ($ @{{  Math.round(auction.item.bids[0].amount) }})
-                      </span>                      
+                      </span>
                     </th>
                     <td class="text-left" v-else>No bids yet.</td>
                   </tr>
@@ -150,22 +149,29 @@
                   <label for="showCompletedItems">
                     <span>Show Completed Items</span>
                   </label>
-                  <div v-if="auction.queue" class="widget-body scrollable col-md-12">
+                  <div v-if="auction.queue" class="widget-body col-md-12">
 
                     <table class="table">
                       <thead>
                         <th>&nbsp</th><th>Item</th><th v-if="showCompletedItems">Winning Bid</th><th v-if="showCompletedItems">Bidder</th>
                       </thead>
 
-                        <tr v-for="(item,index) in auction.reversedItems">
-                            <td v-if="isActive(item.id) || showCompletedItems">@{{ index + 1 }}</td>
-                            <td v-if="isActive(item.id)">@{{ auction.reversedItems[index].name }}</td>
-                            <td v-if="!isActive(item.id) && showCompletedItems" class="disabled">@{{ auction.reversedItems[index].name }}</td>
-                            <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems && (typeof auction.reversedItems[index].bids[0] != 'undefined'  )" >$ @{{ auction.reversedItems[index].bids[0].amount }} </td>
-                            <td v-if="( isActive(item.id) || ( !(item.bids.length > 0) ) ) && showCompletedItems "> - </td>
-                            <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems" > @{{ bidders[auction.reversedItems[index].bids[0].user_id].name }} </td>
-                            <td v-if="( isActive(item.id) || ( !(item.bids.length > 0) ) ) && showCompletedItems "> - </td>
-                        </tr>
+                        <tbody>
+                          <tr v-for="(item,index) in auction.reversedItems">
+                              <td v-if="isActive(item.id) || showCompletedItems">@{{ index + 1 }}</td>
+                              <td v-if="isActive(item.id)">@{{ auction.reversedItems[index].name }}</td>
+                              <td v-if="!isActive(item.id) && showCompletedItems" class="disabled">@{{ auction.reversedItems[index].name }}</td>
+                              <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems && (typeof auction.reversedItems[index].bids[0] != 'undefined'  )" >$ @{{ auction.reversedItems[index].bids[0].amount }} </td>
+                              <td v-if="( isActive(item.id) || ( !(item.bids.length > 0) ) ) && showCompletedItems "> - </td>
+                              <td v-if="!isActive(item.id) && item.bids.length > 0 && showCompletedItems" > @{{ bidders[auction.reversedItems[index].bids[0].user_id].name }} </td>
+                              <td v-if="( isActive(item.id) || ( !(item.bids.length > 0) ) ) && showCompletedItems "> - </td>
+                              <td v-if="(auction.user.id == user.id) && ( isActive(item.id) || showCompletedItems )"><a href="#" @click="switchToItem(item.id)">Go to Item</a></td>
+                          </tr>
+                        </tbody>
+
+
+
+
 
 
                     </table>
@@ -176,7 +182,7 @@
             </div> <!-- end items widget -->
 
             <div id="add-item" class="modal" tabindex="-1" role="dialog" aria-labelledby="add-item-label"> <!-- add item modal -->
-              <div class="modal-dialog widget" role="document">
+              <div class="modal-dialog modal-lg widget" role="document">
                 <div class="modal-content widget-container">
                   <div class="modal-header widget-header">
                     <h3 class="modal-title" id="add-item-label">Add Item</h3>
@@ -191,11 +197,38 @@
                           Item Name
                         </label>
                         <input v-model="name" type="text" class="form-control" id="itemName" />
+                        <b-btn class="mt-3 add-item-button" block @click="addItem">Add Item</b-btn>
                         <hr>
                         <label for="exampleFormControlFile1">Import from CSV</label>
-                        <input type="file" class="form-control-file" id="itemsCsv">
+                        <input type="file" class="form-control-file" id="itemsCsv" ref="itemsCsv" @change="uploadItemsCsv">
+                        <div class="container m-2">
+                          <div class="row">
+                            <div class="col-12">
+                              <table v-if="csv_items.length > 0" class="table">
+                                <thead>
+                                  <tr>
+                                    <th>Item Name</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr v-for="item in csv_items">
+                                    <td>@{{ item.name }}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <b-alert class="minimum-bid-warning" variant="danger"
+                                 dismissible
+                                 fade
+                                 :show="showImportItemsWarning"
+                                 @dismissed="showImportItemsWarning=false">
+                            <span>@{{ importItemsWarning }}</span>
+                        </b-alert>
+                        <b-btn class="mt-3 add-item-button" block @click="importItems">Import Items</b-btn>
                       </div>
-                      <b-btn class="mt-3 add-item-button" block @click="addItem">Add</b-btn>
+
                     </form>
                   </div>
                 </div>
@@ -210,22 +243,37 @@
                 </div>
                 <div class="widget-body p-3">
                   <div id="chat-widget-body" class="panel-body">
-                    <ul class="chat">
-                        <li class="left clearfix" v-for="message in messages">
-                            <div class="chat-body clearfix">
-                                <div class="header">
-                                    <strong class="primary-font">
-                                        @{{ message.user.name }}
-                                    </strong>
-                                    <span>@{{ message.created_at }}</span>
+                    <div class="row">
+                      <div class="col-9">
+                        <ul class="chat">
+                            <li class="left clearfix" v-for="message in messages">
+                                <div class="chat-body clearfix">
+                                    <div class="header">
+                                        <strong class="primary-font">
+                                            @{{ message.user.name }}
+                                        </strong>
+                                        <span>@{{ message.created_at }}</span>
+                                    </div>
+                                    <p>
+                                        @{{ message.message }}
+                                    </p>
                                 </div>
-                                <p>
-                                    @{{ message.message }}
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-                      <div id="scrollToNewMessage"></div>
+                            </li>
+                        </ul>
+                      </div>
+                      <div class="col-3">
+                        <strong>Private Message</strong>
+                        <ul style="list-style-type: none;" v-for="(bidder,index) in bidders">
+                          <li><a href="#"  data-toggle="modal" data-target="#private-chat">@{{ bidder.name }}</a></li>
+
+
+
+
+
+                        </ul>
+                      </div>
+                    </div>
+
                   </div>
                   <br />
                   <div class="row">
@@ -239,6 +287,22 @@
                 </div>
               </div>
             </div> <!-- end chat-widget -->
+
+            <div id="private-chat" class="modal" tabindex="-1" role="dialog" aria-labelledby="private-chat" data-backdrop="false"> <!-- add item modal -->
+              <div class="modal-dialog widget" role="document">
+                <div class="modal-content widget-container">
+                  <div class="modal-header widget-header">
+                    <h3 class="modal-title" id="private-chat">Private Chat</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="widget-body p-2">
+
+                  </div>
+                </div>
+              </div>
+            </div> <!-- end add items modal -->
 
 
           </div>
@@ -314,6 +378,9 @@
 
 
     </div> <!-- end widgets area -->
+
+    <auction></auction>
+
 
   </div> <!-- end auction -->
 

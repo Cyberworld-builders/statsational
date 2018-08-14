@@ -24,6 +24,7 @@
 // @import 'bidding';
 // @import 'bidders-overview';
 // @import 'items';
+@import 'summary';
 
 
 html, body, .dashboard, main {
@@ -258,8 +259,8 @@ html, body, .dashboard, main {
       }
       .widget-container {
         border-radius: 8px;
-        max-height: 365px;
-        overflow: scroll;
+        overflow: hidden;
+
         background-color: #fff;
         box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.12);
         .widget-header {
@@ -276,6 +277,9 @@ html, body, .dashboard, main {
           cursor: grab;
         }
         .widget-body {
+          height: 100%;
+            min-height: 265px;
+          overflow: scroll;
 
         }
 
