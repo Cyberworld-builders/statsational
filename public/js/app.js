@@ -90961,21 +90961,21 @@ new Vue({
       this.itemsCsv = this.$refs.itemsCsv.files[0];
       var formData = new FormData();
       formData.append('itemsCsv', this.itemsCsv);
-      if (this.itemsCsv.type == "text/csv") {
-        __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auctions/import-items', formData).then(function (response) {
-          if (response.data == 0) {
-            _this12.importItemsWarning = "No data was found in the file. Check the format of your data.";
-            _this12.showImportItemsWarning = true;
-          } else {
-            _this12.csv_items = response.data;
-          }
-        }).catch(function (e) {
-          console.log(e);
-        });
-      } else {
-        this.importItemsWarning = "File must be csv.";
-        this.showImportItemsWarning = true;
-      }
+      // if(this.itemsCsv.type == "text/csv"){
+      __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auctions/import-items', formData).then(function (response) {
+        if (response.data == 0) {
+          _this12.importItemsWarning = "No data was found in the file. Check the format of your data.";
+          _this12.showImportItemsWarning = true;
+        } else {
+          _this12.csv_items = response.data;
+        }
+      }).catch(function (e) {
+        console.log(e);
+      });
+      // } else {
+      //   this.importItemsWarning = "File must be csv."
+      //   this.showImportItemsWarning = true;
+      // }
     },
     importItems: function importItems() {
       var _this13 = this;

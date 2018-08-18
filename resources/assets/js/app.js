@@ -582,7 +582,7 @@ new Vue({
       this.itemsCsv = this.$refs.itemsCsv.files[0];
       let formData = new FormData();
       formData.append('itemsCsv', this.itemsCsv);
-      if(this.itemsCsv.type == "text/csv"){
+      // if(this.itemsCsv.type == "text/csv"){
         axios.post('/auctions/import-items' ,formData ).then(response => {
           if(response.data == 0){
             this.importItemsWarning = "No data was found in the file. Check the format of your data."
@@ -593,10 +593,10 @@ new Vue({
         }).catch(e => {
           console.log(e);
         });
-      } else {
-        this.importItemsWarning = "File must be csv."
-        this.showImportItemsWarning = true;
-      }
+      // } else {
+      //   this.importItemsWarning = "File must be csv."
+      //   this.showImportItemsWarning = true;
+      // }
      },
 
 
