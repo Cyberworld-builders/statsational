@@ -270,12 +270,14 @@
 
                         <ul style="list-style-type: none;">
                           <li>
+                            <a href="#" @click="sendMail('everyone')"><i class="fa fa-envelope"></i></a>
                             <a href="#" @click="messageTo = 'Everyone'; notifications.messages['Everyone'] = false;">Everyone</a>
                             <i v-if="notifications.messages['Everyone'] === true">*</i>
                           </li>
                         </ul>
                         <ul style="list-style-type: none;" v-for="(bidder,index) in bidders">
                           <li>
+                            <a href="#" @click="sendMail(bidder.email)"><i class="fa fa-envelope"></i></a>
                             <a href="#" @click="messageTo = bidder.id; notifications.messages[bidder.id] = false;">@{{ bidder.name }}</a>
                             <i v-if="notifications.messages[bidder.id] === true">*</i>
                           </li>

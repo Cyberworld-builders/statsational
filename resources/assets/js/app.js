@@ -309,6 +309,20 @@ new Vue({
          this.newMessage = ''
      },
 
+     sendMail(email){
+       // console.log(email);
+       if(email == "everyone"){
+         var emails = [this.auction.user.email];
+         for(var i=0;i<this.auction.users;i++){
+           emails.push(this.auction.users[i].email);
+         }
+         window.location.href = 'mailto:' + emails.join();
+       } else {
+         window.location.href = 'mailto:' + email;
+       }
+
+     },
+
      // gets all group messages for the auction
      fetchMessages() {
          axios.get('messages/' + this.auction.id).then(response => {
