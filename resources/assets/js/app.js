@@ -76,8 +76,13 @@ new Vue({
 
    newMessage: '',
    messagers: [{ name: "Everyone" }],
-   messageTo: "Everyone",
+   messageTo: 'Everyone',
    messages: [],
+   notifications: {
+     messages: {
+
+     }
+   },
 
    bidders: [
      {
@@ -296,10 +301,9 @@ new Vue({
          axios.post('/messages', {
              user: this.user,
              message: this.newMessage,
-             auction: this.auction.id
+             auction: this.auction.id,
+             other_user_id: this.messageTo
          }).then(response => {
-           // this.messages.unshift(response.data);
-           // this.getAuctionData();
            this.fetchMessages();
          });
          this.newMessage = ''
@@ -314,6 +318,22 @@ new Vue({
            console.log(widget.scrollHeight);
            widget.scrollTop = widget.scrollHeight;
          });
+
+     },
+
+     sendPrivateMessage(){
+       axios.post('/messages/private', {
+           user: this.user,
+           message: this.newMessage,
+           auction: this.auction.id,
+           other_user: this.privateMessage.user.id
+       }).then(response => {
+         this.fetchMessages();
+       });
+       this.newMessage = ''
+     },
+
+     getPrivateMessage(){
 
      },
 
@@ -704,6 +724,11 @@ new Vue({
      .listen('MessageSent', (e) => {
        if(e.type == "chat"){
          this.fetchMessages();
+         this.notifications.messages['Everyone'] = true;
+       } else if (e.type == "private"){
+         console.log({test: e});
+         this.fetchMessages();
+         this.notifications.messages[e.user.id] = true;
        } else if (e.type == "bid"){
          this.getAuctionData(document.getElementById('auction_id').value);
          var current_bid = document.getElementById('current_bid');

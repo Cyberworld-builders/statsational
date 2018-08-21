@@ -90474,8 +90474,11 @@ new Vue({
 
     newMessage: '',
     messagers: [{ name: "Everyone" }],
-    messageTo: "Everyone",
+    messageTo: 'Everyone',
     messages: [],
+    notifications: {
+      messages: {}
+    },
 
     bidders: [{
       name: "",
@@ -90687,10 +90690,9 @@ new Vue({
       __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/messages', {
         user: this.user,
         message: this.newMessage,
-        auction: this.auction.id
+        auction: this.auction.id,
+        other_user_id: this.messageTo
       }).then(function (response) {
-        // this.messages.unshift(response.data);
-        // this.getAuctionData();
         _this3.fetchMessages();
       });
       this.newMessage = '';
@@ -90709,15 +90711,29 @@ new Vue({
         widget.scrollTop = widget.scrollHeight;
       });
     },
-    getTimeRemaining: function getTimeRemaining() {
+    sendPrivateMessage: function sendPrivateMessage() {
       var _this5 = this;
+
+      __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/messages/private', {
+        user: this.user,
+        message: this.newMessage,
+        auction: this.auction.id,
+        other_user: this.privateMessage.user.id
+      }).then(function (response) {
+        _this5.fetchMessages();
+      });
+      this.newMessage = '';
+    },
+    getPrivateMessage: function getPrivateMessage() {},
+    getTimeRemaining: function getTimeRemaining() {
+      var _this6 = this;
 
       __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('/auctions/timer/' + this.auction.id).then(function (response) {
         var status = response.data;
-        _this5.time_remaining = status.time_remaining;
-        _this5.auction.status.status = status.status;
+        _this6.time_remaining = status.time_remaining;
+        _this6.auction.status.status = status.status;
         // console.log(status);
-        _this5.updateClock();
+        _this6.updateClock();
       });
     },
     countDown: function countDown() {
@@ -90746,7 +90762,7 @@ new Vue({
       });
     },
     resetTimer: function resetTimer(seconds) {
-      var _this6 = this;
+      var _this7 = this;
 
       if (typeof seconds == "undefined") {
         if (this.time_remaining <= this.auction.snipe_time) {
@@ -90761,33 +90777,33 @@ new Vue({
         seconds: seconds
       }).then(function (response) {
         var status = response.data;
-        _this6.time_remaining = status.time_remaining;
-        _this6.updateClock();
+        _this7.time_remaining = status.time_remaining;
+        _this7.updateClock();
       }).catch(function (e) {
         console.log(e);
       });
     },
     undoLastBid: function undoLastBid() {},
     switchToItem: function switchToItem(item_id) {
-      var _this7 = this;
+      var _this8 = this;
 
       __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auctions/item/switch', {
         item_id: item_id,
         auction_id: this.auction.id
       }).then(function (response) {
         // console.log(response.data);
-        _this7.getAuctionData(_this7.auction.id);
-        _this7.time_remaining = _this7.auction.bid_timer;
-        _this7.updateClock();
+        _this8.getAuctionData(_this8.auction.id);
+        _this8.time_remaining = _this8.auction.bid_timer;
+        _this8.updateClock();
       }).catch(function (e) {
         console.log(e);
       });
     },
     updateCurrentItem: function updateCurrentItem(item) {
-      var _this8 = this;
+      var _this9 = this;
 
       __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('/auction/data/' + Number(this.auction.id), {}).then(function (response) {
-        _this8.item = response.data.item;
+        _this9.item = response.data.item;
       }).catch(function (e) {
         console.log(e);
       });
@@ -90802,30 +90818,30 @@ new Vue({
       this.timer = __WEBPACK_IMPORTED_MODULE_6_moment___default()().startOf('day').seconds(this.time_remaining).format('m:ss');
     },
     startNextItem: function startNextItem() {
-      var _this9 = this;
+      var _this10 = this;
 
       __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auctions/items/next', {
         auction_id: this.auction.id,
         item_id: this.auction.item.id,
         bid_id: this.getCurrentBid()
       }).then(function (response) {
-        _this9.getAuctionData(_this9.auction.id);
-        _this9.time_remaining = _this9.auction.bid_timer;
-        _this9.updateClock();
+        _this10.getAuctionData(_this10.auction.id);
+        _this10.time_remaining = _this10.auction.bid_timer;
+        _this10.updateClock();
       }).catch(function (e) {
         console.log(e);
       });
     },
     endAuction: function endAuction() {},
     getAuctionData: function getAuctionData(auction_id, callback) {
-      var _this10 = this;
+      var _this11 = this;
 
       __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('/auction/data/' + auction_id, {}).then(function (response) {
-        _this10.updatePool(response.data);
-        if (_this10.user.id == _this10.auction.user.id) {
-          _this10.showOwnerControls = true;
+        _this11.updatePool(response.data);
+        if (_this11.user.id == _this11.auction.user.id) {
+          _this11.showOwnerControls = true;
         }
-        _this10.fetchMessages();
+        _this11.fetchMessages();
         if (callback) {
           callback();
         }
@@ -90834,7 +90850,7 @@ new Vue({
       });
     },
     updateSelectedBidder: function updateSelectedBidder(bidder_id) {
-      var _this11 = this;
+      var _this12 = this;
 
       this.showBiddersOverviewDetail = true;
       __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auction/bidder/data', {
@@ -90842,9 +90858,9 @@ new Vue({
         auction_id: this.auction.id
       }).then(function (response) {
         if (response.data.id) {
-          _this11.selectedBidder = response.data;
-          _this11.bidders[_this11.selectedBidder.id] = _this11.selectedBidder;
-          _this11.calculateBidderStats();
+          _this12.selectedBidder = response.data;
+          _this12.bidders[_this12.selectedBidder.id] = _this12.selectedBidder;
+          _this12.calculateBidderStats();
         }
       }).catch(function (e) {
         console.log(e);
@@ -90954,7 +90970,7 @@ new Vue({
       return false;
     },
     uploadItemsCsv: function uploadItemsCsv() {
-      var _this12 = this;
+      var _this13 = this;
 
       this.showImportItemsWarning = false;
       this.csv_items = [];
@@ -90964,10 +90980,10 @@ new Vue({
       // if(this.itemsCsv.type == "text/csv"){
       __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post('/auctions/import-items', formData).then(function (response) {
         if (response.data == 0) {
-          _this12.importItemsWarning = "No data was found in the file. Check the format of your data.";
-          _this12.showImportItemsWarning = true;
+          _this13.importItemsWarning = "No data was found in the file. Check the format of your data.";
+          _this13.showImportItemsWarning = true;
         } else {
-          _this12.csv_items = response.data;
+          _this13.csv_items = response.data;
         }
       }).catch(function (e) {
         console.log(e);
@@ -90978,7 +90994,7 @@ new Vue({
       // }
     },
     importItems: function importItems() {
-      var _this13 = this;
+      var _this14 = this;
 
       this.showImportItemsWarning = false;
       if (this.csv_items.length > 0) {
@@ -90987,7 +91003,7 @@ new Vue({
           items: this.csv_items
         }).then(function (response) {
           console.log(response.data);
-          _this13.getAuctionData(_this13.auction.id);
+          _this14.getAuctionData(_this14.auction.id);
         }).catch(function (e) {
           console.log(e);
         });
@@ -91059,32 +91075,37 @@ new Vue({
     }
   },
   created: function created() {
-    var _this14 = this;
+    var _this15 = this;
 
     // let the same message event handle all real-time updates
     Echo.private('chat').listen('MessageSent', function (e) {
       if (e.type == "chat") {
-        _this14.fetchMessages();
+        _this15.fetchMessages();
+        _this15.notifications.messages['Everyone'] = true;
+      } else if (e.type == "private") {
+        console.log({ test: e });
+        _this15.fetchMessages();
+        _this15.notifications.messages[e.user.id] = true;
       } else if (e.type == "bid") {
-        _this14.getAuctionData(document.getElementById('auction_id').value);
+        _this15.getAuctionData(document.getElementById('auction_id').value);
         var current_bid = document.getElementById('current_bid');
         current_bid.classList.add('blinking');
         setTimeout(function () {
           current_bid.classList.remove('blinking');
         }, 2000);
       } else if (e.type == "timer") {
-        _this14.getTimeRemaining();
+        _this15.getTimeRemaining();
       } else if (e.type == "status") {
-        _this14.getAuctionData(_this14.auction.id);
+        _this15.getAuctionData(_this15.auction.id);
       } else if (e.type == "next") {
-        _this14.getTimeRemaining();
-        _this14.auction.queue = e.message.queue;
+        _this15.getTimeRemaining();
+        _this15.auction.queue = e.message.queue;
       } else if (e.type == "update") {
-        _this14.auction = e.message;
-        _this14.getAuctionData(document.getElementById('auction_id').value);
+        _this15.auction = e.message;
+        _this15.getAuctionData(document.getElementById('auction_id').value);
       } else if (e.type == "switchItem") {
-        _this14.updateCurrentItem(e.message);
-        _this14.getTimeRemaining();
+        _this15.updateCurrentItem(e.message);
+        _this15.getTimeRemaining();
       }
     });
   }

@@ -239,14 +239,15 @@
             <div class="chat-widget widget col-12"> <!-- chat-widget -->
               <div class="widget-container mx-1">
                 <div class="widget-header p-3">
-                  <h3>Chat</h3>
+                  <h3>Chat <span v-if="this.messageTo != 'Everyone'">( @{{ bidders[messageTo].name }} )</span> </h3>
+
                 </div>
                 <div class="widget-body p-3">
                   <div id="chat-widget-body" class="panel-body">
                     <div class="row">
                       <div class="col-9">
                         <ul class="chat">
-                            <li class="left clearfix" v-for="message in messages">
+                            <li class="left clearfix" v-for="message in messages[this.messageTo]">
                                 <div class="chat-body clearfix">
                                     <div class="header">
                                         <strong class="primary-font">
@@ -262,15 +263,20 @@
                         </ul>
                       </div>
                       <div class="col-3">
-                        <strong>Private Message</strong>
-                        <ul style="list-style-type: none;" v-for="(bidder,index) in bidders">
-                          <li><a href="#"  data-toggle="modal" data-target="#private-chat">@{{ bidder.name }}</a></li>
 
-
-
-
-
+                        <ul style="list-style-type: none;">
+                          <li>
+                            <a href="#" @click="messageTo = 'Everyone'; notifications.messages['Everyone'] = false;">Everyone</a>
+                            <i v-if="notifications.messages['Everyone'] === true">*</i>
+                          </li>
                         </ul>
+                        <ul style="list-style-type: none;" v-for="(bidder,index) in bidders">
+                          <li>
+                            <a href="#" @click="messageTo = bidder.id; notifications.messages[bidder.id] = false;">@{{ bidder.name }}</a> 
+                            <i v-if="notifications.messages[bidder.id] === true">*</i>
+                          </li>
+                        </ul>
+
                       </div>
                     </div>
 

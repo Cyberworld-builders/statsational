@@ -320,24 +320,6 @@ class AuctionController extends Controller
       $expected_time = $status['item_end_time'] - $status['time_remaining'];
       $time_difference = $actual_time - $expected_time;
 
-
-      // if($auction->status['time_remaining'] <= 0){
-        // $status['test'] = array(
-        //   'actual_time'  =>  date('h:i:s',$actual_time),
-        //   'expected_time'  =>  date('h:i:s',$expected_time),
-        //   'time_difference'  =>  $time_difference,
-        //   'item_end_time' => date('h:i:s',$status['item_end_time']),
-        //   'time_remaining'  =>  $status['time_remaining']
-        // );
-        // $auction->status = $status;
-        // $auction->save();
-      // }
-
-      // 1532375099
-      // 1532374938
-
-
-
       if( (   $status['status']['in_progress'] === true  ) && ( $status['time_remaining'] > 0 ) && ( $expected_time < $actual_time  ) ){
         $user = $user = Auth::User();
         if($auction->user->id == $user->id){
@@ -345,12 +327,6 @@ class AuctionController extends Controller
           $auction->status = $status;
           $auction->save();
         } else {
-            // if ($time_difference > 1){
-            //   $status['time_remaining'] = $status['time_remaining'] + $time_difference;
-            //   $auction->status = $status;
-            //   $auction->save();
-            // }
-
 
         }
       }
