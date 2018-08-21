@@ -315,7 +315,6 @@ new Vue({
              this.messages = response.data;
          }).then(response => {
            var widget = document.getElementById('chat-widget-body');
-           console.log(widget.scrollHeight);
            widget.scrollTop = widget.scrollHeight;
          });
 

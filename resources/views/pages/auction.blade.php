@@ -235,17 +235,18 @@
               </div>
             </div> <!-- end add items modal -->
 
-
             <div class="chat-widget widget col-12"> <!-- chat-widget -->
               <div class="widget-container mx-1">
                 <div class="widget-header p-3">
                   <h3>Chat <span v-if="this.messageTo != 'Everyone'">( @{{ bidders[messageTo].name }} )</span> </h3>
-
                 </div>
                 <div class="widget-body p-3">
-                  <div id="chat-widget-body" class="panel-body">
+
                     <div class="row">
                       <div class="col-9">
+
+                        <div id="chat-widget-body" class="panel-body">
+
                         <ul class="chat">
                             <li class="left clearfix" v-for="message in messages[this.messageTo]">
                                 <div class="chat-body clearfix">
@@ -261,6 +262,9 @@
                                 </div>
                             </li>
                         </ul>
+
+                      </div>
+
                       </div>
                       <div class="col-3">
 
@@ -280,7 +284,7 @@
                       </div>
                     </div>
 
-                  </div>
+
                   <br />
                   <div class="row">
                     <div  class="input-group">
@@ -291,7 +295,7 @@
                           class="form-control input-sm"
                           placeholder="Type your message here..."
                           v-model="newMessage"
-                          @keyup="notifications.messages[messageTo] = false" 
+                          @keyup="notifications.messages[messageTo] = false"
                           @keyup.enter="sendMessage">
                         <span class="input-group-btn">
                             <button class="btn btn-primary btn-sm" id="btn-chat" @click="sendMessage">Send</button>
