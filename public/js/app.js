@@ -38635,7 +38635,7 @@ new Vue({
       // console.log(email);
       if (email == "everyone") {
         var emails = [this.auction.user.email];
-        for (var i = 0; i < this.auction.users; i++) {
+        for (var i = 0; i < this.auction.users.length; i++) {
           emails.push(this.auction.users[i].email);
         }
         window.location.href = 'mailto:' + emails.join();
