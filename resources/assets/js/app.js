@@ -312,9 +312,14 @@ new Vue({
      sendMail(email){
        // console.log(email);
        if(email == "everyone"){
-         var emails = [this.auction.user.email];
+         var emails = [];
+         if(this.auction.user.id != this.user.id){
+           emails.push(this.auction.user.email);
+         }
          for(var i=0;i<this.auction.users.length;i++){
-           emails.push(this.auction.users[i].email);
+           if(this.auction.users[i].id != this.user.id){
+             emails.push(this.auction.users[i].email);
+           }
          }
          window.location.href = 'mailto:' + emails.join();
        } else {
