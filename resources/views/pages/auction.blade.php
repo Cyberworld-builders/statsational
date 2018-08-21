@@ -272,7 +272,7 @@
                         </ul>
                         <ul style="list-style-type: none;" v-for="(bidder,index) in bidders">
                           <li>
-                            <a href="#" @click="messageTo = bidder.id; notifications.messages[bidder.id] = false;">@{{ bidder.name }}</a> 
+                            <a href="#" @click="messageTo = bidder.id; notifications.messages[bidder.id] = false;">@{{ bidder.name }}</a>
                             <i v-if="notifications.messages[bidder.id] === true">*</i>
                           </li>
                         </ul>
@@ -284,7 +284,15 @@
                   <br />
                   <div class="row">
                     <div  class="input-group">
-                        <input id="btn-input" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." v-model="newMessage" @keyup.enter="sendMessage">
+                        <input
+                          id="btn-input"
+                          type="text"
+                          name="message"
+                          class="form-control input-sm"
+                          placeholder="Type your message here..."
+                          v-model="newMessage"
+                          @keyup="notifications.messages[messageTo] = false" 
+                          @keyup.enter="sendMessage">
                         <span class="input-group-btn">
                             <button class="btn btn-primary btn-sm" id="btn-chat" @click="sendMessage">Send</button>
                         </span>
