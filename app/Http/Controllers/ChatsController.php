@@ -34,19 +34,17 @@ class ChatsController extends Controller
    */
   public function fetchMessages($auction_id)
   {
-    // $auction = Auction::find($auction_id);
     $messages = Message::with('user')->get();
     $response = array();
     foreach($messages as $message){
       if($auction_id == $message->auction_id){
-          $response[] = $message;
+          if($message->other_user_id == ""){
+            $message->other_user_id = "Everyone";
+          }
+          $response[$message->other_user_id][] = $message;
       }
     }
-    // rsort($response);
     return $response;
-
-    // return Message::with('user')->get();
-    // return $auction;
   }
 
   /**
@@ -62,8 +60,13 @@ class ChatsController extends Controller
     $message = new Message();
     $message->message = $request->input('message');
     $message->auction()->associate($auction);
+    $message_type = "chat";
+    if($request->other_user_id != "Everyone"){
+      $message->other_user_id = $request->other_user_id;
+      $message_type = "private";
+    }
     $new_message = $user->messages()->save($message);
-    broadcast(new MessageSent($user, $message, 'chat'))->toOthers();
+    broadcast(new MessageSent($user, $message, $message_type))->toOthers();
     $message = Message::find($new_message->id);
     $message->user->name = $new_message->user->name;
     return $message;

@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 
 use App\Events\MessageSent;
 
+
+
 class AuctionController extends Controller
 {
 
@@ -38,30 +40,59 @@ class AuctionController extends Controller
          ),
          'time_remaining' =>  request('bid_timer')
        );
-       $auction->settings = array();
+       $auction->settings = array(
+         'password' =>  request('password')
+       );
+       // $auction->settings->password = request('password');
        $user = Auth::User();
        $user->auctions()->save($auction);
        return $auction->id;
      }
 
-     public function addItem(Request $request){
-
-
-       if(isset($request->itemsCsv)){
-         $path = $request->file('itemsCsv')->getRealPath();
-       } else {
-         $item = new Item;
-         $item->name = request('name');
-         $auction = Auction::find(request('auction_id'));
-         $auction->items()->save($item);
+     public function importItems( Request $request ){
+       if($path = $request->file('itemsCsv')->getRealPath()){
+         if($lines = file($path)){
+           $items = array();
+           if(!empty($lines)){
+             foreach ($lines as $line){
+               $line = trim($line);
+               $fields = explode(',',$line);
+               if(count($fields) > 0){
+                 $items[] = array(
+                   'name' =>  $fields[0]
+                 );
+               }
+             }
+           }
+           if(count($items) > 0){
+             return $items;
+           }
+         }
        }
+       return 0;
+     }
 
-
-       $queue = array();
+     public function addItem(Request $request){
+       $auction = Auction::find(request('auction_id'));
+       $queue = [];
        if(isset($auction->queue) && count($auction->queue) > 0){
          $queue = $auction->queue;
        }
-       $queue[] = $item;
+       if(isset($request->items)){
+         $items = [];
+         foreach($request->items as $item){
+           $new_item = new Item;
+           $new_item->name = $item['name'];
+           $items[] = $new_item;
+           $queue[] = $new_item;
+         }
+         $auction->items()->saveMany($items);
+       } else {
+         $item = new Item;
+         $item->name = request('name');
+         $auction->items()->save($item);
+         $queue[] = $item;
+       }
        $auction->queue = $queue;
        $auction->save();
        $user = Auth::User();
@@ -82,6 +113,7 @@ class AuctionController extends Controller
          $auction = Auction::find($auction_id);
          if($auction->is_participant()){
            if( isset( $auction->queue ) && count( $auction->queue ) > 0 ){
+
              $item = Item::find($auction->queue[count($auction->queue)-1]['id']);
              $bids = $item->bids;
            } else {
@@ -101,6 +133,21 @@ class AuctionController extends Controller
            ]);
          }
      }
+
+     public function summary( $auction_id )
+     {
+          $auction = Auction::find($auction_id);
+         if($auction->is_participant()){
+           return view('pages.summary',[
+             'auction_id' => $auction_id,
+             'user_id'=>Auth::User()->id
+           ]);
+         } else {
+           return "You are not a participant. Go away.";
+         }
+     }
+
+
 
      public function getAuctionData( $auction_id )
      {
@@ -176,16 +223,36 @@ class AuctionController extends Controller
       $item = Item::find($request->item_id);
       $bid = new Bid;
       $bid->amount = $request->bid_amount;
-      $bid->user()->associate($user);
+      if(isset($request->user_id) ){
+        $bid->user()->associate($request->user_id);
+      } else {
+        $bid->user()->associate($user);
+      }
       $bid->auction()->associate($auction);
       $bid->item()->associate($item);
       $bid->save();
       $bids = $item->bids();
       $auction = array('auction'=>$this->getAuctionData($auction->id));
       $response = $auction;
-      broadcast(new MessageSent($user, "getBids", "bid"))->toOthers();
+      if(!isset($request->user_id) ){
+        broadcast(new MessageSent($user, "getBids", "bid"))->toOthers();
+      }
       return $response;
     }
+
+    public function removeBid( $bid_id ){
+      $bid = Bid::find($bid_id);
+      $bid->delete();
+      return $bid->delete();
+    }
+
+    public function updateBid( Request $request ){
+      $bid = Bid::find($request->bid_id);
+      $bid->amount = $request->amount;
+      return $$bid->save();
+    }
+
+
 
     public function getUsers($auction_id){
       $auction = Auction::find($auction_id);
@@ -253,24 +320,6 @@ class AuctionController extends Controller
       $expected_time = $status['item_end_time'] - $status['time_remaining'];
       $time_difference = $actual_time - $expected_time;
 
-
-      // if($auction->status['time_remaining'] <= 0){
-        // $status['test'] = array(
-        //   'actual_time'  =>  date('h:i:s',$actual_time),
-        //   'expected_time'  =>  date('h:i:s',$expected_time),
-        //   'time_difference'  =>  $time_difference,
-        //   'item_end_time' => date('h:i:s',$status['item_end_time']),
-        //   'time_remaining'  =>  $status['time_remaining']
-        // );
-        // $auction->status = $status;
-        // $auction->save();
-      // }
-
-      // 1532375099
-      // 1532374938
-
-
-
       if( (   $status['status']['in_progress'] === true  ) && ( $status['time_remaining'] > 0 ) && ( $expected_time < $actual_time  ) ){
         $user = $user = Auth::User();
         if($auction->user->id == $user->id){
@@ -278,12 +327,6 @@ class AuctionController extends Controller
           $auction->status = $status;
           $auction->save();
         } else {
-            // if ($time_difference > 1){
-            //   $status['time_remaining'] = $status['time_remaining'] + $time_difference;
-            //   $auction->status = $status;
-            //   $auction->save();
-            // }
-
 
         }
       }

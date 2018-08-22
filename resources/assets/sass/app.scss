@@ -11,18 +11,29 @@
 // Font Awesome
 @import "~font-awesome/scss/font-awesome.scss";
 
-@import 'navbar';
-@import 'dashboard';
-@import 'auction';
-@import 'chat';
-@import 'bidding';
-@import 'bidders-overview';
-@import 'items';
+// jquery ui
+@import '~jquery-ui/themes/base/all.css';
 
+// gridstack
+// @import '~gridstack/dist/gridstack.css';
+
+// @import 'navbar';
+// @import 'dashboard';
+// @import 'auction';
+@import 'chat';
+// @import 'bidding';
+// @import 'bidders-overview';
+// @import 'items';
+@import 'summary';
+
+
+html, body, .dashboard, main {
+
+}
 
 
 .navbar-laravel {
-  background-color: #fff;
+
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -42,4 +53,335 @@
   50% {
     opacity: 0;
   }
+}
+
+
+.auction-new {
+
+  margin: 0;
+  padding-bottom: 25px;
+  background-color: $lightblue;
+  // height: 95%;
+
+  .topbar {
+
+    width: 100%;
+    background-color: $darkblue;
+
+    .topbar-container {
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      flex-flow: row wrap;
+      -webkit-flex-flow: row wrap;
+      justify-content: space-around;
+    }
+
+    .topbar-item {
+      padding: 0px;
+      text-align: center;
+      line-height: 55px;
+      color: white;
+      font-size: 1.0em;
+    }
+
+    .logo-container {
+      width: 100%;
+      background-color: #fff;
+      img.logo {
+        width: 105px;
+        height: auto;
+      }
+      a {
+        color: $darkblue;
+      }
+    }
+
+    .info-container {
+      text-align: left;
+      padding-left: 15px;
+      a {
+        color: #fff;
+        padding: 0px;
+
+      }
+
+      .dropdown-menu {
+        .dropdown-item {
+          line-height: 1.5;
+        }
+        a {
+          color: $darkblue;
+          padding-left: 10px;
+        }
+        a:hover {
+          background-color: $orange;
+        }
+      }
+
+
+
+    }
+
+  }
+
+  .controlbar {
+
+    th,td {
+      border-top: 0;
+      padding: 5px;
+      line-height: normal;
+    }
+
+    overflow: hidden;
+    background-color: $orange;
+    color: #fff;
+
+    width: 100%;
+
+    .control-container-wrapper {
+      margin-left: auto;
+      margin-right: auto;
+      padding: 15px;
+
+    }
+
+    .control-container {
+
+        cursor: grab;
+
+      .control-item {
+
+        padding: 5px;
+        line-height:12px;
+        color: white;
+        font-size: 1.25em;
+        font-weight: bold;
+
+        .control-wrapper {
+          // margin-left: auto;
+          // margin-right: auto;
+        }
+        .control {
+
+            background-color: $orange;
+            .bidding-controls {
+
+              input[type=number]{
+                position: relative;
+                bottom: 1.0px;
+              }
+
+              input[type=number],button.bid-button {
+
+
+                font-size: 14px;
+                color: #143753;
+                font-weight: bold;
+                background-color: #fff;
+
+                padding: 0px;
+                width: 68px;
+                height: 22px;
+                text-align: center;
+                border-radius: 16px;
+                margin-bottom: 0px;
+                border: 1px;
+              }
+
+              @media only screen and (max-width: 767px ){
+
+                input[type=number]{
+                  position: relative;
+                  bottom: -2px;
+                }
+
+                input[type=number],button.bid-button {
+                  font-size: 24px;
+                  width: 75px;
+                  height: 58px;
+
+                  display: inline-block;
+                }
+              }
+
+
+
+
+
+            }
+
+
+        }
+      }
+    }
+
+    .previous-bids {
+      cursor:grab;
+      .bid-list {
+        max-height: 105px;
+        overflow: scroll;
+
+      }
+      td,th {
+        line-height: 8px;
+        font-size: 1.0em;
+        padding: 8px;
+        border-top: 0px;
+      }
+    }
+
+
+
+
+  }
+
+
+  ::-webkit-scrollbar {
+  display: none;
+  }
+
+  .widgets {
+    .main-content, .sidebar {
+      padding: 0px;
+    }
+    .widget {
+
+
+      .add-item-button {
+        background-color: $darkblue;
+      }
+      .widget-container {
+        border-radius: 8px;
+        overflow: hidden;
+
+        background-color: #fff;
+        box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.12);
+        .widget-header {
+          h3{
+            font-size: 1.0em;
+            line-height: 15px;
+            font-weight: bold;
+          }
+
+          border-radius: 4px 4px 0px 0px;
+          width: 100%;
+          background-color: $darkblue;
+          color: #fff;
+          cursor: grab;
+        }
+        .widget-body {
+          height: 100%;
+            min-height: 265px;
+          overflow: scroll;
+
+        }
+
+      }
+
+      .chat-widget {
+        padding: 25px;
+        button {
+          border-radius: 16px;
+          width: 78px;
+          height: 22px;
+          padding: 0px;
+          font-size: 14px;
+          color: #143753;
+          font-weight: bold;
+          background-color: #fff;
+          margin-left: 15px;
+          margin-right: 15px;
+        }
+        .chat {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+        }
+        .chat li {
+          margin-bottom: 10px;
+          padding-bottom: 5px;
+          border-bottom: 1px dotted #B3A9A9;
+        }
+        .chat li .chat-body p {
+          margin: 0;
+          color: #777777;
+        }
+        .panel-body {
+          overflow-y: scroll;
+          height: 225px;
+        }
+        .input-group {
+          margin: 5px;
+          label { padding: 10px;}
+        }
+      }
+
+      .bidders-overview {
+
+
+        overflow: hidden;
+
+        a:hover{ text-decoration: none;}
+        background-color: #143753;
+        width: 100%;
+        min-height: 100%;
+        border-radius: 4px;
+        padding: 10px;
+        // border: 1px solid #707070;
+        h3 {
+          color: #fff;
+          font-size: 16px;
+          font-weight: bold;
+          cursor: grab;
+        }
+        .bidder-card {
+          background-color: #fff;
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #707070;
+          margin-top: 10px;
+          margin-bottom: 10px;
+
+        }
+        tr.bidder-card {
+          border-top: 10px solid #143753;
+          border-bottom: 10px solid #143753;
+
+        }
+        .isUser {
+          background-color: #fe5722;
+        }
+        td {
+          cursor: pointer;
+        }
+        p,span,strong,th {
+          color: #143753;
+          margin: 0px;
+        }
+        .players-needed { color: #ff5722; }
+
+
+      }
+
+
+      .bidders-overview-details.widget-card {
+          width: 100%;
+          position: absolute;
+          right: 100%;
+          top: 0%;
+          box-shadow: 2px 0px 2px 4px rgba(0, 0, 0, 0.44);
+        }
+
+
+
+    }
+  }
+
 }

@@ -26,6 +26,8 @@ Route::group(['middleware' => 'auth'],function(){
 
   // Route::get('auctions', 'AuctionController@list');
   Route::get('auction/{id}', 'AuctionController@show');
+  Route::get('auction/summary/{id}', 'AuctionController@summary');
+
   Route::get('auction/data/{id}', 'AuctionController@getAuctionData');
   Route::post('auction/bidder/data', 'AuctionController@getBidderData');
   Route::get('auctions/new', 'AuctionController@new');
@@ -33,13 +35,15 @@ Route::group(['middleware' => 'auth'],function(){
   Route::post('auctions/store','AuctionController@store');
   Route::post('auctions/join','AuctionController@join');
   Route::post('auctions/addItem','AuctionController@addItem');
+  Route::post('auctions/import-items','AuctionController@importItems');
   Route::post('auctions/items/next','AuctionController@startNextItem');
+  Route::post('auctions/item/switch','ItemController@switchItem');
 
-  Route::get('auctions/item/switch/{id}','ItemController@switchItem');
 
 
 
   Route::post('auctions/bid','AuctionController@bid');
+  Route::get('auctions/remove-bid/{id}','AuctionController@removeBid');
 
   Route::post('auctions/timer','AuctionController@resetTimer');
   Route::post('auctions/status','AuctionController@setStatus');

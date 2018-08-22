@@ -35,6 +35,9 @@
           <div class="checkbox">
             <label for="private">Make Private:</label>
             <input id="private" v-model="private" type="checkbox" />
+
+            <label v-if="private" for="password">Auction Password:</label>
+            <input v-if="private" v-model="password" type="text" name="password" value="" />
           </div>
 
           <div class="checkbox">
@@ -109,7 +112,8 @@
               manual_next: this.manual_next,
               bid_timer: this.bid_timer,
               snipe_time: this.snipe_time,
-              bid_increment: this.bid_increment
+              bid_increment: this.bid_increment,
+              password: this.password
             }).then(function(response){
               console.log(response.data);
               window.location.href = '/auction/' + response.data;
@@ -125,6 +129,7 @@
             rules: "",
             start_time: "",
             private: false,
+            password: "",
             manual_next: false,
             bid_timer: 30,
             snipe_time: 15,

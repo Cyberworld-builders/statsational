@@ -4,13 +4,15 @@ require('./bootstrap');
 
 var Vue = require('vue');
 
-Vue.component('Auction', require('./components/Auction.vue'));
+Vue.component('auction', require('./components/auction/Auction.vue'));
 Vue.component('Tabs', require('./components/Tabs.vue'));
 Vue.component('auction-control', require('./components/auction/AuctionControl.vue'));
 Vue.component('auction-form', require('./components/auction/AuctionForm.vue'));
 Vue.component('join-form', require('./components/auction/AuctionJoinForm.vue'));
 Vue.component('auction-items', require('./components/auction/AuctionItems.vue'));
 Vue.component('grid-test',require('./components/GridTest.vue'));
+Vue.component('auction-summary',require('./components/auction/AuctionSummary.vue'));
+
 
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue);
@@ -23,33 +25,31 @@ import 'vue-datetime/dist/vue-datetime.css'
 import axios from 'axios'
 import moment from 'moment'
 
-var testLayout = [
+
+import 'lodash/lodash.js'
+
+window.$ = window.jQuery = require('jquery');
+import 'jquery-ui/ui/core.js';
+import 'jquery-ui/ui/widget.js';
+import 'jquery-ui/ui/data.js';
+import 'jquery-ui/ui/widgets/resizable.js';
+import 'jquery-ui/ui/widgets/draggable.js';
+import 'jquery-ui/ui/widgets/mouse.js';
 
 
-];
 
-import VueGridLayout from 'vue-grid-layout'
 
-var GridLayout = VueGridLayout.GridLayout;
-var GridItem = VueGridLayout.GridItem;
+import 'gridstack/dist/gridstack.js';
+// import 'gridstack/src/gridstack.jQueryUI.js';
+
 
 Vue.use(Datetime)
 
 
 new Vue({
  el: '#app',
- components: {
-   GridLayout,
-   GridItem
- },
 
  data: {
-   layout: [
-        {id: "Items","x":0,"y":0,"w":9,"h":9,"i":"0"},
-        {id: "Bidders","x":9,"y":0,"w":3,"h":18,"i":"2"},
-        {id: "Chat","x":2,"y":10,"w":7,"h":9,"i":"3"},
-        {id: "Queue","x":0,"y":10,"w":2,"h":9,"i":"4"}
-     ],
    auction: {
      item: {
        name: "",
@@ -64,6 +64,9 @@ new Vue({
      }
    },
 
+   csv_items: [],
+   itemsCsv: '',
+
    user: {
      bid: {
        amount: 0,
@@ -73,8 +76,13 @@ new Vue({
 
    newMessage: '',
    messagers: [{ name: "Everyone" }],
-   messageTo: "Everyone",
+   messageTo: 'Everyone',
    messages: [],
+   notifications: {
+     messages: {
+
+     }
+   },
 
    bidders: [
      {
@@ -101,6 +109,10 @@ new Vue({
    showOwnerControls: false,
    showBiddersOverviewDetail: false,
 
+   importItemsWarning: "",
+   showImportItemsWarning: false,
+
+
    bid_increment: 5,
 
    bid_amount: 1
@@ -108,7 +120,75 @@ new Vue({
  },
  methods: {
 
+
+   axiosGet(path,id,callback){
+     axios.get( path + '/' + id,{
+     }).then(response => {
+       if(callback){
+         callback(response.data);
+       } else {
+         return response.data;
+       }
+     }).catch(e => {
+       console.log(e);
+     });
+   },
+
+   axiosPost(path,data,callback){
+     axios.post( path, data ).then(response => {
+       if(callback){
+         callback(response.data);
+       } else {
+         return response.data;
+       }
+     }).catch(e => {
+       console.log(e);
+     });
+   },
+
+
      // bidding
+
+     reverseItems(){
+
+       var items = this.auction.items;
+       var queue = this.auction.queue;
+
+       console.log(queue);
+
+       var completed = [];
+
+       var queue_ids = [];
+
+       for(var i=0;i<queue.length;i++){
+         queue_ids.push(queue[i].id);
+       }
+
+       for(var i=0;i<items.length;i++){
+         if( ! this.inArray( items[i].id, queue_ids ) ){
+           completed.push(items[i]);
+         }
+       }
+
+       var reversedItems = [];
+       var order = 1;
+
+       for (var i=completed.length - 1;i>=0;i--){
+          var item = completed[i];
+          item.order = order;
+          order++;
+          reversedItems.push(item);
+       }
+
+       for (var i=0; i<queue.length;i++){
+          var item = queue[i];
+          item.order = order;
+          order++;
+          reversedItems.push(item);
+       }
+
+       return reversedItems;
+     },
 
      bid(){
        this.resetTimer();
@@ -212,8 +292,6 @@ new Vue({
        }).catch(e => {
          console.log(e);
        });
-       // this.auction.items = items;
-       this.hideModal();
      },
 
      // messaging
@@ -223,11 +301,31 @@ new Vue({
          axios.post('/messages', {
              user: this.user,
              message: this.newMessage,
-             auction: this.auction.id
+             auction: this.auction.id,
+             other_user_id: this.messageTo
          }).then(response => {
-           this.messages.unshift(response.data);
+           this.fetchMessages();
          });
          this.newMessage = ''
+     },
+
+     sendMail(email){
+       // console.log(email);
+       if(email == "everyone"){
+         var emails = [];
+         if(this.auction.user.id != this.user.id){
+           emails.push(this.auction.user.email);
+         }
+         for(var i=0;i<this.auction.users.length;i++){
+           if(this.auction.users[i].id != this.user.id){
+             emails.push(this.auction.users[i].email);
+           }
+         }
+         window.location.href = 'mailto:' + emails.join();
+       } else {
+         window.location.href = 'mailto:' + email;
+       }
+
      },
 
      // gets all group messages for the auction
@@ -238,6 +336,22 @@ new Vue({
            var widget = document.getElementById('chat-widget-body');
            widget.scrollTop = widget.scrollHeight;
          });
+
+     },
+
+     sendPrivateMessage(){
+       axios.post('/messages/private', {
+           user: this.user,
+           message: this.newMessage,
+           auction: this.auction.id,
+           other_user: this.privateMessage.user.id
+       }).then(response => {
+         this.fetchMessages();
+       });
+       this.newMessage = ''
+     },
+
+     getPrivateMessage(){
 
      },
 
@@ -254,17 +368,6 @@ new Vue({
      countDown(){
         var current_time_remaining = this.time_remaining;
         this.getTimeRemaining();
-         // if(this.auction.user.id == document.getElementById('user_id').value){
-         //   if(this.auction.queue.length > 0 ){
-         //     if(this.auction.status.status.in_progress == true && this.time_remaining > 0 && current_time_remaining == this.time_remaining){
-         //        this.resetTimer(this.time_remaining - 1);
-         //     } else {
-         //       if(this.auction.manual_next == 0){
-         //         this.startNextItem();
-         //       }
-         //     }
-         //   }
-         // }
      },
 
      toggleStatus(){
@@ -284,7 +387,6 @@ new Vue({
          in_progress: status.in_progress,
          label: status.label
        }).then(response => {
-         // console.log(response.data);
          // this.updatePool();
        }).catch(e => {
          console.log(e);
@@ -317,17 +419,18 @@ new Vue({
      },
 
 
-     switchToItem(item){
-       // axios.get('/auctions/item/switch/' + item.id,{
-       //
-       // }).then(response => {
-       //   console.log(response.data);
-       //   this.updateCurrentItem(response.data);
-       //   this.time_remaining = 30;
-       //   this.updateClock();
-       // }).catch(e => {
-       //   console.log(e);
-       // });
+     switchToItem(item_id){
+       axios.post('/auctions/item/switch',{
+         item_id: item_id,
+         auction_id: this.auction.id
+       }).then(response => {
+         // console.log(response.data);
+         this.getAuctionData(this.auction.id);
+         this.time_remaining = this.auction.bid_timer;
+         this.updateClock();
+       }).catch(e => {
+         console.log(e);
+       });
      },
 
      updateCurrentItem(item){
@@ -365,7 +468,11 @@ new Vue({
        });
      },
 
-     getAuctionData(auction_id){
+     endAuction(){
+
+     },
+
+     getAuctionData(auction_id,callback){
        axios.get('/auction/data/' + auction_id,{
        }).then(response => {
          this.updatePool(response.data);
@@ -373,6 +480,11 @@ new Vue({
            this.showOwnerControls = true;
          }
         this.fetchMessages();
+        if(callback){
+          callback();
+        }
+
+
        }).catch(e => {
          console.log(e);
        });
@@ -483,7 +595,8 @@ new Vue({
          };
        }
 
-       console.log(auction);
+       this.auction.reversedItems = this.reverseItems();
+       // console.log(auction);
      },
 
      formatMoney(number){
@@ -499,18 +612,128 @@ new Vue({
          }
        // }
        return false;
+     },
+
+     uploadItemsCsv(){
+       this.showImportItemsWarning = false;
+       this.csv_items = [];
+      this.itemsCsv = this.$refs.itemsCsv.files[0];
+      let formData = new FormData();
+      formData.append('itemsCsv', this.itemsCsv);
+      // if(this.itemsCsv.type == "text/csv"){
+        axios.post('/auctions/import-items' ,formData ).then(response => {
+          if(response.data == 0){
+            this.importItemsWarning = "No data was found in the file. Check the format of your data."
+            this.showImportItemsWarning = true;
+          } else {
+            this.csv_items = response.data;
+          }
+        }).catch(e => {
+          console.log(e);
+        });
+      // } else {
+      //   this.importItemsWarning = "File must be csv."
+      //   this.showImportItemsWarning = true;
+      // }
+     },
+
+
+
+     importItems(){
+       this.showImportItemsWarning = false;
+       if(this.csv_items.length > 0 ){
+         axios.post('/auctions/addItem',{
+           auction_id: this.auction.id,
+           items: this.csv_items
+         }).then(response => {
+           console.log(response.data);
+           this.getAuctionData(this.auction.id);
+         }).catch(e => {
+           console.log(e);
+         });
+       } else {
+         this.importItemsWarning = "No items to import.";
+         this.showImportItemsWarning = true;
+       }
      }
 
  },
 
  mounted() {
+
+   // $('.draggable').draggable();
+   // $('.resizable').resizable();
+
+   $('.controlbar').resizable();
+
+   $('.controlbar').draggable(
+      {
+        snap:".topbar",
+        cancel: ".control-item"
+      }
+   );
+
+       $('.control-container').draggable(
+         {
+           grid: [5,5],
+           stack: ".control-container",
+           cancel: ".control",
+           cursor: "move"
+         }
+       );
+
+       $('.previous-bids').draggable(
+         {
+           grid: [5,5],
+           stack: ".control-container",
+           cancel: ".control",
+           cursor: "move"
+         }
+       );
+
+
+
+         $('.control').draggable(
+           {
+             containment:".controlbar",
+             stack: ".control",
+             cancel: ".control-ui",
+             cursor: "move"
+           }
+         );
+
+
+   $('.widget-container').draggable(
+     {
+       grid: [5,5],
+       handle: ".widget-header",
+       cursor: "grab",
+       stack: ".widget-container"
+     }
+   );
+   $('.widget-container').resizable();
+
+   $('.sidebar').draggable(
+     {
+       grid: [5,5],
+       stack: ".widget-container",
+       handle: "h3"
+     }
+   );
+   $('.bidders-overview').resizable();
+
+
+
    if(document.getElementById('user_id')){
      this.user.id = document.getElementById('user_id').value;
    }
    if(document.getElementById('auction_id')){
-     this.getAuctionData(document.getElementById('auction_id').value);
+     this.getAuctionData(document.getElementById('auction_id').value,function(){
+       // $('#items-widget-body').animate({scrollTop: $('#items-widget-body').height() + 100},500);
+     });
      setInterval(function(){ this.countDown() }.bind(this),1000);
    }
+
  },
 
  created() {
@@ -519,6 +742,11 @@ new Vue({
      .listen('MessageSent', (e) => {
        if(e.type == "chat"){
          this.fetchMessages();
+         this.notifications.messages['Everyone'] = true;
+       } else if (e.type == "private"){
+         console.log({test: e});
+         this.fetchMessages();
+         this.notifications.messages[e.user.id] = true;
        } else if (e.type == "bid"){
          this.getAuctionData(document.getElementById('auction_id').value);
          var current_bid = document.getElementById('current_bid');
