@@ -1,0 +1,47 @@
+.bidders-overview {
+
+  a:hover{ text-decoration: none;}
+  background-color: #143753;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  padding: 10px;
+  // border: 1px solid #707070;
+  h3 {color: #fff; font-size: 16px; font-weight: bold;}
+  .bidder-card {
+    background-color: #fff;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #707070;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+  }
+  tr.bidder-card {
+    border-top: 10px solid #143753;
+    border-bottom: 10px solid #143753;
+
+  }
+  .isUser {
+    background-color: #fe5722;
+  }
+  td {
+    cursor: pointer;
+  }
+  p,span,strong,th {
+    color: #143753;
+    margin: 0px;
+  }
+  .players-needed { color: #ff5722; }
+
+
+}
+
+
+.bidders-overview-details.widget-card {
+    width: 100%;
+    position: absolute;
+    right: 100%;
+    top: 0%;
+    box-shadow: 2px 0px 2px 4px rgba(0, 0, 0, 0.44);
+  }

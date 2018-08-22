@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('content')
 
-  <Auction>
+<div class="auction">   <!-- the entire auction room -->
+
     <div class="row justify-content-center">
         <div class="col-md-12">
 
@@ -12,7 +13,7 @@
           		</div>
           		<div class="col-md-6">
 
-                <join-form auction_id="{{ $auction->id }}" auction_name="{{ $auction->name }}"></join-form>
+                <join-form auction_id="{{ $auction->id }}" auction="{{ $auction }}"></join-form>
 
 
           		</div>
@@ -24,5 +25,7 @@
 
         </div>
     </div>
-  <Auction>
+</div>
+
+</div>
 @endsection

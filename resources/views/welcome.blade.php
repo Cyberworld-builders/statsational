@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="{{ asset('/images/favicon.png') }}">
-        <title>{{ config('app.name', 'Statsational') }}</title>
+        <title>{{ config('app.name', 'Auction Pools') }}</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -85,7 +85,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    <img class="welcome-logo" src="{{ asset('/images/statsational-logo.jpg') }}" />
+                    <img class="welcome-logo" src="{{ asset('/images/logo.png') }}" />
                 </div>
             </div>
         </div>

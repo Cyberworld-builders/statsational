@@ -1,0 +1,28 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Font Awesome
+@import "~font-awesome/scss/font-awesome.scss";
+
+// jquery ui
+@import '~jquery-ui/themes/base/all.css';
+
+@import 'summary';
+
+
+.summary {
+  .bid-log {
+
+  }
+  input[type="number"].bid-amount{
+    width: 55px;
+    height: auto;
+  }
+}

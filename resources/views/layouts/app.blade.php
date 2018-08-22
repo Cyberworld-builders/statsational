@@ -9,10 +9,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="icon" href="{{ asset('/images/favicon.png') }}">
-    <title>{{ config('app.name', 'Statsational') }}</title>
+    <title>{{ config('app.name', 'Auction Pools') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -21,52 +22,13 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <style>
-      .chat {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-
-      .chat li {
-        margin-bottom: 10px;
-        padding-bottom: 5px;
-        border-bottom: 1px dotted #B3A9A9;
-      }
-
-      .chat li .chat-body p {
-        margin: 0;
-        color: #777777;
-      }
-
-      .panel-body {
-        overflow-y: scroll;
-        height: 350px;
-      }
-
-      ::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-        background-color: #F5F5F5;
-      }
-
-      ::-webkit-scrollbar {
-        width: 12px;
-        background-color: #F5F5F5;
-      }
-
-      ::-webkit-scrollbar-thumb {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-        background-color: #555;
-      }
-    </style>
-
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    <img class="logo-small" src="{{asset('/images/statsational-logo.jpg')}}" />
+                    <img class="logo-small" src="{{asset('/images/logo.png')}}" />
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

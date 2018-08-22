@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $auctions = \App\Auction::all();
+        $auctions = \App\Auction::all()->sortByDesc("created_at");
         return view('home')->with('auctions',$auctions);
     }
 }
