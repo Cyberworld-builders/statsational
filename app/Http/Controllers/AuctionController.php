@@ -74,6 +74,26 @@ class AuctionController extends Controller
 
      public function addItem(Request $request){
        $auction = Auction::find(request('auction_id'));
+
+       $status = $auction->status;
+       if(!isset($status)){
+         $status = array(
+           'time_remaining'  =>  $auction->bid_timer,
+           'item_end_time' =>  time() + $auction->bid_timer,
+           'status'  =>  array(
+             'label' =>  "Not Started",
+             'in_progress' =>  false
+           )
+         );
+       } else {
+         if($status['item_end_time'] < time()){
+           $status['time_remaining'] = $auction->bid_timer;
+           $status['item_end_time'] =  time() + $auction->bid_timer;
+         }
+       }
+       $auction->status = $status;
+
+
        $queue = [];
        if(isset($auction->queue) && count($auction->queue) > 0){
          $queue = $auction->queue;
@@ -97,7 +117,7 @@ class AuctionController extends Controller
        $auction->save();
        $user = Auth::User();
        broadcast(new MessageSent($user, "update", "update"))->toOthers();
-       return $auction->items;
+       return $auction;
      }
 
      public function join(Request $request)
