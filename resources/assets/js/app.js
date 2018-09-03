@@ -191,7 +191,9 @@ new Vue({
      },
 
      bid(){
-       this.resetTimer();
+       if(this.time_remaining <= this.auction.snipe_time){
+         this.resetTimer(this.auction.snipe_time);
+       }
        this.user.bid.amount = this.bid_amount;
        if(this.auction.status.status.in_progress == true){
          if(this.bid_amount >= this.user.bid.minimum){
