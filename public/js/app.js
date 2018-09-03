@@ -90755,16 +90755,14 @@ new Vue({
     countDown: function countDown() {
       if (this.auction.queue[0]) {
         this.getTimeRemaining();
-      } else {
-        this.time_remaining = 0;
-      }
-
-      if (this.time_remaining < 1) {
-        if (this.auction.manual_next == 0 && this.auction.queue[0] && this.auction.item.id == this.auction.queue[0].id) {
-          this.startNextItem();
-        } else {
-          this.pauseStatus();
+        if (this.time_remaining < 1) {
+          if (this.auction.manual_next == 0 && this.auction.queue[0] && this.auction.item.id == this.auction.queue[0].id) {
+            this.startNextItem();
+          }
         }
+      } else {
+        this.pauseStatus();
+        this.time_remaining = 0;
       }
     },
     toggleStatus: function toggleStatus() {
