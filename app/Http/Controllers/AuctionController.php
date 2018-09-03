@@ -364,6 +364,24 @@ class AuctionController extends Controller
     public function startNextItem(Request $request){
       $item = Item::find($request->item_id);
       $auction = Auction::find($request->auction_id);
+      if($item->id != $auction->queue[0]['id']){
+        return $auction;
+      }
+      $status = $auction->status;
+      if(!isset($status)){
+        $status = array(
+          'time_remaining'  =>  $auction->bid_timer,
+          'item_end_time' =>  time() + $auction->bid_timer,
+          'status'  =>  array(
+            'label' =>  "Not Started",
+            'in_progress' =>  false
+          )
+        );
+      } else {
+        $status['time_remaining'] = $auction->bid_timer;
+        $status['item_end_time'] =  time() + $auction->bid_timer;
+      }
+      $auction->status = $status;
       $queue_ids = array();
       foreach($auction->queue as $key => $queue_item){
         if( $item->id != $queue_item['id'] ){
