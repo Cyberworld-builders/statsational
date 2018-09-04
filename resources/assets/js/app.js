@@ -154,8 +154,6 @@ new Vue({
        var items = this.auction.items;
        var queue = this.auction.queue;
 
-       console.log(queue);
-
        var completed = [];
 
        var queue_ids = [];
@@ -191,7 +189,10 @@ new Vue({
      },
 
      bid(){
-       this.resetTimer();
+       if(this.time_remaining <= this.auction.snipe_time){
+         this.resetTimer(this.auction.snipe_time);
+       }
+       // this.resetTimer();
        this.user.bid.amount = this.bid_amount;
        if(this.auction.status.status.in_progress == true){
          if(this.bid_amount >= this.user.bid.minimum){
@@ -360,24 +361,44 @@ new Vue({
          var status = response.data;
          this.time_remaining = status.time_remaining;
          this.auction.status.status = status.status;
-         // console.log(status);
          this.updateClock();
        });
      },
 
      countDown(){
-        var current_time_remaining = this.time_remaining;
-        this.getTimeRemaining();
+       if(this.auction.queue[0]){
+         this.getTimeRemaining();
+         if(this.time_remaining < 1 ){
+           if(this.auction.manual_next == 0 && this.auction.queue[0] && this.auction.item.id == this.auction.queue[0].id){
+               this.startNextItem();
+           }
+         }
+       } else {
+         this.pauseStatus();
+         this.time_remaining = 0;
+       }
+
+
+
      },
 
      toggleStatus(){
        if(this.auction.status.status.in_progress){
-         this.auction.status.status.label = "Paused";
-         this.auction.status.status.in_progress = false;
+         this.pauseStatus();
        } else {
-         this.auction.status.status.label = "In Progress";
-         this.auction.status.status.in_progress = true;
+         this.startStatus();
        }
+     },
+
+     pauseStatus(){
+       this.auction.status.status.label = "Paused";
+       this.auction.status.status.in_progress = false;
+       this.setStatus(this.auction.status.status);
+     },
+
+     startStatus(){
+       this.auction.status.status.label = "In Progress";
+       this.auction.status.status.in_progress = true;
        this.setStatus(this.auction.status.status);
      },
 
@@ -420,17 +441,20 @@ new Vue({
 
 
      switchToItem(item_id){
-       axios.post('/auctions/item/switch',{
-         item_id: item_id,
-         auction_id: this.auction.id
-       }).then(response => {
-         // console.log(response.data);
-         this.getAuctionData(this.auction.id);
-         this.time_remaining = this.auction.bid_timer;
-         this.updateClock();
-       }).catch(e => {
-         console.log(e);
-       });
+
+         axios.post('/auctions/item/switch',{
+           item_id: item_id,
+           auction_id: this.auction.id
+         }).then(response => {
+           // console.log(response.data);
+           // this.getAuctionData(this.auction.id);
+           this.updatePool(response.data);
+           this.time_remaining = this.auction.bid_timer;
+           this.updateClock();
+         }).catch(e => {
+           console.log(e);
+         });
+
      },
 
      updateCurrentItem(item){
@@ -455,17 +479,24 @@ new Vue({
      },
 
      startNextItem(){
-       axios.post('/auctions/items/next',{
-         auction_id: this.auction.id,
-         item_id: this.auction.item.id,
-         bid_id: this.getCurrentBid()
-       }).then(response => {
-         this.getAuctionData(this.auction.id);
-         this.time_remaining = this.auction.bid_timer;
-         this.updateClock();
-       }).catch(e => {
-         console.log(e);
-       });
+       if(this.auction.queue.length > 0){
+         axios.post('/auctions/items/next',{
+           auction_id: this.auction.id,
+           item_id: this.auction.item.id,
+           bid_id: this.getCurrentBid()
+         }).then(response => {
+           // this.getAuctionData(this.auction.id);
+           // this.getTimeRemaining();
+           this.updatePool(response.data);
+           this.time_remaining = this.auction.bid_timer;
+           this.updateClock();
+         }).catch(e => {
+           console.log(e);
+         });
+       } else {
+         this.pauseStatus();
+       }
+
      },
 
      endAuction(){
@@ -483,8 +514,6 @@ new Vue({
         if(callback){
           callback();
         }
-
-
        }).catch(e => {
          console.log(e);
        });
@@ -646,7 +675,6 @@ new Vue({
            auction_id: this.auction.id,
            items: this.csv_items
          }).then(response => {
-           console.log(response.data);
            this.getAuctionData(this.auction.id);
          }).catch(e => {
            console.log(e);

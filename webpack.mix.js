@@ -16,3 +16,6 @@ let mix = require('laravel-mix');
 
   mix.js('resources/assets/js/summary.js', 'public/js')
    .sass('resources/assets/sass/summary.scss', 'public/css');
+
+   mix.js('resources/assets/js/landing.js', 'public/js')
+    .sass('resources/assets/sass/landing.scss', 'public/css');

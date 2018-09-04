@@ -1,6 +1,8 @@
 {
-    "/js/summary.js": "/js/summary.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/css/summary.css": "/css/summary.css"
+    "/css/summary.css": "/css/summary.css",
+    "/css/landing.css": "/css/landing.css",
+    "/js/summary.js": "/js/summary.js",
+    "/js/landing.js": "/js/landing.js"
 }
