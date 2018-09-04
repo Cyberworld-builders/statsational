@@ -28,8 +28,8 @@
       <div class="right_bar">
         <div class="login_sec">
           <ul>
-            <li><a href="#">Sign In</a></li>
-            <li><a class="active" href="#">Join a pool</a></li>
+            <li><a href="/login">Sign In</a></li>
+            <li><a class="active" href="/home">Join a pool</a></li>
           </ul>
         </div>
         <div class="search_bar">
